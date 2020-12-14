@@ -23,8 +23,11 @@ jobs:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install Grunt
+      - name: Install Angular CLI
         run: npm install -g @angular/cli@9.1.12
+
+      - name: Update npm
+        run: npm update
 
       - name: Build with NPM
         run: ng build --prod
