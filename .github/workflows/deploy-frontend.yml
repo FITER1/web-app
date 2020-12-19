@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.DOCKER_PACKAGE_GITHUB_USERNAME }}
           password: ${{ secrets.DOCKER_PACKAGE_GITHUB_PASSWORD }}
           registry: docker.pkg.github.com
-          repository: fiter1/web-app/caritas-demo-web-app
+          repository: fiter1/web-app/caritas-uat-web-app
           tags: latest
 
       - name: Deploy to demo server
