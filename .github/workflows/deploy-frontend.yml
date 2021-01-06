@@ -38,45 +38,29 @@ jobs:
 
       - name: Build with NPM
         run: ng build --prod
+        
+        
+      - name: Deploy to server
+        run: |
+          echo "$TEST_SERVER_SSH_KEY" > key.pem
+          chmod 400 key.pem
+          echo "Stopping the tomcat and removing the old ROOT file"
+          ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/stopserverui.sh'
+        env:
+          TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_DEMO_SERVER_SSH_KEY }}
+          TEST_SERVER_URL: caritas.fiter.io
 
-      - name: Docker publish
-        uses: docker/build-push-action@v1
+      - name: deploy the war file
+        uses: garygrossgarten/github-action-scp@release
         with:
-          username: ${{ secrets.DOCKER_PACKAGE_GITHUB_USERNAME }}
-          password: ${{ secrets.DOCKER_PACKAGE_GITHUB_PASSWORD }}
-          registry: docker.pkg.github.com
-          repository: fiter1/web-app/caritas-uat-web-app
-          tags: latest
+           host: ${{ secrets.NEWCONCEPT_SERVER_URL }}
+           username: ubuntu
+           privateKey: ${{ secrets.NEWCONCEPT_SERVER_SSH_KEY }}
+           local: "dist/community-app"
+           remote: "/opt/tomcat/webapps/ROOT"
 
-      - name: Deploy to demo server
-        if: endsWith(github.ref, '/caritas-dev')
-        run: |
-          echo "$TEST_SERVER_SSH_KEY" > key.pem
-          chmod 400 key.pem
-          echo "Restart docker container...!!!"
-          ssh -i key.pem -o StrictHostKeyChecking=no $TEST_SERVER_URL 'sudo /root/deploy-fineract.sh'
+      - name: start the server after deployment
+        run: ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/startserver.sh'
         env:
-          TEST_SERVER_SSH_KEY: ${{secrets.CARITAS_DEMO_SERVER_SSH_KEY}}
-          TEST_SERVER_URL: ${{secrets.CARITAS_DEMO_SERVER_URL}}
-
-      - name: Deploy to uat server
-        if: endsWith(github.ref, '/caritas-uat')
-        run: |
-          echo "$TEST_SERVER_SSH_KEY" > key.pem
-          chmod 400 key.pem
-          echo "Restart docker container...!!!"
-          ssh -i key.pem -o StrictHostKeyChecking=no $TEST_SERVER_URL 'sudo /root/deploy-fineract.sh'
-        env:
-          TEST_SERVER_SSH_KEY: ${{secrets.CARITAS_UAT_SERVER_SSH_KEY}}
-          TEST_SERVER_URL: ${{secrets.CARITAS_UAT_SERVER_URL}}
-
-      - name: Deploy to production server 
-        if: endsWith(github.ref, '/caritas-prod')
-        run: |
-          echo "$TEST_SERVER_SSH_KEY" > key.pem
-          chmod 400 key.pem
-          echo "Restart docker container...!!!"
-          ssh -i key.pem -o StrictHostKeyChecking=no $TEST_SERVER_URL 'sudo /root/deploy-fineract.sh'
-        env:
-          TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_PROD_SERVER_SSH_KEY }}
-          TEST_SERVER_URL: ${{ secrets.CARITAS_PROD_SERVER_URL }}
+          TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_DEMO_SERVER_SSH_KEY }}
+          TEST_SERVER_URL: caritas.fiter.io
