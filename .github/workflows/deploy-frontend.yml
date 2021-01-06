@@ -56,7 +56,7 @@ jobs:
            host: ${{ secrets.NEWCONCEPT_SERVER_URL }}
            username: ubuntu
            privateKey: ${{ secrets.NEWCONCEPT_SERVER_SSH_KEY }}
-           local: "dist/community-app"
+           local: "dist/web-app"
            remote: "/opt/tomcat/webapps/ROOT"
 
       - name: start the server after deployment
