@@ -53,9 +53,9 @@ jobs:
       - name: deploy the war file
         uses: garygrossgarten/github-action-scp@release
         with:
-           host: ${{ secrets.NEWCONCEPT_SERVER_URL }}
+           host: caritas.fiter.io
            username: ubuntu
-           privateKey: ${{ secrets.NEWCONCEPT_SERVER_SSH_KEY }}
+           privateKey: ${{ secrets.CARITAS_DEMO_SERVER_SSH_KEY }}
            local: "dist/web-app"
            remote: "/opt/tomcat/webapps/ROOT"
 
