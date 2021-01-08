@@ -1,0 +1,64 @@
+name: Caritas Web UI Build
+
+on:
+  push:
+    branches:
+      - caritas-uat
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Set up Node 12 (package install)
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Remove Node Modules
+        run: rm -rf node_modules
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@9.1.12
+
+      - name: Update npm
+        run: npm update
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with NPM
+        run: ng build --prod
+        
+        
+      - name: Deploy to server
+        run: |
+          echo "$TEST_SERVER_SSH_KEY" > key.pem
+          chmod 400 key.pem
+          echo "Stopping the tomcat and removing the old ROOT file"
+          ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/stopserverui.sh'
+        env:
+          TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
+          TEST_SERVER_URL: mifosdemo.caritasnairobi.org
+
+      - name: deploy the war file
+        uses: garygrossgarten/github-action-scp@release
+        with:
+           host: mifosdemo.caritasnairobi.org
+           username: ubuntu
+           privateKey: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
+           local: "dist/web-app"
+           remote: "/opt/tomcat/webapps/ROOT"
+
+      - name: start the server after deployment
+        run: ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/startserver.sh'
+        env:
+          TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
+          TEST_SERVER_URL: mifosdemo.caritasnairobi.org
