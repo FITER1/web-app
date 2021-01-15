@@ -14,7 +14,7 @@
   </div>
 
   <!-- Upcoming Charges -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="upcomingCharges.length > 0">
     <div fxLayout="column" fxFlex="50%">
       <div className="heading-name">
         <h3>Upcoming Charges</h3>
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <table mat-table [dataSource]="upcomingCharges">
+  <table *ngIf="upcomingCharges.length > 0" mat-table [dataSource]="upcomingCharges">
 
     <ng-container matColumnDef="Name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -83,7 +83,7 @@
   </table>
 
   <!-- loans accounts overview table -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="loanAccounts.length > 0" >
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
         <h3>Loan Accounts</h3>
@@ -220,7 +220,7 @@
   </table>
 
   <!-- Saving overview Table -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="isSavings">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
         <h3>Saving Accounts</h3>
@@ -234,7 +234,7 @@
     </div>
   </div>
 
-  <table *ngIf="!showClosedSavingAccounts" mat-table
+  <table *ngIf="!showClosedSavingAccounts && isSavings" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isSavings'">
 
     <ng-container matColumnDef="Account No">
@@ -293,7 +293,7 @@
   </table>
 
   <!-- Closed Saving Accounts -->
-  <table *ngIf="showClosedSavingAccounts" mat-table
+  <table *ngIf="showClosedSavingAccounts && isSavings" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isSavings'">
 
     <ng-container matColumnDef="Account No">
@@ -318,7 +318,7 @@
   </table>
 
   <!-- Fixed Deposit Table -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="isFixed">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
         <h3>Fixed Deposit Accounts</h3>
@@ -331,8 +331,7 @@
       </div>
     </div>
   </div>
-
-  <table *ngIf="!showClosedFixedAccounts" mat-table
+  <table *ngIf="(!showClosedFixedAccounts && isFixed)" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isFixed'">
 
     <ng-container matColumnDef="Account No">
@@ -384,7 +383,7 @@
 
   <!-- Closed Fixed Deposit Accounts -->
 
-  <table *ngIf="showClosedFixedAccounts" mat-table
+  <table *ngIf="(showClosedFixedAccounts && isFixed)" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isFixed'">
 
     <ng-container matColumnDef="Account No">
@@ -410,7 +409,7 @@
   </table>
 
   <!-- Recurring Deposit Table -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="isRecurring">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
         <h3>Recurring Deposit Accounts</h3>
@@ -424,7 +423,7 @@
     </div>
   </div>
 
-  <table *ngIf="!showClosedRecurringAccounts" mat-table
+  <table *ngIf="!showClosedRecurringAccounts && isRecurring" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'open':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
@@ -480,7 +479,7 @@
   </table>
 
   <!-- Closed Recurring Deposit Accounts -->
-  <table *ngIf="showClosedRecurringAccounts" mat-table
+  <table *ngIf="showClosedRecurringAccounts && isRecurring" mat-table
     [dataSource]="savingAccounts|accountsFilter:'saving':'closed':'isRecurring'">
 
     <ng-container matColumnDef="Account No">
@@ -505,7 +504,7 @@
   </table>
 
   <!-- Shares overview Table -->
-  <div class="heading-content">
+  <div class="heading-content" *ngIf="shareAccounts.length > 0">
     <div fxLayout="column" fxFlex="50%">
       <div class="heading-name">
         <h3>Shares Accounts</h3>
@@ -519,7 +518,7 @@
     </div>
   </div>
 
-  <table *ngIf="!showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
+  <table *ngIf="(!showClosedShareAccounts && shareAccounts.length > 0)" mat-table [dataSource]="shareAccounts|accountsFilter:'share'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>
@@ -567,7 +566,7 @@
   </table>
 
   <!-- Closed Share Accounts -->
-  <table *ngIf="showClosedShareAccounts" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
+  <table *ngIf="(showClosedShareAccounts && shareAccounts.length > 0)" mat-table [dataSource]="shareAccounts|accountsFilter:'share':'closed'">
 
     <ng-container matColumnDef="Account No">
       <th mat-header-cell *matHeaderCellDef> Account No. </th>

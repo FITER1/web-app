@@ -56,6 +56,9 @@ export class GeneralTabComponent {
 
   /** Client Id */
   clientid: any;
+  isFixed = false;
+  isRecurring = false;
+  isSavings = false;
 
   /**
    * @param {ActivatedRoute} route Activated Route
@@ -68,13 +71,26 @@ export class GeneralTabComponent {
     private router: Router
   ) {
     this.route.data.subscribe((data: { clientAccountsData: any, clientChargesData: any, clientSummary: any }) => {
-      this.clientAccountData = data.clientAccountsData;
-      this.savingAccounts = data.clientAccountsData.savingsAccounts;
-      this.loanAccounts = data.clientAccountsData.loanAccounts;
-      this.shareAccounts = data.clientAccountsData.shareAccounts;
-      this.upcomingCharges = data.clientChargesData.pageItems;
+      this.clientAccountData = data.clientAccountsData || [];
+      this.savingAccounts = data.clientAccountsData.savingsAccounts || [];
+      this.loanAccounts = data.clientAccountsData.loanAccounts || [];
+      this.shareAccounts = data.clientAccountsData.shareAccounts || [];
+      this.upcomingCharges = data.clientChargesData.pageItems || [];
       this.clientSummary = data.clientSummary[0];
       this.clientid = this.route.parent.snapshot.params['clientId'];
+
+      var fixAccounts = this.savingAccounts.filter((account: any) => {
+            return (account.depositType.value === 'Fixed Deposit');
+      });
+      var recAccounts = this.savingAccounts.filter((account: any) => {
+            return (account.depositType.value === 'Recurring Deposit');
+      });
+      var savAccounts = this.savingAccounts.filter((account: any) => {
+            return (account.depositType.value === 'Savings');
+          });
+      if(fixAccounts.length > 0){this.isFixed = true;}
+      if(recAccounts.length > 0){this.isRecurring = true;}
+      if(savAccounts.length > 0){this.isSavings = true;}
   });
   }
 

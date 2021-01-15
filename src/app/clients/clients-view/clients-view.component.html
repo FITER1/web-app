@@ -44,10 +44,17 @@
               <a>{{group.name}}</a>&nbsp;
             </span>
             <span *ngIf="!clientViewData.groups">Unassigned</span>
-            <br/>
-          </p>
+            | Mobile No. : {{(clientViewData.mobileNo)?(clientViewData.mobileNo) :'Unassigned'}}
+            | National Id : {{(clientViewData.nationalId)?(clientViewData.nationalId) :'Unassigned'}}<br />
+            Gender : {{(clientViewData.gender)?(clientViewData.gender.name) :'Unassigned'}}
+            | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
+            | Client Classification : {{(clientViewData.clientClassification)?(clientViewData.clientClassification.name) :'Unassigned'}}
+            <br />
+            Date Of Birth : {{(clientViewData.dateOfBirth)?(clientViewData.dateOfBirth|date) :'Unassigned'}} 
+            | Age : {{(clientViewData.age)?(clientViewData.age) :'Unassigned'}} 
+            <br />
+            </p>
         </mat-card-subtitle>
-
       </div>
 
     </mat-card-title-group>
