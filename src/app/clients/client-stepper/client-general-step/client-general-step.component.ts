@@ -79,7 +79,8 @@ export class ClientGeneralStepComponent implements OnInit {
       'dateOfBirth': [''],
       'clientTypeId': [''],
       'clientClassificationId': [''],
-      'submittedOnDate': ['']
+      'submittedOnDate': [''],
+      'nationalId':['']
     });
   }
 

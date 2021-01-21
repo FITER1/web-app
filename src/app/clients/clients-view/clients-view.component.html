@@ -51,7 +51,7 @@
             | Client Classification : {{(clientViewData.clientClassification)?(clientViewData.clientClassification.name) :'Unassigned'}}
             <br />
             Date Of Birth : {{(clientViewData.dateOfBirth)?(clientViewData.dateOfBirth|date) :'Unassigned'}} 
-            | Age : {{(clientViewData.age)?(clientViewData.age) :'Unassigned'}} 
+            | Age : {{age}} 
             <br />
             </p>
         </mat-card-subtitle>
@@ -79,7 +79,7 @@
       <button mat-raised-button [matMenuTriggerFor]="Actions">
         <i class="fa fa-tasks"></i>Actions</button>
       <mat-menu #Actions="matMenu">
-        <button mat-menu-item (click)="doAction('Close')">Close</button>
+        <span *ngIf="clientViewData.status.value != 'Closed'"><button mat-menu-item (click)="doAction('Close')">Close</button></span>
         <button mat-menu-item (click)="doAction('Transfer Client')">Transfer Client</button>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Activate')">Activate</button></span>
         <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item (click)="doAction('Withdraw')">Withdraw</button></span>

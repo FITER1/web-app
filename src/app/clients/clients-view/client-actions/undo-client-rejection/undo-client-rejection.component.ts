@@ -77,7 +77,7 @@ export class UndoClientRejectionComponent implements OnInit {
       locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'undoRejection', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

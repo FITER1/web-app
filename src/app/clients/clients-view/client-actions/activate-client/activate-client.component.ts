@@ -78,7 +78,7 @@ export class ActivateClientComponent implements OnInit {
       locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

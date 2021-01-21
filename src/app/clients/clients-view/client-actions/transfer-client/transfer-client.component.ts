@@ -81,7 +81,7 @@ export class TransferClientComponent implements OnInit {
       locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'proposeTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

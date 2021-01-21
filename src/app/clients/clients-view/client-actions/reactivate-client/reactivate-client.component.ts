@@ -78,7 +78,7 @@ export class ReactivateClientComponent implements OnInit {
       locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'reactivate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

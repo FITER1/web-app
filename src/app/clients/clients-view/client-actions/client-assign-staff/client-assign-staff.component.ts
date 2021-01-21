@@ -62,7 +62,7 @@ export class ClientAssignStaffComponent implements OnInit {
   submit() {
     this.clientsService.executeClientCommand(this.clientData.id, 'assignStaff', this.clientAssignStaffForm.value)
       .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
+        this.router.navigate(['../../', 'general'], { relativeTo: this.route });
       });
   }
 

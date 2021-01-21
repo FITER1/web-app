@@ -60,6 +60,7 @@ export class EditClientComponent implements OnInit {
               private clientsService: ClientsService,
               private datePipe: DatePipe,
               private settingsService: SettingsService) {
+                console.log(this.route.data);
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -83,7 +84,8 @@ export class EditClientComponent implements OnInit {
       'clientTypeId': this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
       'clientClassificationId': this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
       'submittedOnDate': this.clientDataAndTemplate.timeline.submittedOnDate && new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
-      'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
+      'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate),
+      'nationalId': this.clientDataAndTemplate.nationalId
     });
   }
 
@@ -105,7 +107,8 @@ export class EditClientComponent implements OnInit {
       'clientTypeId': [''],
       'clientClassificationId': [''],
       'submittedOnDate': [''],
-      'activationDate': ['', Validators.required]
+      'activationDate': ['', Validators.required],
+      'nationalId':['']
     });
   }
 
@@ -178,7 +181,7 @@ export class EditClientComponent implements OnInit {
       clientData.clientNonPersonDetails = {};
     }
     this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../', 'general'], { relativeTo: this.route });
     });
   }
 

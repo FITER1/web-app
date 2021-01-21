@@ -228,7 +228,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];
     this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

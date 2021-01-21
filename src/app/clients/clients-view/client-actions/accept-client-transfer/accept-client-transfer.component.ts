@@ -65,7 +65,7 @@ export class AcceptClientTransferComponent implements OnInit {
       ...this.acceptClientTransferForm.value,
     };
     this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

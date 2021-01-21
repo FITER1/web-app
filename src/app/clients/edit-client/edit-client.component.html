@@ -138,6 +138,11 @@
             Is staff?
           </mat-checkbox>
 
+          <mat-form-field fxFlex="48%">
+            <mat-label>National Id</mat-label>
+            <input matInput formControlName = "nationalId">
+          </mat-form-field>
+
           <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
             *ngIf="editClientForm.contains('clientNonPersonDetails')">
 
@@ -183,7 +188,7 @@
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+        <button type="button" mat-raised-button [routerLink]="['../general']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!editClientForm.valid" (click)="submit()">Submit</button>
       </mat-card-actions>
 
