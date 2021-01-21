@@ -80,7 +80,7 @@ export class RejectClientComponent implements OnInit {
       locale
     };
     this.clientsService.executeClientCommand(this.clientId, 'reject', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

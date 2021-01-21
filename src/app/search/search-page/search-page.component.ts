@@ -39,7 +39,7 @@ export class SearchPageComponent {
   navigate(entity: any) {
     switch (entity.entityType) {
       case 'CLIENT':
-        this.router.navigate(['clients', entity.entityId]);
+        this.router.navigate(['clients', entity.entityId, 'general']);
         break;
       case 'CENTER':
         this.router.navigate(['centers', entity.entityId]);

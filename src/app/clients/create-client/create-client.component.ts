@@ -83,7 +83,7 @@ export class CreateClientComponent {
       locale
     };
     this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(['../general', response.resourceId], { relativeTo: this.route });
     });
   }
 

@@ -65,7 +65,7 @@ export class UndoClientTransferComponent implements OnInit {
       ...this.undoClientTransferForm.value,
     };
     this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 

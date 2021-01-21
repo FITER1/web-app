@@ -136,7 +136,7 @@ export class AddClientChargeComponent implements OnInit {
       }
     }
     this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe( () => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../', 'general'], { relativeTo: this.route });
     });
   }
 

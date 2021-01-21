@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 /** Custom Dialogs */
 import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-dialog/unassign-staff-dialog.component';
@@ -27,12 +28,14 @@ export class ClientsViewComponent implements OnInit {
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
+  age:any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private clientsService: ClientsService,
               private _sanitizer: DomSanitizer,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private datePipe : DatePipe) {
     this.route.data.subscribe((data: {
       clientViewData: any,
       clientTemplateData: any,
@@ -50,6 +53,7 @@ export class ClientsViewComponent implements OnInit {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
       }, (error: any) => {}
     );
+    this.calculateAge();
   }
 
   /**
@@ -255,6 +259,14 @@ export class ClientsViewComponent implements OnInit {
           });
       }
     });
+  }
+
+  private calculateAge() {
+    if(this.clientViewData.dateOfBirth){
+    const convertAge = new Date(this.clientViewData.dateOfBirth);
+      const timeDiff = Math.abs(Date.now() - convertAge.getTime());
+      this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    }
   }
 
 }
