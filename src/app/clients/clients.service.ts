@@ -179,9 +179,9 @@ export class ClientsService {
 
   uploadClientSignatureImage(clientId: string, signature: File) {
     const formData = new FormData();
+    formData.append('name', 'clientSignature');
     formData.append('file', signature);
-    formData.append('filename', signature.name);
-    return this.http.post(`/clients/${clientId}/images`, formData);
+    return this.http.post(`/clients/${clientId}/documents`, formData);
   }
 
   getClientSignatureImage(clientId: string, documentId: string) {
