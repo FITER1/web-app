@@ -32,11 +32,13 @@ export class ClientsDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of clients within the page.
    */
+
   getClients(orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+    const status = clientActive ? '' : 'Closed';
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit, status)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => client.active)) : (clients.pageItems.filter((client: any) => !client.active));
+        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => (client.active || (client.status.value === 'Pending')))) : (clients.pageItems.filter((client: any) => (!client.active && (client.status.value === 'Closed'))));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
@@ -66,7 +68,8 @@ export class ClientsDataSource implements DataSource<any> {
    */
   filterClients(filter: string, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, clientActive: boolean = true) {
     this.clientsSubject.next([]);
-    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit)
+    const status = clientActive ? '' : 'Closed';
+    this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit, status)
       .subscribe((clients: any) => {
         clients.pageItems = clients.pageItems.filter((client: any) => client.active === clientActive && client.displayName.toLowerCase().includes(filter));
         this.recordsSubject.next(clients.totalFilteredRecords);

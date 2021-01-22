@@ -35,8 +35,8 @@
 
         <mat-card-subtitle>
           <p>
-            Client #:{{clientViewData.accountNo}} | External
-            Id: {{clientViewData.externalId}} | Staff:{{clientViewData.staffName || 'Unassigned'}}<br />
+          <span *ngIf ="clientViewData.active">Client #:{{clientViewData.accountNo}} | External
+            Id: {{(clientViewData.externalId) ? (clientViewData.externalId) : 'Unassigned'}} | Staff:{{clientViewData.staffName || 'Unassigned'}} <br /> </span>  
             Activation Date :
             {{(clientViewData.activationDate)?(clientViewData.activationDate|date) :'Not Activated'}}<br />
             Member Of : 
@@ -44,15 +44,20 @@
               <a>{{group.name}}</a>&nbsp;
             </span>
             <span *ngIf="!clientViewData.groups">Unassigned</span>
+            <span *ngIf ="clientViewData.active">
             | Mobile No. : {{(clientViewData.mobileNo)?(clientViewData.mobileNo) :'Unassigned'}}
             | National Id : {{(clientViewData.nationalId)?(clientViewData.nationalId) :'Unassigned'}}<br />
             Gender : {{(clientViewData.gender)?(clientViewData.gender.name) :'Unassigned'}}
-            | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             | Client Classification : {{(clientViewData.clientClassification)?(clientViewData.clientClassification.name) :'Unassigned'}}
             <br />
             Date Of Birth : {{(clientViewData.dateOfBirth)?(clientViewData.dateOfBirth|date) :'Unassigned'}} 
-            | Age : {{age}} 
+            | Age : {{age}} </span>
+            Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             <br />
+            <span *ngIf ="!clientViewData.active">
+            Closed Date : {{(clientViewData.timeline.closedOnDate)?(clientViewData.timeline.closedOnDate|date) :'Unassigned'}} 
+            </span>
+            
             </p>
         </mat-card-subtitle>
       </div>

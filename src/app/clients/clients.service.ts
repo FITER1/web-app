@@ -28,12 +28,16 @@ export class ClientsService {
     return this.http.get('/clients', { params: httpParams });
   }
 
-  getClients(orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
-    const httpParams = new HttpParams()
+  getClients(orderBy: string, sortOrder: string, offset: number, limit: number, status : string): Observable<any> {
+   console.log(status);
+    let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
       .set('sortOrder', sortOrder)
       .set('orderBy', orderBy);
+    if(status === 'Closed'){
+      httpParams = httpParams.set('status',status);
+    }
     return this.http.get('/clients', { params: httpParams });
   }
 
