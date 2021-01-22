@@ -29,7 +29,6 @@ export class ClientsService {
   }
 
   getClients(orderBy: string, sortOrder: string, offset: number, limit: number, status : string): Observable<any> {
-   console.log(status);
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
