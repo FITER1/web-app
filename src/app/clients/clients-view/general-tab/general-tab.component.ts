@@ -53,6 +53,7 @@ export class GeneralTabComponent {
   showClosedRecurringAccounts = false;
   /** Show Closed Fixed Deposits Accounts */
   showClosedFixedAccounts = false;
+  status: boolean = true;
 
   /** Client Id */
   clientid: any;
@@ -92,6 +93,13 @@ export class GeneralTabComponent {
       if(recAccounts.length > 0){this.isRecurring = true;}
       if(savAccounts.length > 0){this.isSavings = true;}
   });
+  }
+
+  /**
+   * Call function on page load
+   */
+  ngOnInit(){
+    this.getClient();
   }
 
   /**
@@ -148,6 +156,16 @@ export class GeneralTabComponent {
   getChargeData(clientId: string) {
     this.clientService.getClientChargesData(clientId).subscribe((data: any) => {
       this.upcomingCharges = data.pageItems;
+    });
+  }
+
+  /**
+   * Get client Data.
+   * @param clientId Selected Client Id.
+   */
+  getClient(){
+    this.clientService.getClientData(this.clientid).subscribe((data : any) => {
+     if(data.status.value === 'Closed'){this.status = data.active;}
     });
   }
 

@@ -1,6 +1,8 @@
 <div class="tab-container mat-typography">
-  <h3 *ngIf = "!clientSummary?.activeLoans">Client Closed</h3>
-
+  <div *ngIf = "!status" >
+    <h3>Client Closed</h3>
+  </div>
+  
   <h3>Performance History</h3>
   <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
     <p>
