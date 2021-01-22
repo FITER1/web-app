@@ -34,14 +34,15 @@ export class ViewSignatureDialogComponent implements OnInit {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
-    console.log(this.clientId);
   }
 
   ngOnInit() {
     if (this.signatureId) {
       this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
         (base64Image: any) => {
-          this.signatureImage = this.sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+          console.log(base64Image);
+          let objectURL = 'data:image/jpeg;base64,' + base64Image;
+          this.signatureImage = 'https://localhost:8443/fineract-provider/api/v1/clients/95/documents/5551/attachment?tenantIdentifier=default';
         }, (error: any) => {}
       );
     }
