@@ -38,7 +38,9 @@ export class ClientsDataSource implements DataSource<any> {
     const status = clientActive ? '' : 'Closed';
     this.clientsService.getClients(orderBy, sortOrder, pageIndex * limit, limit, status)
       .subscribe((clients: any) => {
-        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => (client.active || (client.status.value === 'Pending')))) : (clients.pageItems.filter((client: any) => (!client.active && (client.status.value === 'Closed'))));
+        clients.pageItems = (clientActive) ? (clients.pageItems.filter((client: any) => (client.active || client.status.value === ('Pending')
+        || client.status.value === ('TRANSFER_IN_PROGRESS') || client.status.value === ('TRANSFER_ON_HOLD') || client.status.value === ('WITHDRAWN'))))
+        : (clients.pageItems.filter((client: any) => (!client.active && (client.status.value === 'Closed'))));
         this.recordsSubject.next(clients.totalFilteredRecords);
         this.clientsSubject.next(clients.pageItems);
       });
