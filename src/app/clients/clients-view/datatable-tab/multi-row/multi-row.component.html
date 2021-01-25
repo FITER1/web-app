@@ -1,5 +1,6 @@
 <div class="tab-container mat-typography">
-  <h3>{{datatableName}}</h3>
+  <h3 *ngIf = "datatableName != 'NextofKin'">{{datatableName}}</h3>
+  <h3 *ngIf = "datatableName === 'NextofKin'">Beneficiaries</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end">
     <button mat-raised-button color="primary" (click)="add()">
       <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;Add

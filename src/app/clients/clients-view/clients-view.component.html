@@ -154,7 +154,7 @@
       <ng-container *ngFor="let clientDatatable of clientDatatables">
         <a mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]"
           routerLinkActive #datatable="routerLinkActive" [active]="datatable.isActive" *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName">
-          {{clientDatatable.registeredTableName}}
+          {{clientDatatable.registeredDatatableDisplayName}}
         </a>
       </ng-container>
     </nav>
