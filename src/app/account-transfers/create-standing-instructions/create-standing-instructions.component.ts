@@ -166,11 +166,9 @@ export class CreateStandingInstructionsComponent implements OnInit {
       if (destination === 1) {
         this.allowclientedit = false;
         this.createStandingInstructionsForm.patchValue({
-          'toOfficeId': this.officeId,
-          'toClientId': this.clientId
+          'toOfficeId': Number(this.officeId),
+          'toClientId': Number(this.clientId)
         });
-        this.createStandingInstructionsForm.controls['toOfficeId'].disable();
-        this.createStandingInstructionsForm.controls['toClientId'].disable();
         this.changeEvent();
       } else {
         this.allowclientedit = true;
