@@ -53,6 +53,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getClientTransferProposalDate(clientId);
       case 'Create Self Service User':
         return this.clientsService.getClientData(clientId);
+      case 'payment':
+        return this.clientsService.getClientPaymentDate(clientId);
       default:
         return undefined;
     }
