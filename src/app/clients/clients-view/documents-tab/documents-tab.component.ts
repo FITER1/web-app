@@ -21,15 +21,15 @@ export class DocumentsTabComponent implements OnInit {
   documentsColumns: string[] = ['name', 'description', 'fileName', 'actions'];
   clientDocuments: any;
   clientId: string;
+  clientDocumentTemplate: any;
 
 
   constructor(private route: ActivatedRoute,
     private clientService: ClientsService,
     public dialog: MatDialog) {
-    this.route.data.subscribe((data: { clientDocuments: any }) => {
+    this.route.data.subscribe((data: { clientDocuments: any, clientTemplateDocument : any }) => {
       this.clientDocuments = data.clientDocuments;
-      console.log(this.clientDocuments);
-
+      this.clientDocumentTemplate = data.clientTemplateDocument;
     });
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
   }
@@ -60,7 +60,7 @@ export class DocumentsTabComponent implements OnInit {
 
   uploadDocument() {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: false }
+      data: { documentIdentifier: false, clientDocumentTemplate : this.clientDocumentTemplate }
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       console.log(dialogResponse);

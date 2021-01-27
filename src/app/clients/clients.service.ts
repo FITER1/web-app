@@ -241,6 +241,10 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/documents`);
   }
 
+  getClientDocumentsTemplate(clientId: string) {
+    return this.http.get(`/clients/${clientId}/documents/template`);
+  }
+
   downloadClientDocument(parentEntityId: string, documentId: string) {
     return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
   }

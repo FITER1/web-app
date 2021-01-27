@@ -15,6 +15,15 @@
             <input formControlName="description" matInput />
         </mat-form-field>
 
+        <mat-form-field *ngIf="!documentIdentifier" fxFlex="48%">
+            <mat-label>Document Tag</mat-label>
+            <mat-select formControlName="tagId">
+              <mat-option *ngFor="let tag of documentTags" [value]="tag.id">
+                {{ tag.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
         <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
         <mat-dialog-actions align="end">
