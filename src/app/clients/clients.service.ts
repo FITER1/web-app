@@ -370,4 +370,8 @@ export class ClientsService {
     return this.http.post(`/users`, userData);
   }
 
+  getClientPaymentDate(clientId: string){
+    return this.http.get(`/clientpayment/${clientId}`);
+  }
+
 }
