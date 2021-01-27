@@ -51,7 +51,8 @@
             | Client Classification : {{(clientViewData.clientClassification)?(clientViewData.clientClassification.name) :'Unassigned'}}
             <br />
             Date Of Birth : {{(clientViewData.dateOfBirth)?(clientViewData.dateOfBirth|date) :'Unassigned'}}
-            | Age : {{(clientViewData.age)?(clientViewData.age) :'Unassigned'}}
+            | Age : {{age}} </span>
+            | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             <br />
             <span *ngIf ="clientViewData.status.value === 'Closed'">
             Closed Date : {{(clientViewData.timeline.closedOnDate)?(clientViewData.timeline.closedOnDate|date) :'Unassigned'}}
