@@ -48,6 +48,7 @@ import { ClientActionsResolver } from './common-resolvers/client-actions.resolve
 import { ClientChargeViewResolver } from './common-resolvers/client-charge-view.resolver';
 import { ClientTransactionPayResolver } from './common-resolvers/client-transaction-pay.resolver';
 import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-template.resolver';
+import { ClientDocumentsTemplateResolver } from './common-resolvers/client-document-template.resolver';
 
 const routes: Routes = [
   Route.withShell([{
@@ -144,7 +145,8 @@ const routes: Routes = [
             component: DocumentsTabComponent,
             data: { title: extract('Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
             resolve: {
-              clientDocuments: ClientDocumentsResolver
+              clientDocuments: ClientDocumentsResolver,
+              clientTemplateDocument : ClientDocumentsTemplateResolver
             }
           },
           {
@@ -283,7 +285,8 @@ const routes: Routes = [
     ClientActionsResolver,
     ClientChargeViewResolver,
     ClientTransactionPayResolver,
-    ClientDataAndTemplateResolver
+    ClientDataAndTemplateResolver,
+    ClientDocumentsTemplateResolver
   ]
 })
 export class ClientsRoutingModule { }
