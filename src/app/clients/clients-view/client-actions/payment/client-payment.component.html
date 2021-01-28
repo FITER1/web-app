@@ -46,7 +46,7 @@
             <th mat-header-cell *matHeaderCellDef> Repayment Amount </th>
             <td mat-cell *matCellDef="let element">
             <mat-form-field *ngIf="clientPaymentForm.contains('repaymentAmount')">
-              <input matInput formControlName="repaymentAmount">
+              <input matInput formControlName="repaymentAmount" (change)="updateAmounts()">
             </mat-form-field>
             </td>
           </ng-container>
@@ -84,7 +84,7 @@
             <th mat-header-cell *matHeaderCellDef> Account Type </th>
             <td mat-cell *matCellDef="let element"> {{element.depositType.value}} </td>
           </ng-container>
-          
+
           <ng-container matColumnDef="Type">
             <th mat-header-cell *matHeaderCellDef> Type </th>
             <td mat-cell *matCellDef="let element">
@@ -96,7 +96,7 @@
             <th mat-header-cell *matHeaderCellDef> Deposit Amount </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field *ngIf="clientPaymentForm.contains('depositAmount')">
-                <input matInput formControlName="repaymentAmount">
+                <input matInput formControlName="depositAmount" (change)="updateAmounts()">
               </mat-form-field>
             </td>
           </ng-container>
@@ -110,6 +110,12 @@
           <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"></tr>
 
+        </table>
+        <table>
+          <ng-container matColumnDef="Total Payment">
+            <th mat-header-cell *matHeaderCellDef> Total Payment </th>
+            <td mat-cell> {{totalPaymentAmount}} </td>
+          </ng-container>
         </table>
 
       </mat-card-content>
