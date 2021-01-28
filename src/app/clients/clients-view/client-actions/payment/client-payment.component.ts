@@ -34,9 +34,15 @@ export class ClientPaymentComponent implements OnInit {
   showClosedSavingAccounts = false;
   isSavings = true;
   /** local variables */
-  totalPaymentAmount: number;
-  repaymentAmount: number;
-  depositAmount: number;
+  totalPaymentAmount: number = 0;
+  LoanPaymentAmount: number = 0;
+  savingsDepositAmount: number = 0;
+  loanIds: bigint[] = [];
+  savingIds: bigint[] = [];
+  loanRepayments: number[] = [];
+  savingDeposits: number[] = [];
+  existingPlace: number = -1;
+
 
 
   /**
@@ -61,18 +67,44 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
-    this.totalPaymentAmount = 0;
   }
 
-  updateAmounts(){
+  captureLoanAmount(loanId: bigint){
+    this.totalPaymentAmount = 0;
+    this.LoanPaymentAmount = 0;
+    this.existingPlace = -1;
     const generalDetails = this.clientPaymentForm.value;
-    if(generalDetails.repaymentAmount){
-      this.totalPaymentAmount = +this.totalPaymentAmount + +generalDetails.repaymentAmount;
+    this.existingPlace = this.loanIds.indexOf(loanId);
+    if(this.existingPlace != -1){
+      this.loanRepayments.splice(this.existingPlace,1);
+      this.loanIds.splice(this.existingPlace,1);
     }
-    if(generalDetails.depositAmount){
-      this.totalPaymentAmount = +this.totalPaymentAmount + +generalDetails.depositAmount;
+    this.loanIds.push(loanId);
+    this.loanRepayments.push(generalDetails.repaymentAmount);
+    for(var i=0;i<this.loanRepayments.length;i++){
+      this.LoanPaymentAmount = +this.LoanPaymentAmount + +this.loanRepayments[i];
     }
+    this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
   }
+
+  captureSavingsAmount(savingId: bigint){
+    this.totalPaymentAmount = 0;
+    this.savingsDepositAmount = 0;
+    this.existingPlace = -1;
+    const generalDetails = this.clientPaymentForm.value;
+    this.existingPlace = this.savingIds.indexOf(savingId);
+    if(this.existingPlace != -1){
+      this.savingDeposits.splice(this.existingPlace,1);
+      this.savingIds.splice(this.existingPlace,1);
+    }
+    this.savingIds.push(savingId);
+    this.savingDeposits.push(generalDetails.depositAmount);
+    for(var i=0;i<this.savingDeposits.length;i++){
+      this.savingsDepositAmount = +this.savingsDepositAmount + +this.savingDeposits[i];
+    }
+    this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
+  }
+
 
   /**
    * Submits the form and update savings account for the client.
