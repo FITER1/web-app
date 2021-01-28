@@ -19,7 +19,7 @@ export class ClientPaymentComponent implements OnInit {
   /** Open Loan Accounts Columns */
   openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Repayment Amount', 'Charges'];
   /** Open Savings Accounts Columns */
-  openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Type', 'Account Type', 'Deposit Amount', 'Charges'];
+  openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges'];
   /** Client Update Savings Account form. */
   clientPaymentForm: FormGroup;
   /** Client Data */
@@ -33,6 +33,11 @@ export class ClientPaymentComponent implements OnInit {
   /** Show Closed Saving Accounts */
   showClosedSavingAccounts = false;
   isSavings = true;
+  /** local variables */
+  totalPaymentAmount: number;
+  repaymentAmount: number;
+  depositAmount: number;
+
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -56,6 +61,17 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
+    this.totalPaymentAmount = this.repaymentAmount + this.depositAmount;
+  }
+
+  updateAmounts(){
+    const generalDetails = this.clientPaymentForm.value;
+    if(generalDetails.repaymentAmount){
+      this.totalPaymentAmount = this.totalPaymentAmount + generalDetails.repaymentAmount;
+    }
+    if(generalDetails.depositAmount){
+      this.totalPaymentAmount = this.totalPaymentAmount + generalDetails.depositAmount;
+    }
   }
 
   /**
