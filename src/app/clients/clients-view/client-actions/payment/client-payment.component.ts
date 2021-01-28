@@ -61,16 +61,16 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
-    this.totalPaymentAmount = this.repaymentAmount + this.depositAmount;
+    this.totalPaymentAmount = 0;
   }
 
   updateAmounts(){
     const generalDetails = this.clientPaymentForm.value;
     if(generalDetails.repaymentAmount){
-      this.totalPaymentAmount = this.totalPaymentAmount + generalDetails.repaymentAmount;
+      this.totalPaymentAmount = +this.totalPaymentAmount + +generalDetails.repaymentAmount;
     }
     if(generalDetails.depositAmount){
-      this.totalPaymentAmount = this.totalPaymentAmount + generalDetails.depositAmount;
+      this.totalPaymentAmount = +this.totalPaymentAmount + +generalDetails.depositAmount;
     }
   }
 
