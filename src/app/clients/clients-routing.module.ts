@@ -78,6 +78,7 @@ const routes: Routes = [
           clientDatatables: ClientDatatablesResolver
         },
         children: [
+          { path: '', redirectTo: 'general', pathMatch: 'full' },
           {
             path: 'general',
             component: GeneralTabComponent,
