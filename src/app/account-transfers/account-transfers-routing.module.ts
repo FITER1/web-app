@@ -69,6 +69,7 @@ const routes: Routes = [
         path: ':standingInstructionsId',
         data: { title: extract('Standing Instructions'), routeParamBreadcrumb: 'standingInstructionsId' },
         children: [
+          { path: '', redirectTo: 'view', pathMatch: 'full' },
           {
             path: 'view',
             data: { title: extract('View Standing Instructions'), breadcrumb: 'view', routeParamBreadcrumb: false },
