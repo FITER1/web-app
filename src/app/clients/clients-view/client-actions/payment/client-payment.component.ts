@@ -20,6 +20,7 @@ export class ClientPaymentComponent implements OnInit {
   openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Repayment Amount', 'Charges'];
   /** Open Savings Accounts Columns */
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges'];
+  totalColumns: String[] = ['Total Payment'];
   /** Client Update Savings Account form. */
   clientPaymentForm: FormGroup;
   /** Client Data */
@@ -42,6 +43,7 @@ export class ClientPaymentComponent implements OnInit {
   loanRepayments: number[] = [];
   savingDeposits: number[] = [];
   existingPlace: number = -1;
+  totalPaymentArray: number[] = [];
 
 
 
@@ -67,9 +69,11 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
+    this.totalPaymentArray.push(this.totalPaymentAmount);
   }
 
   captureLoanAmount(loanId: bigint){
+    this.totalPaymentArray = [];
     this.totalPaymentAmount = 0;
     this.LoanPaymentAmount = 0;
     this.existingPlace = -1;
@@ -85,9 +89,11 @@ export class ClientPaymentComponent implements OnInit {
       this.LoanPaymentAmount = +this.LoanPaymentAmount + +this.loanRepayments[i];
     }
     this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
+    this.totalPaymentArray.push(this.totalPaymentAmount);
   }
 
   captureSavingsAmount(savingId: bigint){
+    this.totalPaymentArray = [];
     this.totalPaymentAmount = 0;
     this.savingsDepositAmount = 0;
     this.existingPlace = -1;
@@ -103,6 +109,7 @@ export class ClientPaymentComponent implements OnInit {
       this.savingsDepositAmount = +this.savingsDepositAmount + +this.savingDeposits[i];
     }
     this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
+    this.totalPaymentArray.push(this.totalPaymentAmount);
   }
 
 
