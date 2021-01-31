@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
+import {TasksService} from "../../../../tasks/tasks.service";
+import {SettingsService} from "../../../../settings/settings.service";
+import {DatePipe} from "@angular/common";
 
 /**
  * Clients Update Savings Account Component
@@ -21,6 +24,7 @@ export class ClientPaymentComponent implements OnInit {
   /** Open Savings Accounts Columns */
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges'];
   totalColumns: String[] = ['Total Payment'];
+  paymentDetailsColumns: String[] = ['Payment Details', 'Transaction Date', 'Payment Type', 'Account #', 'Cheque #', 'Routing Code', 'Reciept #', 'Bank #'];
   /** Client Update Savings Account form. */
   clientPaymentForm: FormGroup;
   /** Client Data */
@@ -44,8 +48,14 @@ export class ClientPaymentComponent implements OnInit {
   savingDeposits: number[] = [];
   existingPlace: number = -1;
   totalPaymentArray: number[] = [];
-
-
+  paymentDetails: any[] = [];
+  transactionDetails: any[] = [];
+  batchRequests: any[];
+  /** Minimum Date allowed. */
+  minDate = new Date(2000, 0, 1);
+  /** Maximum Date allowed. */
+  maxDate = new Date();
+  paymentTypeOptions: any[] = [];
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -57,19 +67,37 @@ export class ClientPaymentComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private clientsService: ClientsService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private tasksService: TasksService,
+              private settingsService: SettingsService,
+              private datePipe: DatePipe) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientPaymentData = data.clientActionData;
     });
   }
 
   ngOnInit() {
+    this.clientPaymentForm = this.formBuilder.group({
+      'transactionDate': [new Date(), Validators.required],
+      'transactionAmount': ['', Validators.required],
+      'paymentTypeId': '',
+      'note':''
+    });
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
     this.savingAccounts = this.clientPaymentData.savingsAccounts || [];
+    this.paymentTypeOptions = this.clientPaymentData.paymentTypeOptions || [];
     this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
+    this.clientPaymentForm.addControl('transactionDate', new FormControl('', []));
+    this.clientPaymentForm.addControl('paymentTypeId', new FormControl('', []));
+    this.clientPaymentForm.addControl('accountNumber', new FormControl(''));
+    this.clientPaymentForm.addControl('checkNumber', new FormControl(''));
+    this.clientPaymentForm.addControl('routingCode', new FormControl(''));
+    this.clientPaymentForm.addControl('receiptNumber', new FormControl(''));
+    this.clientPaymentForm.addControl('bankNumber', new FormControl(''));
     this.totalPaymentArray.push(this.totalPaymentAmount);
+    this.paymentDetails.push('Payment Details');
   }
 
   captureLoanAmount(loanId: bigint){
@@ -113,10 +141,72 @@ export class ClientPaymentComponent implements OnInit {
   }
 
 
-  /**
-   * Submits the form and update savings account for the client.
-   */
-  submit() {
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`general`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
+  /**
+   * Submits the form and make deposit and transactions to the loan.
+   */
+  submit() {
+
+    const dateFormat = this.settingsService.dateFormat;
+    const transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
+    const locale = this.settingsService.language.code;
+    const paymentTypeId = this.clientPaymentForm.value.paymentTypeId;
+    const accountNumber = this.clientPaymentForm.value.accountNumber;
+    const checkNumber = this.clientPaymentForm.value.checkNumber;
+    const routingCode = this.clientPaymentForm.value.routingCode;
+    const receiptNumber = this.clientPaymentForm.value.receiptNumber;
+    const bankNumber = this.clientPaymentForm.value.bankNumber;
+    this.batchRequests = [];
+    let reqId = 1;
+    this.loanIds.forEach((element: any) => {
+      const transactionAmount = this.loanRepayments[this.loanIds.indexOf(element)];
+      const url = 'loans/' + element + '/transactions?command=repayment';
+      const formData = {
+        dateFormat,
+        transactionDate,
+        locale,
+        transactionAmount,
+        paymentTypeId,
+        accountNumber,
+        checkNumber,
+        routingCode,
+        receiptNumber,
+        bankNumber
+      };
+      const bodyData = JSON.stringify(formData);
+      const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
+      this.batchRequests.push(batchData);
+    });
+    this.savingIds.forEach((element: any) => {
+      const transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
+      const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
+      const formData = {
+        dateFormat,
+        transactionDate,
+        locale,
+        transactionAmount,
+        paymentTypeId,
+        accountNumber,
+        checkNumber,
+        routingCode,
+        receiptNumber,
+        bankNumber
+      };
+      const bodyData = JSON.stringify(formData);
+      const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
+      this.batchRequests.push(batchData);
+    });
+    this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
+      response.forEach((responseEle: any) => {
+        if (responseEle.statusCode = '200') {
+            this.reload();
+        }
+      });
+    });
+  }
 }
