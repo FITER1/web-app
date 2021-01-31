@@ -84,6 +84,10 @@ export class TasksService {
     return this.http.post('/batches', data);
   }
 
+  submitBatchTransactionalData(data: any): Observable<any> {
+    return this.http.post('/batches?enclosingTransaction = true', data);
+  }
+
   /**
    * Execute Maker Checker Approve and Reject Action.
    * @param {makerCheckerId} MakerCheckerId
