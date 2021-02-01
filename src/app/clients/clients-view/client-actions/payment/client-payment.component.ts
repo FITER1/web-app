@@ -25,6 +25,7 @@ export class ClientPaymentComponent implements OnInit {
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges'];
   totalColumns: String[] = ['Total Payment'];
   paymentDetailsColumns: String[] = ['Payment Details', 'Transaction Date', 'Payment Type', 'Account #', 'Cheque #', 'Routing Code', 'Reciept #', 'Bank #'];
+  errorResponseColumns: String[] = ['Errors'];
   /** Client Update Savings Account form. */
   clientPaymentForm: FormGroup;
   /** Client Data */
@@ -56,6 +57,8 @@ export class ClientPaymentComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   paymentTypeOptions: any[] = [];
+  clientId: bigint;
+  errorResponse: any[];
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -83,6 +86,7 @@ export class ClientPaymentComponent implements OnInit {
       'paymentTypeId': '',
       'note':''
     });
+    this.clientId = this.clientPaymentData.clientData.id;
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
     this.savingAccounts = this.clientPaymentData.savingsAccounts || [];
     this.paymentTypeOptions = this.clientPaymentData.paymentTypeOptions || [];
@@ -143,7 +147,7 @@ export class ClientPaymentComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`general`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/`+this.clientId+`/general`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
@@ -203,10 +207,14 @@ export class ClientPaymentComponent implements OnInit {
     });
     this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if (responseEle.statusCode = '200') {
-            this.reload();
+        this.errorResponse = [];
+        if (responseEle.statusCode != '200') {
+          this.errorResponse.push(responseEle.body);
         }
       });
+      if(this.errorResponse.length === 0){
+        this.reload();
+      }
     });
   }
 }

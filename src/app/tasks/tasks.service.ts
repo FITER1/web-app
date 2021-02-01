@@ -85,7 +85,8 @@ export class TasksService {
   }
 
   submitBatchTransactionalData(data: any): Observable<any> {
-    return this.http.post('/batches?enclosingTransaction = true', data);
+    const httpParams = new HttpParams().set('enclosingTransaction', 'true');
+    return this.http.post('/batches', data, {params: httpParams});
   }
 
   /**
