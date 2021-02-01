@@ -40,7 +40,8 @@ export class ViewSignatureDialogComponent implements OnInit {
     if (this.signatureId) {
       this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
         (base64Image: any) => {
-          this.signatureImage = this.sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+          const objectURL = URL.createObjectURL(base64Image);
+          this.signatureImage = this.sanitizer.bypassSecurityTrustResourceUrl(objectURL);
         }, (error: any) => {}
       );
     }
