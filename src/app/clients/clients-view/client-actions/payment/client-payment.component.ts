@@ -115,8 +115,10 @@ export class ClientPaymentComponent implements OnInit {
       this.loanRepayments.splice(this.existingPlace,1);
       this.loanIds.splice(this.existingPlace,1);
     }
-    this.loanIds.push(loanId);
-    this.loanRepayments.push(generalDetails.repaymentAmount);
+    if(generalDetails.repaymentAmount != 0) {
+      this.loanIds.push(loanId);
+      this.loanRepayments.push(generalDetails.repaymentAmount);
+    }
     for(var i=0;i<this.loanRepayments.length;i++){
       this.LoanPaymentAmount = +this.LoanPaymentAmount + +this.loanRepayments[i];
     }
@@ -135,8 +137,10 @@ export class ClientPaymentComponent implements OnInit {
       this.savingDeposits.splice(this.existingPlace,1);
       this.savingIds.splice(this.existingPlace,1);
     }
-    this.savingIds.push(savingId);
-    this.savingDeposits.push(generalDetails.depositAmount);
+    if(generalDetails.depositAmount != 0) {
+      this.savingIds.push(savingId);
+      this.savingDeposits.push(generalDetails.depositAmount);
+    }
     for(var i=0;i<this.savingDeposits.length;i++){
       this.savingsDepositAmount = +this.savingsDepositAmount + +this.savingDeposits[i];
     }
@@ -146,7 +150,7 @@ export class ClientPaymentComponent implements OnInit {
 
 
   reload() {
-    const url: string = this.router.url;
+    const url: string = `/clients/`+this.clientId+`/general`;
     this.router.navigateByUrl(`/clients/`+this.clientId+`/general`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
