@@ -65,14 +65,14 @@ export class ViewChargeComponent {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: '',
+        value: this.chargeData.amount || this.chargeData.amountOrPercentage,
         type: 'number',
         required: true
       }),
       new DatepickerBase({
         controlName: 'dueDate',
         label: 'Payment Date',
-        value: '',
+        value: new Date(),
         type: 'date',
         required: true
       })
@@ -80,7 +80,8 @@ export class ViewChargeComponent {
     const data = {
       title: 'Pay Charge',
       layout: { addButtonText: 'Confirm' },
-      formfields: formfields
+      formfields: formfields,
+      pristine: false
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
