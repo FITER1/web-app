@@ -58,6 +58,7 @@ const routes: Routes = [
               savingsDatatables: SavingsDatatablesResolver
             },
             children: [
+              {path: '', redirectTo: 'transactions', pathMatch: 'full'},
               {
                 path: 'transactions',
                 data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
