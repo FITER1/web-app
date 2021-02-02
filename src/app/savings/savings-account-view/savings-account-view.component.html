@@ -25,6 +25,7 @@
             <span *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
               Current Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.accountBalance}}<br/>
               Available Balance: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.availableBalance}}<br/>
+              Onhold Funds: {{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.onHoldFunds ? savingsAccountData.onHoldFunds : ''}}<br/>
             </span>
           </p>
         </mat-card-subtitle>
@@ -254,10 +255,7 @@
                 <td>Total Withdrawls</td>
                 <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}</td>
               </tr>
-              <tr *ngIf="savingsAccountData.onHoldFunds">
-                <td>On Hold Funds</td>
-                <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>
-              </tr>
+              
           </table>
         </div>
 

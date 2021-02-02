@@ -102,27 +102,28 @@ export class ChargesTabComponent implements OnInit {
    * Pays the charge.
    * @param {any} chargeId Charge Id
    */
-  payCharge(chargeId: any) {
+  payCharge(charge: any) {
     const formfields: FormfieldBase[] = [
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: '',
+        value: charge.amount || charge.amountOrPercentage,
         type: 'number',
         required: true
       }),
       new DatepickerBase({
         controlName: 'dueDate',
         label: 'Payment Date',
-        value: '',
+        value: new Date(),
         type: 'date',
         required: true
       })
     ];
     const data = {
-      title: `Pay Charge ${chargeId}`,
+      title: `Pay Charge ${charge.id}`,
       layout: { addButtonText: 'Confirm' },
-      formfields: formfields
+      formfields: formfields,
+      pristine: false
     };
     const payChargeDialogRef = this.dialog.open(FormDialogComponent, { data });
     payChargeDialogRef.afterClosed().subscribe((response: any) => {
@@ -135,7 +136,7 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
