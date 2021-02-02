@@ -79,6 +79,8 @@ export class ClientsViewComponent implements OnInit {
       case 'Create Self Service User':
       case 'Client Screen Reports':
       case 'payment':
+      case 'Send SMS':  
+      case 'View Guarantors':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
        case 'Unassign Staff':

@@ -374,4 +374,8 @@ export class ClientsService {
     return this.http.get(`/clientpayment/${clientId}`);
   }
 
+  sendSms(smsData: any){
+    return this.http.post(`/sms`, smsData);
+  }
+
 }
