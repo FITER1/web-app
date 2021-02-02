@@ -60,10 +60,6 @@
         <h4 class="table-headers">Account Summary</h4>
         <table>
           <tbody>
-            <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
-              <td>Total Withdrawls</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}</td>
-            </tr>
             <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
               <td>Withdrawals Fees</td>
               <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawalFees}}</td>
@@ -164,10 +160,6 @@
               <td>Interest Recalculation Date</td>
               <td>{{savingsAccountData.summary.lastInterestCalculationDate | date}}</td>
             </tr>
-            <tr *ngIf="savingsAccountData.onHoldFunds">
-              <td>On Hold Funds</td>
-              <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>
-            </tr>
             <tr *ngIf="savingsAccountData.withHoldTax">
               <td>Withhold Tax Group</td>
               <td>{{savingsAccountData.taxGroup.name}}</td>
@@ -257,6 +249,14 @@
               <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
                 <td>Total Interest Earned</td>
                 <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalInterestEarned}}</td>
+              </tr>
+              <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
+                <td>Total Withdrawls</td>
+                <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals}}</td>
+              </tr>
+              <tr *ngIf="savingsAccountData.onHoldFunds">
+                <td>On Hold Funds</td>
+                <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds}}</a></td>
               </tr>
           </table>
         </div>
