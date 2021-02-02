@@ -59,6 +59,8 @@ import { ClientFamilyMemberDialogComponent } from './client-stepper/client-famil
 import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 import { ClientPaymentComponent } from "./clients-view/client-actions/payment/client-payment.component";
+import { SendSmsComponent } from './clients-view/client-actions/send-sms/send-sms.component';
+import { ViewGuarantorsComponent } from './clients-view/client-actions/view-guarantors/view-guarantors.component';
 
 
 /**
@@ -123,7 +125,9 @@ import { ClientPaymentComponent } from "./clients-view/client-actions/payment/cl
     ClientFamilyMemberDialogComponent,
     CaptureImageDialogComponent,
     CreateSelfServiceUserComponent,
-    ClientPaymentComponent
+    ClientPaymentComponent,
+    SendSmsComponent,
+    ViewGuarantorsComponent
   ],
   providers: [DatePipe]
 

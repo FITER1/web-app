@@ -1,0 +1,37 @@
+<div class="container">
+
+    <mat-card>
+
+        <form [formGroup] = "clientSMSForm" (ngSubmit) = "submit()">
+
+            <mat-card-content>
+
+            <div fxLayout="column">
+                <mat-form-field>
+                    <mat-label>To</mat-label>
+                    <input type = "text" required matInput formControlName = "toClient">
+                    <mat-error *ngIf="clientSMSForm.controls.toClient.hasError('required')">
+                        Client Is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Message</mat-label>
+                    <textarea required matInput formControlName="message"></textarea>
+                    <mat-error *ngIf="clientSMSForm.controls.message.hasError('required')">
+                        Message Is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  
+            </div>    
+
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                <button type="button" mat-raised-button [routerLink]="['../../', 'general']">Cancel</button>
+                <button mat-raised-button color="primary" [disabled]="!clientSMSForm.valid">Submit</button>
+            </mat-card-actions>
+        </form>
+
+    </mat-card>
+</div>
