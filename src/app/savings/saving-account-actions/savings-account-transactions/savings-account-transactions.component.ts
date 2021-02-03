@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Create savings account transactions component.
@@ -52,7 +53,8 @@ export class SavingsAccountTransactionsComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe,
-              private savingsService: SavingsService) {
+              private savingsService: SavingsService,
+              private settingsService: SettingsService) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData.paymentTypeOptions;
     });
@@ -106,13 +108,14 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   submit() {
     const prevTransactionDate: Date = this.savingAccountTransactionForm.value.transactionDate;
     // TODO: Update once language and date settings are setup
-    const dateFormat = 'dd-MM-yyyy';
-    this.savingAccountTransactionForm.patchValue({
-      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
-    });
-    const transactionData = this.savingAccountTransactionForm.value;
-    transactionData.locale = 'en';
-    transactionData.dateFormat = dateFormat;
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
+    const transactionData = {
+      ...this.savingAccountTransactionForm.value,
+      transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat),
+      locale,
+      dateFormat,
+    }
     this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, this.transactionCommand, transactionData).subscribe(res => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
