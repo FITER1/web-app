@@ -121,6 +121,10 @@
               <td>Substatus</td>
               <td>{{savingsAccountData.subStatus.value}}</td>
             </tr>
+            <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">
+              <td>Block/Unblock Narration</td>
+              <td>{{savingsAccountData.blockNarration.name}}</td>
+            </tr>
             <tr *ngIf="savingsAccountData.daysToInactive">
               <td>Days to Inactive</td>
               <td>{{savingsAccountData.daysToInactive}}</td>

@@ -1,0 +1,26 @@
+<div class="container">
+
+    <mat-card>
+        <form [formGroup]="freezeSavingsAccountForm">
+        <mat-card-content>
+        <div fxLayout = "column">
+            <mat-form-field>
+                <mat-label>Select Block Or Unblock Narration</mat-label>
+                <mat-select formControlName = "narrationId">
+                  <mat-option *ngFor = "let narration of blockNarrationOptions" [value] = 'narration.id'>
+                      {{narration.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+            <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
+            <div *ngIf = "!savingsDetails.subStatus.blockDebit && !savingsDetails.subStatus.block"><button type = "Submit" mat-raised-button color="primary" *mifosxHasPermission = "'BLOCKDEBIT_SAVINGSACCOUNT'" (click) = "blockDebitCredit('BLOCKDEBIT_SAVINGSACCOUNT')">Block Debit</button></div>
+            <div *ngIf = "savingsDetails.subStatus.blockDebit || savingsDetails.subStatus.block"><button mat-raised-button color="primary" *mifosxHasPermission = "'UNBLOCKDEBIT_SAVINGSACCOUNT'" (click) = "blockDebitCredit('UNBLOCKDEBIT_SAVINGSACCOUNT')">UnBlock Debit</button></div>
+            <div *ngIf = "!savingsDetails.subStatus.blockCredit && !savingsDetails.subStatus.block"><button mat-raised-button color="primary" *mifosxHasPermission = "'BLOCKCREDIT_SAVINGSACCOUNT'" (click) = "blockDebitCredit('BLOCKCREDIT_SAVINGSACCOUNT')">Block Credit</button></div>
+            <div *ngIf = "savingsDetails.subStatus.blockCredit || savingsDetails.subStatus.block"><button mat-raised-button color="primary" *mifosxHasPermission = "'UNBLOCKCREDIT_SAVINGSACCOUNT'" (click) = "blockDebitCredit('UNBLOCKCREDIT_SAVINGSACCOUNT')">UnBlock Credit</button></div>
+          </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

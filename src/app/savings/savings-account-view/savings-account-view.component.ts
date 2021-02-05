@@ -106,6 +106,12 @@ export class SavingsAccountViewComponent implements OnInit {
         });
       }
     }
+    if(this.savingsAccountData.depositType.id === 100){
+      this.buttonConfig.addOption({
+        name: 'Freeze',
+        taskPermissionName: 'UNBLOCKDEBIT_SAVINGSACCOUNT || BLOCKDEBIT_SAVINGSACCOUNT || BLOCKCREDIT_SAVINGSACCOUNT || UNBLOCKCREDIT_SAVINGSACCOUNT'
+      });
+    }
   }
 
 
@@ -138,6 +144,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Unassign Staff':
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
+      case 'Freeze':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Withdraw':

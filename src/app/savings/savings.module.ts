@@ -46,6 +46,7 @@ import { ViewRecieptComponent } from './savings-account-view/transactions/view-r
 import { ExportTransactionsComponent } from './savings-account-view/transactions-tab/export-transactions/export-transactions.component';
 import { EditTransactionComponent } from './savings-account-view/transactions/edit-transaction/edit-transaction.component';
 import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions/apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
+import { FreezeSavingsAccountComponent } from './saving-account-actions/freeze-savings-account/freeze-savings-account.component';
 
 
 /**
@@ -97,7 +98,8 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
     ViewRecieptComponent,
     ExportTransactionsComponent,
     EditTransactionComponent,
-    ApplyAnnualFeesSavingsAccountComponent
+    ApplyAnnualFeesSavingsAccountComponent,
+    FreezeSavingsAccountComponent
   ],
   providers: [DatePipe]
 })
