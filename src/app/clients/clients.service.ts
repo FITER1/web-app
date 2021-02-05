@@ -378,4 +378,8 @@ export class ClientsService {
     return this.http.post(`/sms`, smsData);
   }
 
+  getClientGuarantees(clientId: string) {
+    return this.http.get(`/clients/${clientId}/guarantedLoans`);
+  }
+
 }

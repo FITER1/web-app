@@ -1,0 +1,39 @@
+<div class="tab-container mat-typography">
+
+<table mat-table [dataSource]="clientGuaranteesAccounts|accountsFilter:'guarantor':'true'">
+
+    <ng-container matColumnDef="Loan Account No">
+      <th mat-header-cell *matHeaderCellDef> Loan Account No. </th>
+      <td mat-cell *matCellDef="let element"><i class="fa fa-stop"
+        [ngClass]="element.inArrears?'status-active-overdue':(element.status.code|statusLookup)"></i>
+        {{element.accountNo}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef>Status </th>
+      <td mat-cell *matCellDef="let element">{{element.status.value}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="Principal Amount">
+    <th mat-header-cell *matHeaderCellDef>Principal Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.originalLoan}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Hold Amount">
+      <th mat-header-cell *matHeaderCellDef>Hold Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.onHoldAmount}} </td>
+  </ng-container>
+
+
+    <ng-container matColumnDef="Loan Product">
+      <th mat-header-cell *matHeaderCellDef> Loan Product </th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
+       class="select-row"></tr>
+
+  </table>
+</div>

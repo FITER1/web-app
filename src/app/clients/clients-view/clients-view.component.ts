@@ -80,7 +80,7 @@ export class ClientsViewComponent implements OnInit {
       case 'Client Screen Reports':
       case 'payment':
       case 'Send SMS':  
-      case 'View Guarantors':
+      case 'View Guarantees':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
        case 'Unassign Staff':
