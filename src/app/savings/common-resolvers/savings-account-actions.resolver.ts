@@ -42,6 +42,8 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
         ]);
       case 'Apply Annual Fees':
         return this.savingsService.getSavingsAccountData(savingAccountId);
+      case 'Freeze':
+        return this.savingsService.getSavingsAccountData(savingAccountId);  
       default:
         return undefined;
     }
