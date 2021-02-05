@@ -60,7 +60,7 @@ import { CaptureImageDialogComponent } from './clients-view/custom-dialogs/captu
 import { CreateSelfServiceUserComponent } from './clients-view/client-actions/create-self-service-user/create-self-service-user.component';
 import { ClientPaymentComponent } from "./clients-view/client-actions/payment/client-payment.component";
 import { SendSmsComponent } from './clients-view/client-actions/send-sms/send-sms.component';
-import { ViewGuarantorsComponent } from './clients-view/client-actions/view-guarantors/view-guarantors.component';
+import { ViewGuaranteesComponent } from './clients-view/client-actions/view-guarantees/view-guarantees.component';
 
 
 /**
@@ -127,7 +127,7 @@ import { ViewGuarantorsComponent } from './clients-view/client-actions/view-guar
     CreateSelfServiceUserComponent,
     ClientPaymentComponent,
     SendSmsComponent,
-    ViewGuarantorsComponent
+    ViewGuaranteesComponent
   ],
   providers: [DatePipe]
 

@@ -57,8 +57,8 @@ export class ClientActionsResolver implements Resolve<Object> {
         return this.clientsService.getClientPaymentDate(clientId);
       case 'Send SMS':
         return this.clientsService.getClientData(clientId);  
-      case 'View Guarantors':
-        return this.clientsService.getClientAccountData(clientId);  
+      case 'View Guarantees':
+        return this.clientsService.getClientGuarantees(clientId);  
       default:
         return undefined;
     }

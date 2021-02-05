@@ -32,7 +32,7 @@ export class ClientActionsComponent {
     'Create Self Service User': boolean,
     'payment': boolean,
     'Send SMS': boolean,
-    'View Guarantors': boolean
+    'View Guarantees': boolean
   } = {
     'Assign Staff': false,
     'Close': false,
@@ -52,7 +52,7 @@ export class ClientActionsComponent {
     'Create Self Service User': false,
     'payment': false,
     'Send SMS': false,
-    'View Guarantors': false
+    'View Guarantees': false
   };
 
   /**
