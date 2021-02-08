@@ -56,6 +56,13 @@
             <td mat-cell *matCellDef="let element"> {{element.charges}} </td>
           </ng-container>
 
+          <ng-container matColumnDef="Add Loan Charges">
+            <th mat-header-cell *matHeaderCellDef> All Loans Charges </th>
+            <td mat-cell *matCellDef="let element">
+              <button type="button" mat-raised-button [routerLink]="['/clients/'+clientId+'/loans-accounts/'+element.id+'/actions/Add Loan Charge']">Add Charge</button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: openLoansColumns;" class="select-row"></tr>
 
@@ -104,6 +111,13 @@
           <ng-container matColumnDef="Charges">
             <th mat-header-cell *matHeaderCellDef> Charges </th>
             <td mat-cell *matCellDef="let element"> {{element.charges}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Add Savings Charges">
+            <th mat-header-cell *matHeaderCellDef> All savings Charges </th>
+            <td mat-cell *matCellDef="let element">
+              <button type="button" mat-raised-button [routerLink]="['/clients/'+clientId+'/savings-accounts/'+element.id+'/actions/Add Charge']">Add Charge</button>
+            </td>
           </ng-container>
 
 
