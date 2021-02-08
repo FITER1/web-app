@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Export Client Savings Transactions Component
@@ -43,7 +44,8 @@ export class ExportTransactionsComponent implements OnInit {
               private reportsService: ReportsService,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountId = data.savingsAccountData.accountNo;
     });
@@ -68,10 +70,11 @@ export class ExportTransactionsComponent implements OnInit {
    * Generates client savings transactions report.
    */
   generate() {
+    const dateFormat = this.settingsService.dateFormat;
     const data = {
       'output-type':	'PDF',
-      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, 'yyyy-MM-dd'),
-      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, 'yyyy-MM-dd'),
+      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, dateFormat),
+      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, dateFormat),
       R_savingsAccountId:	this.savingsAccountId
     };
     this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', 'en', 'dd MMMM yyyy')
