@@ -20,9 +20,9 @@ import {DatePipe} from "@angular/common";
 export class ClientPaymentComponent implements OnInit {
 
   /** Open Loan Accounts Columns */
-  openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Repayment Amount', 'Charges'];
+  openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Repayment Amount', 'Charges', 'Add Loan Charges'];
   /** Open Savings Accounts Columns */
-  openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges'];
+  openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges', 'Add Savings Charges'];
   totalColumns: String[] = ['Total Payment'];
   paymentDetailsColumns: String[] = ['Payment Details', 'Transaction Date', 'Payment Type', 'Account #', 'Cheque #', 'Routing Code', 'Reciept #', 'Bank #'];
   errorResponseColumns: String[] = ['Errors'];
@@ -59,6 +59,7 @@ export class ClientPaymentComponent implements OnInit {
   paymentTypeOptions: any[] = [];
   clientId: bigint;
   errorResponse: any[];
+  loanChargeURL: string;
 
   /**
    * Fetches Client Action Data from `resolve`
