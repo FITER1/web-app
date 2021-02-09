@@ -1,0 +1,30 @@
+.tab-container {
+    padding: 1%;
+    margin: 1%;
+  
+    h3{
+      margin:1% auto;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 1%;
+      td:hover {
+        cursor: pointer;
+      }
+      .select-row:hover {
+        cursor: pointer;
+      }
+    }
+  
+  }
+  
+  .heading-content {
+    margin-bottom: 1%;
+    margin-top: 1%;
+  }
+  
+  .heading-name {
+    display: block;
+  }
+  

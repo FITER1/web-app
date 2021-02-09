@@ -1,0 +1,32 @@
+<div class="tab-container mat-typography">
+
+    <table mat-table [dataSource]="onHoldTransactions">
+    
+      <ng-container matColumnDef="Transaction Id">
+        <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Loan Account No">
+          <th mat-header-cell *matHeaderCellDef> Loan Account No. </th>
+          <td mat-cell *matCellDef="let element">
+            {{element.loanAccountNo}}
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Amount">
+        <th mat-header-cell *matHeaderCellDef>Amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Transaction Type">
+        <th mat-header-cell *matHeaderCellDef>Transaction Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.transactionType.value}} </td>
+      </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
+           class="select-row"></tr>
+    
+      </table>
+    </div>
