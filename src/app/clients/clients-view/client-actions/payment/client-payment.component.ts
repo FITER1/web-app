@@ -2,12 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import {DatePipe} from "@angular/common";
+import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import {TasksService} from "../../../../tasks/tasks.service";
+import { ReportsService } from '../../../../reports/reports.service';
 import {SettingsService} from "../../../../settings/settings.service";
-import {DatePipe} from "@angular/common";
 
 /**
  * Clients Update Savings Account Component
@@ -59,6 +61,11 @@ export class ClientPaymentComponent implements OnInit {
   paymentTypeOptions: any[] = [];
   clientId: bigint;
   errorResponse: any[];
+  pentahoUrl: any;
+  showReport: boolean = false;
+  receiptNumber: string;
+  transactionDate: any;
+  showError: boolean = false;
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -73,7 +80,9 @@ export class ClientPaymentComponent implements OnInit {
               private router: Router,
               private tasksService: TasksService,
               private settingsService: SettingsService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private reportsService: ReportsService,
+              private sanitizer: DomSanitizer) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientPaymentData = data.clientActionData;
     });
@@ -161,13 +170,15 @@ export class ClientPaymentComponent implements OnInit {
   submit() {
 
     const dateFormat = this.settingsService.dateFormat;
-    const transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
+    this.transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
+    const transactionDate = this.transactionDate;
+    const receiptNumber = this.receiptNumber;
     const locale = this.settingsService.language.code;
     const paymentTypeId = this.clientPaymentForm.value.paymentTypeId;
     const accountNumber = this.clientPaymentForm.value.accountNumber;
     const checkNumber = this.clientPaymentForm.value.checkNumber;
     const routingCode = this.clientPaymentForm.value.routingCode;
-    const receiptNumber = this.clientPaymentForm.value.receiptNumber;
+    this.receiptNumber = this.clientPaymentForm.value.receiptNumber;
     const bankNumber = this.clientPaymentForm.value.bankNumber;
     this.batchRequests = [];
     let reqId = 1;
@@ -192,6 +203,8 @@ export class ClientPaymentComponent implements OnInit {
     });
     this.savingIds.forEach((element: any) => {
       const transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
+      const transactionDate = this.transactionDate;
+      const receiptNumber = this.receiptNumber;
       const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
       const formData = {
         dateFormat,
@@ -213,11 +226,28 @@ export class ClientPaymentComponent implements OnInit {
       response.forEach((responseEle: any) => {
         this.errorResponse = [];
         if (responseEle.statusCode != '200') {
+          this.showError = true;
           this.errorResponse.push(responseEle.body);
         }
       });
       if(this.errorResponse.length === 0){
-        this.reload();
+        const R_reciptNo = this.receiptNumber;
+        const R_clientId = this.clientId;
+        const R_tDate = this.transactionDate;
+        const formData = {
+          R_reciptNo,
+          R_clientId,
+          R_tDate
+        };
+        formData['output-type'] = 'PDF';
+        this.reportsService.getPentahoRunReportData('Payment Receipts', formData, 'default', this.settingsService.language.code, this.settingsService.dateFormat)
+          .subscribe( (res: any) => {
+            const contentType = 'application/pdf';
+            const file = new Blob([res.body], {type: contentType});
+            const filecontent = URL.createObjectURL(file);
+            this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
+            this.showReport = true;
+          });
       }
     });
   }

@@ -215,11 +215,11 @@
 
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">Back</button>
           <button mat-raised-button color="primary">Submit</button>
         </mat-card-actions>
 
-        <table mat-table [dataSource]="errorResponse" *ngIf="errorResponse">
+        <table mat-table [dataSource]="errorResponse" *ngIf="showError">
 
           <ng-container matColumnDef="Errors">
             <th mat-header-cell *matHeaderCellDef> Errors </th>
@@ -230,6 +230,8 @@
           <tr mat-row *matRowDef="let row; columns: errorResponseColumns;"></tr>
 
         </table>
+
+        <iframe *ngIf = "showReport" [src]="pentahoUrl" frameborder="0" width=100% height="750px;"></iframe>
 
       </mat-card-content>
 
