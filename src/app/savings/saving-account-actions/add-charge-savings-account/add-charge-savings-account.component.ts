@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
@@ -43,7 +44,8 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private savingsService: SavingsService
+    private savingsService: SavingsService,
+    private location: Location
   ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
@@ -106,6 +108,10 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     });
   }
 
+  goBack(){
+    this.location.back();
+  }
+
   /**
    * Submits savings charge.
    */
@@ -133,7 +139,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
       }
     }
     this.savingsService.createSavingsCharge(this.savingAccountId, 'charges', savingsCharge).subscribe( () => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.location.back();
     });
   }
 

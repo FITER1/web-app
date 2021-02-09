@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Location } from '@angular/common';
+
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
@@ -56,7 +58,8 @@ export class AddLoanChargeComponent implements OnInit {
               private router: Router,
               private datePipe: DatePipe,
               private loansService: LoansService,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private location: Location) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
@@ -97,6 +100,10 @@ export class AddLoanChargeComponent implements OnInit {
     });
   }
 
+  goBack(){
+    this.location.back();
+  }
+
   submit() {
     const prevDueDate: Date = this.loanChargeForm.value.dueDate;
     // TODO: Update once language and date settings are setup
@@ -108,7 +115,7 @@ export class AddLoanChargeComponent implements OnInit {
     loanCharge.locale = this.settingsService.language.code;
     loanCharge.dateFormat = dateFormat;
     this.loansService.createLoanCharge(this.loanId, 'charges', loanCharge).subscribe(res => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
+      this.location.back();
     });
   }
 }
