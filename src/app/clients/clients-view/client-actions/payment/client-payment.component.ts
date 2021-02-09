@@ -59,7 +59,6 @@ export class ClientPaymentComponent implements OnInit {
   paymentTypeOptions: any[] = [];
   clientId: bigint;
   errorResponse: any[];
-  loanChargeURL: string;
 
   /**
    * Fetches Client Action Data from `resolve`
