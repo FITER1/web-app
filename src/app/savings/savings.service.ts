@@ -269,4 +269,22 @@ export class SavingsService {
     return this.http.delete(`/savingsaccounts/${accountId}/charges/${chargeId}`);
   }
 
+  /**
+   * 
+   * @param {string} accountId  Savings Account Id
+   * @returns {Observable<any>}
+   */
+  getGuarateedLoansForSavingsAccount(accountId: string): Observable<any> {
+    return this.http.get(`/savingsaccounts/${accountId}/guaranteedLoans`);
+  }
+
+  /**
+   * 
+   * @param {string} accountId  Savings Account Id
+   * @returns {Observable<any>}
+   */
+  getOnHoldTransactionsForSavingsAccount(accountId: string): Observable<any> {
+    return this.http.get(`/savingsaccounts/${accountId}/onholdtransactions`);
+  }
+
 }

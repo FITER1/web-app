@@ -31,6 +31,10 @@ import { SavingsAccountChargeResolver } from './common-resolvers/savings-account
 import { SavingsAccountActionsResolver } from './common-resolvers/savings-account-actions.resolver';
 import { SavingsTransactionRecieptResolver } from './common-resolvers/savings-transaction-reciept.resolver';
 import { SavingsAccountTransactionTemplateResolver } from './common-resolvers/savings-account-transaction-template.resolver';
+import { ViewOnholdComponent } from './savings-account-view/view-onhold/view-onhold.component';
+import { SavingsAccountOnHoldResolver } from './common-resolvers/savings-account-onhold.resolver';
+import { ViewSavingAccountOnholdtransactionsComponent } from './savings-account-view/view-onhold/view-saving-account-onholdtransactions/view-saving-account-onholdtransactions.component';
+import { SavingsAccountOnHoldTransactionsResolver } from './common-resolvers/savings-account-onholdtransactions.resolver';
 
 /** Savings Routes */
 const routes: Routes = [
@@ -98,6 +102,15 @@ const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: 'onHold',
+            component: ViewOnholdComponent,
+            data: { title: extract('Savings Account Onhold'), breadcrumb: 'Onhold', routeParamBreadcrumb: false },
+            resolve: {
+              savingsOnHold: SavingsAccountOnHoldResolver,
+              savingsAccount: SavingsAccountViewResolver
+            }
           },
           {
             path: 'edit',
@@ -180,6 +193,14 @@ const routes: Routes = [
           {
             path: 'transfer-funds',
             loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
+          },
+          {
+            path: 'onHoldTransactions',
+            component: ViewSavingAccountOnholdtransactionsComponent,
+            data: { title: extract('Savings Account Onhold transactions'), breadcrumb: 'OnholdTransactions', routeParamBreadcrumb: false },
+            resolve: {
+              savingsOnHoldTransactions: SavingsAccountOnHoldTransactionsResolver
+            }
           }
         ]
       }
@@ -199,6 +220,8 @@ const routes: Routes = [
               SavingsAccountChargeResolver,
               SavingsAccountActionsResolver,
               SavingsTransactionRecieptResolver,
-              SavingsAccountTransactionTemplateResolver]
+              SavingsAccountTransactionTemplateResolver,
+              SavingsAccountOnHoldResolver,
+              SavingsAccountOnHoldTransactionsResolver]
 })
 export class SavingsRoutingModule {}
