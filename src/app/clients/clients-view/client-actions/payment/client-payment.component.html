@@ -2,7 +2,7 @@
 
   <mat-card>
 
-    <form [formGroup]="clientPaymentForm" (ngSubmit)="submit()">
+    <form [formGroup]="clientPaymentForm">
 
       <mat-card-content>
 
@@ -216,7 +216,8 @@
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
           <button type="button" mat-raised-button [routerLink]="['../../general']">Back</button>
-          <button mat-raised-button color="primary">Submit</button>
+          <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+          <button mat-raised-button color="primary" (click)="submitAndReport()">Submit And Print</button>
         </mat-card-actions>
 
         <table mat-table [dataSource]="errorResponse" *ngIf="showError">
