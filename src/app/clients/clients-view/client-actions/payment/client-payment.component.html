@@ -46,7 +46,7 @@
             <th mat-header-cell *matHeaderCellDef> Repayment Amount </th>
             <td mat-cell *matCellDef="let element">
             <mat-form-field *ngIf="clientPaymentForm.contains('repaymentAmount')">
-              <input matInput formControlName="repaymentAmount" (change)="captureLoanAmount(element.id)">
+              <input matInput formControlName="repaymentAmount" [defaultValue]="0" (change)="captureLoanAmount(element.id)">
             </mat-form-field>
             </td>
           </ng-container>
@@ -103,7 +103,7 @@
             <th mat-header-cell *matHeaderCellDef> Deposit Amount </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field *ngIf="clientPaymentForm.contains('depositAmount')">
-                <input matInput formControlName="depositAmount" (change)="captureSavingsAmount(element.id)">
+                <input matInput formControlName="depositAmount" [defaultValue]="0" (change)="captureSavingsAmount(element.id)">
               </mat-form-field>
             </td>
           </ng-container>
