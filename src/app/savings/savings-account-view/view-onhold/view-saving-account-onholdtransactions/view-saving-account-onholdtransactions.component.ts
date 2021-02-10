@@ -11,7 +11,7 @@ export class ViewSavingAccountOnholdtransactionsComponent implements OnInit {
    /** Client Guarantors Accounts */
    onHoldTransactions : any = [];
 
-   openLoansColumns: string[] = ['Transaction Id', 'Loan Account No', 'Amount', 'Transaction Type'];
+   openLoansColumns: string[] = ['Transaction Id', 'Transaction Type', 'Transaction Date', 'Amount'];
 
   constructor(private route : ActivatedRoute,
                        private router: Router) {

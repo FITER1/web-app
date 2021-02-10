@@ -283,8 +283,9 @@ export class SavingsService {
    * @param {string} accountId  Savings Account Id
    * @returns {Observable<any>}
    */
-  getOnHoldTransactionsForSavingsAccount(accountId: string): Observable<any> {
-    return this.http.get(`/savingsaccounts/${accountId}/onholdtransactions`);
+  getOnHoldTransactionsForSavingsAccount(accountId: string, guarantorFundingId:string): Observable<any> {
+    const httpParams = new HttpParams().set('guarantorFundingId', guarantorFundingId);
+    return this.http.get(`/savingsaccounts/${accountId}/onholdtransactions`, {params : httpParams});
   }
 
 }
