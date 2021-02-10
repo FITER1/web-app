@@ -138,6 +138,11 @@
 
         <table mat-table [dataSource]="paymentDetails">
 
+          <ng-container matColumnDef="Payment Details">
+            <th mat-header-cell *matHeaderCellDef> Payment Details </th>
+            <td mat-cell *matCellDef="let element"> {{element}} </td>
+          </ng-container>
+
           <ng-container matColumnDef="Transaction Date">
             <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
             <td mat-cell *matCellDef="let element">
@@ -172,11 +177,17 @@
             </td>
           </ng-container>
 
+          <tr mat-header-row *matHeaderRowDef="paymentDetailsColumns1"></tr>
+          <tr mat-row *matRowDef="let row; columns: paymentDetailsColumns1;"></tr>
+        </table>
+
+        <table mat-table [dataSource]="paymentDetails">
+
           <ng-container matColumnDef="Cheque #">
             <th mat-header-cell *matHeaderCellDef> Cheque # </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-              <input matInput formControlName="checkNumber">
+                <input matInput formControlName="checkNumber">
               </mat-form-field>
             </td>
           </ng-container>
@@ -185,7 +196,7 @@
             <th mat-header-cell *matHeaderCellDef> Routing Code </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-              <input matInput formControlName="routingCode">
+                <input matInput formControlName="routingCode">
               </mat-form-field>
             </td>
           </ng-container>
@@ -194,7 +205,7 @@
             <th mat-header-cell *matHeaderCellDef> Reciept # </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-              <input matInput formControlName="receiptNumber">
+                <input matInput formControlName="receiptNumber">
               </mat-form-field>
             </td>
           </ng-container>
@@ -203,13 +214,13 @@
             <th mat-header-cell *matHeaderCellDef> Bank # </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-              <input matInput formControlName="bankNumber">
+                <input matInput formControlName="bankNumber">
               </mat-form-field>
             </td>
           </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="paymentDetailsColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: paymentDetailsColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="paymentDetailsColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: paymentDetailsColumns2;"></tr>
         </table>
 
 
