@@ -136,7 +136,7 @@
           <tr mat-row *matRowDef="let row; columns: totalColumns;"></tr>
         </table>
 
-        <table id = "table" mat-table [dataSource]="paymentDetails">
+        <table mat-table [dataSource]="paymentDetails">
 
           <ng-container matColumnDef="Transaction Date">
             <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
