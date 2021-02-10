@@ -195,9 +195,9 @@ const routes: Routes = [
             loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
           },
           {
-            path: 'onHoldTransactions',
+            path: 'onHoldTransactions/:guarantorFundId',
             component: ViewSavingAccountOnholdtransactionsComponent,
-            data: { title: extract('Savings Account Onhold transactions'), breadcrumb: 'OnholdTransactions', routeParamBreadcrumb: false },
+            data: { title: extract('Savings Account Onhold transactions'), breadcrumb: 'OnholdTransactions', routeParamBreadcrumb: 'guarantorFundId' },
             resolve: {
               savingsOnHoldTransactions: SavingsAccountOnHoldTransactionsResolver
             }
