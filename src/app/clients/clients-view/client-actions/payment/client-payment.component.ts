@@ -203,25 +203,58 @@ export class ClientPaymentComponent implements OnInit {
       this.batchRequests.push(batchData);
     });
     this.savingIds.forEach((element: any) => {
-      const transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
+      let transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
       const transactionDate = this.transactionDate;
+      const dueDate = this.transactionDate;
       const receiptNumber = this.receiptNumber;
-      const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
-      const formData = {
-        dateFormat,
-        transactionDate,
-        locale,
-        transactionAmount,
-        paymentTypeId,
-        accountNumber,
-        checkNumber,
-        routingCode,
-        receiptNumber,
-        bankNumber
-      };
-      const bodyData = JSON.stringify(formData);
-      const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
-      this.batchRequests.push(batchData);
+      this.savingAccounts.forEach((element1: any) => {
+        if(element1.id === element){
+          element1.savingsCharges.forEach((element2: any) => {
+            let amount = 0;
+            if(transactionAmount > element2.amountOutstanding){
+              amount = element2.amountOutstanding;
+              transactionAmount = +transactionAmount - +element2.amountOutstanding;
+            }else{
+              amount = transactionAmount;
+              transactionAmount = 0;
+            }
+            const url = 'savingsaccounts/' + element + '/charges/' + element2.id + '?command=paycharge';
+            const formData = {
+              dateFormat,
+              dueDate,
+              locale,
+              amount,
+              paymentTypeId,
+              accountNumber,
+              checkNumber,
+              routingCode,
+              receiptNumber,
+              bankNumber
+            };
+            const bodyData = JSON.stringify(formData);
+            const batchData = {requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData};
+            this.batchRequests.push(batchData);
+          });
+        }
+      });
+      if(transactionAmount !== 0) {
+        const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
+        const formData = {
+          dateFormat,
+          transactionDate,
+          locale,
+          transactionAmount,
+          paymentTypeId,
+          accountNumber,
+          checkNumber,
+          routingCode,
+          receiptNumber,
+          bankNumber
+        };
+        const bodyData = JSON.stringify(formData);
+        const batchData = {requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData};
+        this.batchRequests.push(batchData);
+      }
     });
     this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
