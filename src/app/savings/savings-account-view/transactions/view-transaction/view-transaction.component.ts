@@ -10,6 +10,9 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
 import { UndoTransactionDialogComponent } from '../../custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 
 /**
  * View Transaction Component.
@@ -66,6 +69,45 @@ export class ViewTransactionComponent {
         });
       }
     });
+  }
+
+  releaseTransaction(){
+    const formfields: FormfieldBase[] =[];
+    const data = {
+      title: `Release Amount`,
+      layout: { addButtonText: 'Confirm'},
+      formfields: formfields,
+      pristine: false
+    };
+    const accountId = this.route.parent.snapshot.params['savingAccountId'];
+    const releaseTransactionAccountDialogRef = this.dialog.open(FormDialogComponent, {data});
+    releaseTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const locale = this.settingsService.language.code;
+        const dateFormat = this.settingsService.dateFormat;
+        const dataObject = {
+          transactionDate: this.datePipe.transform(new Date(), dateFormat),
+          transactionAmount: 0,
+          dateFormat,
+          locale
+        };
+        this.savingsService.executeSavingsAccountTransactionsCommand(accountId, 'releaseAmount', dataObject, this.transactionData.id).subscribe(() => {
+          this.reload();
+        });
+      }
+    })
+   }
+
+   /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const url: string = this.router.url;
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('transactions') + 'transactions'.length);
+    console.log(url, refreshUrl);
+    this.router.navigateByUrl(refreshUrl, {skipLocationChange: false})
+      .then(() => this.router.navigate([refreshUrl]));
   }
 
 }
