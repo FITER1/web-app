@@ -33,7 +33,7 @@
 
     <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
-       class="select-row"></tr>
+       class="select-row" [routerLink]="['../../', 'loans-accounts', row.id, 'general']"></tr>
 
   </table>
 </div>
