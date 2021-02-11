@@ -25,9 +25,9 @@ export class ClientPaymentComponent implements OnInit {
   openLoansColumns: string[] = ['Account No', 'Loan Account', 'Original Loan', 'Loan Balance', 'Amount Paid', 'Type', 'Repayment Amount', 'Charges', 'Add Loan Charges'];
   /** Open Savings Accounts Columns */
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges', 'Add Savings Charges'];
-  totalColumns: String[] = ['Total Payment'];
-  paymentDetailsColumns1: String[] = ['Payment Details', 'Transaction Date', 'Payment Type', 'Account #'];
-  paymentDetailsColumns2: String[] = ['Cheque #', 'Routing Code', 'Reciept #', 'Bank #'];
+  totalColumns: String[] = ['Total Payment', 'More'];
+  paymentDetailsColumns1: String[] = ['Transaction Date', 'Payment Type', 'Account #', 'Reciept #'];
+  paymentDetailsColumns2: String[] = ['Cheque #', 'Routing Code', 'Bank #'];
   errorResponseColumns: String[] = ['Errors'];
   /** Client Update Savings Account form. */
   clientPaymentForm: FormGroup;
@@ -67,6 +67,7 @@ export class ClientPaymentComponent implements OnInit {
   receiptNumber: string;
   transactionDate: any;
   showError: boolean = false;
+  showPaymentDetails = false;
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -112,6 +113,10 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm.addControl('bankNumber', new FormControl(''));
     this.totalPaymentArray.push(this.totalPaymentAmount);
     this.paymentDetails.push('Payment Details');
+  }
+
+  addPaymentDetails() {
+    this.showPaymentDetails = !this.showPaymentDetails;
   }
 
   captureLoanAmount(loanId: bigint){
