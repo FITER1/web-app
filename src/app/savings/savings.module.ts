@@ -49,6 +49,7 @@ import { ApplyAnnualFeesSavingsAccountComponent } from './saving-account-actions
 import { FreezeSavingsAccountComponent } from './saving-account-actions/freeze-savings-account/freeze-savings-account.component';
 import { ViewOnholdComponent } from './savings-account-view/view-onhold/view-onhold.component';
 import { ViewSavingAccountOnholdtransactionsComponent } from './savings-account-view/view-onhold/view-saving-account-onholdtransactions/view-saving-account-onholdtransactions.component';
+import { HoldAmountOnSavingsAccountComponent } from './saving-account-actions/hold-amount-on-savings-account/hold-amount-on-savings-account.component';
 
 
 /**
@@ -103,7 +104,8 @@ import { ViewSavingAccountOnholdtransactionsComponent } from './savings-account-
     ApplyAnnualFeesSavingsAccountComponent,
     FreezeSavingsAccountComponent,
     ViewOnholdComponent,
-    ViewSavingAccountOnholdtransactionsComponent
+    ViewSavingAccountOnholdtransactionsComponent,
+    HoldAmountOnSavingsAccountComponent
   ],
   providers: [DatePipe]
 })

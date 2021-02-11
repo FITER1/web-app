@@ -112,6 +112,12 @@ export class SavingsAccountViewComponent implements OnInit {
         taskPermissionName: 'UNBLOCKDEBIT_SAVINGSACCOUNT || BLOCKDEBIT_SAVINGSACCOUNT || BLOCKCREDIT_SAVINGSACCOUNT || UNBLOCKCREDIT_SAVINGSACCOUNT'
       });
     }
+    if(this.savingsAccountData){
+      this.buttonConfig.addOption({
+        name: 'Hold Amount',
+        taskPermissionName: 'HOLDAMOUNT_SAVINGSACCOUNT'
+      });
+    }
   }
 
 
@@ -145,6 +151,7 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
       case 'Freeze':
+      case 'Hold Amount':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
       case 'Withdraw':
