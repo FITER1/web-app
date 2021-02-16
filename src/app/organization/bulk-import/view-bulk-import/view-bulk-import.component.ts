@@ -163,7 +163,10 @@ export class ViewBulkImportComponent implements OnInit {
         legalFormType = 'CLIENTS_PERSON';
       }
     }
-    this.organizationService.uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType).subscribe(() => {});
+    this.organizationService.uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType).subscribe(() => {
+      this.refreshDocuments();
+    });
+    
   }
 
   /**
