@@ -64,7 +64,7 @@ export class EditGlAccountComponent implements OnInit {
       'glCode': [this.glAccount.glCode, Validators.required],
       'parentId': [this.glAccount.parentId],
       'tagId': [this.glAccount.tagId.id],
-      'manualEntriesAllowed': [this.glAccount.manualEntriesAllowed, Validators.required],
+      'manualEntriesAllowed': [this.glAccount.manualEntriesAllowed],
       'description': [this.glAccount.description]
     });
   }

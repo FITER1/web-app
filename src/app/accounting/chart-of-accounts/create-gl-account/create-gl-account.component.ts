@@ -80,7 +80,7 @@ export class CreateGlAccountComponent implements OnInit {
       'glCode': ['', Validators.required],
       'parentId': [this.parentId || undefined],
       'tagId': [''],
-      'manualEntriesAllowed': [true, Validators.required],
+      'manualEntriesAllowed': [true],
       'description': ['']
     });
   }
