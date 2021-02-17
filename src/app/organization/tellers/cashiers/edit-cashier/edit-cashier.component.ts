@@ -75,14 +75,13 @@ export class EditCashierComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const startDate = this.editCashierForm.value.startDate;
     const endDate = this.editCashierForm.value.endDate;
-    this.editCashierForm.patchValue({
-      'startDate': this.datePipe.transform(startDate, dateFormat),
-      'endDate': this.datePipe.transform(endDate, dateFormat)
-    });
+    
     const editCashierForm = this.editCashierForm.value;
     editCashierForm.locale = this.settingsService.language.code;
     editCashierForm.dateFormat = dateFormat;
     editCashierForm.staffId = this.cashierData.data.staffId;
+    editCashierForm.startDate = this.datePipe.transform(startDate, dateFormat);
+    editCashierForm.endDate = this.datePipe.transform(endDate, dateFormat);
     this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, editCashierForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

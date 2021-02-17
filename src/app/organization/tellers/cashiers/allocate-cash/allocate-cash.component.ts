@@ -73,12 +73,11 @@ export class AllocateCashComponent implements OnInit {
   submit() {
     const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.allocateCashForm.value.txnDate;
-    this.allocateCashForm.patchValue({
-      txnDate: this.datePipe.transform(txnDate, dateFormat)
-    });
+    
     const allocateCashForm = this.allocateCashForm.value;
     allocateCashForm.dateFormat = dateFormat;
     allocateCashForm.locale = this.settingsService.language.code;
+    allocateCashForm.txnDate = this.datePipe.transform(txnDate, dateFormat);
     this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, allocateCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

@@ -81,13 +81,11 @@ export class CreateTellerComponent implements OnInit {
     const prevEndDate: Date = this.tellerForm.value.endDate;
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    this.tellerForm.patchValue({
-      startDate: this.datePipe.transform(prevStartDate, dateFormat),
-      endDate: this.datePipe.transform(prevEndDate, dateFormat)
-    });
     const teller = this.tellerForm.value;
     teller.locale = this.settingsService.language.code;
     teller.dateFormat = dateFormat;
+    teller.startDate = this.datePipe.transform(prevStartDate, dateFormat);
+    teller.endDate = this.datePipe.transform(prevEndDate, dateFormat);
     this.organizationService.createTeller(teller).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });

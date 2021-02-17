@@ -71,13 +71,12 @@ export class CreateCashierComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const startDate = this.createCashierForm.value.startDate;
     const endDate = this.createCashierForm.value.endDate;
-    this.createCashierForm.patchValue({
-      'startDate': this.datePipe.transform(startDate, dateFormat),
-      'endDate': this.datePipe.transform(endDate, dateFormat)
-    });
+    
     const createCashierForm = this.createCashierForm.value;
     createCashierForm.locale = this.settingsService.language.code;
     createCashierForm.dateFormat = dateFormat;
+    createCashierForm.startDate = this.datePipe.transform(startDate, dateFormat);
+    createCashierForm.endDate = this.datePipe.transform(endDate, dateFormat);
     this.organizationService.createCashier(this.cashierTemplate.tellerId, createCashierForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

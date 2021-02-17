@@ -70,12 +70,11 @@ export class SettleCashComponent implements OnInit {
   submit() {
     const dateFormat = this.settingsService.dateFormat;
     const txnDate = this.settleCashForm.value.txnDate;
-    this.settleCashForm.patchValue({
-      txnDate: this.datePipe.transform(txnDate, dateFormat)
-    });
+    
     const settleCashForm = this.settleCashForm.value;
     settleCashForm.dateFormat = dateFormat;
     settleCashForm.locale = this.settingsService.language.code;
+    settleCashForm.txnDate = this.datePipe.transform(txnDate, dateFormat);
     this.organizationService.settleCash(this.cashierData.tellerId, this.cashierData.cashierId, settleCashForm).subscribe((response: any) => {
       this.router.navigate(['../'], {relativeTo: this.route});
     });

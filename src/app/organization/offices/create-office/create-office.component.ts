@@ -71,10 +71,9 @@ export class CreateOfficeComponent implements OnInit {
     const prevOpeningDate: Date = this.officeForm.value.openingDate;
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    this.officeForm.patchValue({
-      openingDate: this.datePipe.transform(prevOpeningDate, dateFormat)
-    });
+    
     const office = this.officeForm.value;
+    office.openingDate = this.datePipe.transform(prevOpeningDate, dateFormat);
     office.locale = this.settingsService.language.code;
     office.dateFormat = dateFormat;
     this.organizationService.createOffice(office).subscribe(response => {

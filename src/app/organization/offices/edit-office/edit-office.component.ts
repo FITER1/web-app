@@ -72,10 +72,9 @@ export class EditOfficeComponent implements OnInit {
   submit() {
     const openedOn: Date = this.officeForm.value.openingDate;
     const dateFormat = this.settingsService.dateFormat;
-    this.officeForm.patchValue({
-      openingDate: this.datepipe.transform(openedOn, dateFormat)
-    });
+    
     const office = this.officeForm.value;
+    office.openingDate = this.datepipe.transform(openedOn, dateFormat);
     office.locale = this.settingsService.language.code;
     office.dateFormat = dateFormat;
     this.organizationService.updateOffice(this.officeData.id, office).subscribe((response: any) => {
