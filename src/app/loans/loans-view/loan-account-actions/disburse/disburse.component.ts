@@ -57,6 +57,7 @@ export class DisburseComponent implements OnInit {
   ngOnInit() {
     this.createDisbursementLoanForm();
     this.setDisbursementLoanDetails();
+    this.addPaymentDetails();
   }
 
   /**
@@ -88,8 +89,8 @@ export class DisburseComponent implements OnInit {
       this.disbursementLoanForm.addControl('accountNumber', new FormControl(''));
       this.disbursementLoanForm.addControl('checkNumber', new FormControl(''));
       this.disbursementLoanForm.addControl('routingCode', new FormControl(''));
-      this.disbursementLoanForm.addControl('receiptNumber', new FormControl(''));
-      this.disbursementLoanForm.addControl('bankNumber', new FormControl(''));
+      this.disbursementLoanForm.addControl('receiptNumber', new FormControl('', Validators.required));
+      this.disbursementLoanForm.addControl('bankNumber', new FormControl('', Validators.required));
     } else {
       this.disbursementLoanForm.removeControl('accountNumber');
       this.disbursementLoanForm.removeControl('checkNumber');
