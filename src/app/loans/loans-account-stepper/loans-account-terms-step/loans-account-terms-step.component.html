@@ -42,7 +42,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>First repayment on</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentsPicker"
+        <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
