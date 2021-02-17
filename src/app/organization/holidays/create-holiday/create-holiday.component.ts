@@ -88,20 +88,17 @@ export class CreateHolidayComponent implements OnInit {
   submit() {
     const dateFormat = this.settings.dateFormat;
     const locale = this.settings.language.code;
-    this.holidayForm.patchValue({
-      'fromDate': this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
-      'toDate': this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),
-    });
-    if (this.holidayForm.contains('repaymentsRescheduledTo')) {
-      this.holidayForm.patchValue({
-        'repaymentsRescheduledTo': this.datePipe.transform(this.holidayForm.value.repaymentsRescheduledTo, dateFormat)
-      });
-    }
+    
     const holiday = {
       ...this.holidayForm.value,
+      fromDate: this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat),
+      toDate: this.datePipe.transform(this.holidayForm.value.toDate, dateFormat),
       dateFormat,
       locale
     };
+    if (this.holidayForm.contains('repaymentsRescheduledTo')) {
+      holiday.repaymentsRescheduledTo = this.datePipe.transform(this.holidayForm.value.repaymentsRescheduledTo, dateFormat);
+    }
     this.organizationService.createHoliday(holiday).subscribe((response: any) => {
       this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
     });

@@ -101,23 +101,18 @@ export class EditHolidayComponent implements OnInit {
    */
   submit() {
     const dateFormat = this.settings.dateFormat;
-    if (!this.isActiveHoliday) {
-      const fromDate: Date = this.holidayForm.value.fromDate;
-      const toDate: Date = this.holidayForm.value.toDate;
-      if (this.reSchedulingType === 2 ) {
-        const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-        this.holidayForm.patchValue({
-          repaymentsRescheduledTo: this.datePipe.transform(repaymentScheduledTo, dateFormat)
-        });
-      }
-      this.holidayForm.patchValue({
-        fromDate: this.datePipe.transform(fromDate, dateFormat),
-        toDate: this.datePipe.transform(toDate, dateFormat)
-      });
-    }
+    
     const holidayForm = this.holidayForm.value;
     holidayForm.locale = this.settings.language.code;
     holidayForm.dateFormat = dateFormat;
+    holidayForm.fromDate = this.datePipe.transform(this.holidayForm.value.fromDate, dateFormat);
+    holidayForm.toDate = this.datePipe.transform(this.holidayForm.value.toDate.toDate, dateFormat);
+
+    if (!this.isActiveHoliday) {
+      if (this.reSchedulingType === 2 ) {
+        holidayForm.repaymentScheduledTo = this.holidayForm.value.repaymentsRescheduledTo;
+      }
+    }
     this.organizatioService.updateHoliday(this.holidayData.id, holidayForm).subscribe(response => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */
       this.router.navigate(['../'], { relativeTo: this.route });
