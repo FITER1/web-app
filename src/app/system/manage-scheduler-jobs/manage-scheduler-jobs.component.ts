@@ -3,8 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { SystemService } from '../system.service';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -24,7 +25,7 @@ export class ManageSchedulerJobsComponent implements OnInit {
   /** Scheduler data */
   schedulerData: any;
   /** Columns to be displayed in manage scheduler jobs table. */
-  displayedColumns: string[] = ['select', 'displayName', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
+  displayedColumns: string[] = ['run', 'displayName', 'nextRunTime', 'previousRunTime', 'previousRunStatus', 'currentlyRunning', 'errorLog'];
   /** Data source for manage scheduler jobs table. */
   dataSource: MatTableDataSource<any>;
   /** Initialize Selection */
@@ -39,7 +40,9 @@ export class ManageSchedulerJobsComponent implements OnInit {
    * Retrieves the scheduler jobs data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private systemService: SystemService) {
     this.route.data.subscribe((data: { jobsScheduler: any }) => {
       this.jobData = data.jobsScheduler[0];
       this.schedulerData = data.jobsScheduler[1];
@@ -52,24 +55,6 @@ export class ManageSchedulerJobsComponent implements OnInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  /**
-   * Whether the number of selected elements matches the total number of rows.
-   */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /**
-   * Selects all rows if they are not all selected; otherwise clear selection.
-   */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   /**
@@ -97,4 +82,16 @@ export class ManageSchedulerJobsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/system/scheduler-jobs`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
+  }
+
+  runJob(jobId: string){
+    this.systemService.runSelectedJob(jobId)
+      .subscribe((response: any) => {
+        this.reload();
+      });
+  }
 }
