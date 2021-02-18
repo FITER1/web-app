@@ -269,6 +269,10 @@ export class SystemService {
     return this.http.get(`/jobs/${jobId}/runhistory`);
   }
 
+  runSelectedJob(jobId: string): Observable<any> {
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, null);
+  }
+
   /**
    * @param {any} code Code to be created.
    * @returns {Observable<any>}
