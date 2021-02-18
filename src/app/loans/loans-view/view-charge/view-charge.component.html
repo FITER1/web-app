@@ -1,13 +1,13 @@
 <div *ngIf="loansAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
   fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-    <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
+    <!-- <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
       <fa-icon icon="dollar-sign"></fa-icon>&nbsp;&nbsp;
       Pay
-    </button>
+    </button>-->
     <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
       <fa-icon icon="flag"></fa-icon>&nbsp;&nbsp;
       Waive
-    </button>
+    </button> 
 </div>
 
 <div *ngIf="loansAccountData.status.value === 'Submitted and pending approval'"

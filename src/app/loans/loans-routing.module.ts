@@ -70,6 +70,7 @@ const routes: Routes = [
             loanDatatables: LoanDatatablesResolver,
           },
           children: [
+            {path:'', redirectTo:'general', pathMatch:'full'},
             {
               path: 'general',
               component: GeneralTabComponent,
