@@ -83,9 +83,10 @@ export class ManageSchedulerJobsComponent implements OnInit {
   }
 
   reload() {
-    const url: string = this.router.url;
-    this.router.navigateByUrl(`/system/scheduler-jobs`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 
   runJob(jobId: string){

@@ -33,13 +33,13 @@
 
       <ng-container matColumnDef="nextRunTime">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Next Run </th>
-        <td mat-cell *matCellDef="let job" [routerLink]="[job.jobId]"> {{ job.nextRunTime }} </td>
+        <td mat-cell *matCellDef="let job" [routerLink]="[job.jobId]"> {{ job.nextRunTime | date:'MMM d, y, h:mm a'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="previousRunTime">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Previous Run </th>
         <td mat-cell *matCellDef="let job" [routerLink]="[job.jobId]">
-          <div *ngIf="job.lastRunHistory">{{ job.lastRunHistory.jobRunStartTime }} </div>
+          <div *ngIf="job.lastRunHistory">{{ job.lastRunHistory.jobRunStartTime | date:'MMM d, y, h:mm a'}} </div>
         </td>
       </ng-container>
 
