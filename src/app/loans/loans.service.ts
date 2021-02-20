@@ -311,8 +311,8 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}/documents/${documentId}`);
   }
 
-  loadLoanDocument(loanId: any, data: any): Observable<any> {
-    return this.http.post(`/loans/${loanId}/documents`, data);
+  loadLoanDocument(loanId: string, documentData: any) {
+    return this.http.post(`/loans/${loanId}/documents`, documentData);
   }
 
   /**

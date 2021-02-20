@@ -5,8 +5,8 @@
 
     <mat-form-field fxFlex>
       <mat-label>File Name</mat-label>
-      <input formControlName="name" required matInput />
-      <mat-error *ngIf="uploadDocumentForm.controls.name.hasError('required')">
+      <input formControlName="fileName" required matInput />
+      <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
         File Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -20,8 +20,7 @@
 
     <mat-dialog-actions align="end">
       <button mat-raised-button mat-dialog-close>Cancel</button>
-      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" *mifosxHasPermission="'CREATE_DOCUMENT'"
-        [mat-dialog-close]="{data: {name: uploadDocumentForm.value.name, description: uploadDocumentForm.value.description, file: uploadDocumentForm.value.file} }">Confirm</button>
+      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid" [mat-dialog-close]="uploadDocumentForm.value" *mifosxHasPermission="'CREATE_DOCUMENT'">Confirm</button>
     </mat-dialog-actions>
 
   </form>
