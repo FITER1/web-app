@@ -33,6 +33,7 @@ export class LoanDocumentsTabComponent implements OnInit {
   status: any;
   /** Choice */
   choice: boolean;
+  loanId: string;
 
   /** Columns to be displayed in loan documents table. */
   displayedColumns: string[] = ['name', 'description', 'filename', 'actions'];
@@ -57,6 +58,7 @@ export class LoanDocumentsTabComponent implements OnInit {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
     });
+    this.loanId = this.route.parent.snapshot.paramMap.get('loanId');
   }
 
   ngOnInit() {
@@ -91,9 +93,25 @@ export class LoanDocumentsTabComponent implements OnInit {
   uploadDocument() {
     const uploadLoanDocumentDialogRef = this.dialog.open(LoanAccountLoadDocumentsDialogComponent);
     uploadLoanDocumentDialogRef.afterClosed().subscribe((data: any) => {
+      console.log(data);
       if (data) {
-        this.loansService.loadLoanDocument(this.loanDetailsData.id, data)
-          .subscribe(() => {});
+        const formData: FormData = new FormData;
+        formData.append('name', data.fileName);
+        formData.append('file', data.file);
+        formData.append('description', data.description);
+        this.loansService.loadLoanDocument(this.loanId, formData)
+          .subscribe((res: any) => {
+            this.loanDocuments.push({
+              id: res.resourceId,
+              parentEntityType: 'loan',
+              parentEntityId: this.loanId,
+              name: data.fileName,
+              description: data.description,
+              fileName: data.file.name
+            });
+            this.documentsTable.renderRows();
+            console.log('document Uploaded');
+          });
       }
     });
   }
