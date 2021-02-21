@@ -54,6 +54,8 @@
             | Age : {{age}} </span>
             | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             <br />
+            Sub Status : {{(clientViewData.subStatus.name)?(clientViewData.subStatus.name) :'Update Pending'}}
+            <br />
             <span *ngIf ="clientViewData.status.value === 'Closed'">
             Closed Date : {{(clientViewData.timeline.closedOnDate)?(clientViewData.timeline.closedOnDate|date) :'Unassigned'}}
             </span>
