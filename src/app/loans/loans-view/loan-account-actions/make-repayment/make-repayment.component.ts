@@ -46,6 +46,9 @@ export class MakeRepaymentComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private settingsService: SettingsService) {
+    this.route.data.subscribe((data: { actionButtonData: any }) => {
+      this.paymentTypes = data.actionButtonData;
+    });
       this.loanId = this.route.parent.snapshot.params['loanId'];
     }
 
