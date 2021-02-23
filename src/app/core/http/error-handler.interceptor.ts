@@ -54,8 +54,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       this.alertService.alert({ type: 'Authentication Error', message: 'Invalid User Details. Please try again!' });
     } else if (status === 403 && errorMessage === 'The provided one time token is invalid') {
       this.alertService.alert({ type: 'Invalid Token', message: 'Invalid Token. Please try again!' });
-    } else if (status === 400) {
+    } else if (status === 400 && response.error.defaultUserMessage != 'Validation errors exist.') {
       this.alertService.alert({ type: 'Bad Request', message: 'Invalid parameters were passed in the request!' });
+    } else if (status === 400 && response.error.defaultUserMessage === 'Validation errors exist.') {
+      this.alertService.alert({ type: 'Bad Request', message: errorMessage });
     } else if (status === 403) {
       this.alertService.alert({ type: 'Unauthorized Request', message: errorMessage || 'You are not authorized for this request!' });
     } else if (status === 404) {
