@@ -43,6 +43,8 @@ import { LoansAccountChargeResolver } from './common-resolvers/loans-account-cha
 import { LoansAccountTransactionResolver } from './common-resolvers/loans-account-transaction.resolver';
 import { LoansTransactionRecieptResolver } from './common-resolvers/loans-transaction-reciept.resolver';
 import { LoansAccountTransactionTemplateResolver } from './common-resolvers/loans-account-transaction-template.resolver';
+import { LoanAccountViewGuarantorsTransactionsComponent } from './loans-view/loan-account-actions/view-guarantors/loan-account-view-guarantors-transactions/loan-account-view-guarantors-transactions.component';
+import { SavingsAccountOnHoldTransactionsResolver } from 'app/savings/common-resolvers/savings-account-onholdtransactions.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -246,6 +248,12 @@ const routes: Routes = [
             loansAccountAndTemplate: LoansAccountAndTemplateResolver
           }
         },
+        {
+          path: 'view-guarantor-transactions/:savingsId/:guarantorFundId',
+          component: LoanAccountViewGuarantorsTransactionsComponent,
+          data: {title: extract('View Guarantor Transactions'), breadcrumb: 'OnHold Transactions', routeParamBreadcrumb: 'guarantorFundId'},
+          resolve : {savingsOnHoldTransactions: SavingsAccountOnHoldTransactionsResolver}
+        }
       ]
     }]
   },
@@ -266,7 +274,8 @@ const routes: Routes = [
     LoansAccountChargeResolver,
     LoansAccountTransactionResolver,
     LoansAccountTransactionTemplateResolver,
-    LoansTransactionRecieptResolver
+    LoansTransactionRecieptResolver,
+    SavingsAccountOnHoldTransactionsResolver
   ]
 })
 

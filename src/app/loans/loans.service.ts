@@ -39,8 +39,9 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/guarantors`, data);
   }
 
-  deleteGuarantor(loanId: any, guarantorId: any): Observable<any> {
-    return this.http.delete(`/loans/${loanId}/guarantors/${guarantorId}`);
+  deleteGuarantor(loanId: any, guarantorId: any, fundId: any): Observable<any> {
+    const httpParams = new HttpParams().set('guarantorFundingId', fundId);
+    return this.http.delete(`/loans/${loanId}/guarantors/${guarantorId}`, {params : httpParams});
   }
 
   deleteLoanAccount(loanId: any): Observable<any> {

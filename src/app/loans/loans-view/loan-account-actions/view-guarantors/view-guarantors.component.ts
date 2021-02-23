@@ -49,13 +49,13 @@ export class ViewGuarantorsComponent implements OnInit {
     this.showDeletedGuarantorsAccounts = !this.showDeletedGuarantorsAccounts;
   }
 
-  deleteGuarantor(id: any) {
+  deleteGuarantor(id: any, fundId: any) {
     const deleteGuarantorDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `the guarantor id: ${id}` }
     });
     deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteGuarantor(this.loanId, id).subscribe(() => {
+        this.loansService.deleteGuarantor(this.loanId, id, fundId).subscribe(() => {
           this.reload();
         });
       }
@@ -76,8 +76,9 @@ export class ViewGuarantorsComponent implements OnInit {
   private reload() {
     const clientId = this.dataObject.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('loans-accounts') + 'loans-accounts'.length);
+    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true })
+      .then(() => this.router.navigate([refreshUrl+'/'+this.loanId+'/actions/', 'View Guarantors']));
   }
 
 }

@@ -5,27 +5,44 @@
   <div fxLayout="row wrap" fxLayout.lt-md="column">
 
     <div fxFlexFill>
-      <span fxFlex="50%">First Name:</span>
+      <span fxFlex="50%">First Name :</span>
       <span fxFlex="50%">{{ data.guarantorData.firstname }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Last Name:</span>
+      <span fxFlex="50%">Last Name :</span>
       <span fxFlex="50%">{{ data.guarantorData.lastname }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Relationship:</span>
-      <span fxFlex="50%">{{ data.guarantorData.clientRelationshipType.name }}</span>
+      <span fxFlex="50%">Relationship :</span>
+      <span fxFlex="50%">{{ data.guarantorData.clientRelationshipType ? data.guarantorData.clientRelationshipType.name : 'Self' }}</span>
     </div>
 
     <div fxFlexFill>
-      <span fxFlex="50%">Guarantor Type:</span>
+      <span fxFlex="50%">Guarantor Type :</span>
       <span fxFlex="50%">{{ data.guarantorData.guarantorType.value }}</span>
     </div>
 
+    <ng-container *ngFor = "let guarantorFund of data.guarantorData.guarantorFundingDetails">
     <div fxFlexFill>
-      <span fxFlex="50%">Status:</span>
+      <span fxFlex="50%">Deposit Account :</span>
+      <span fxFlex="50%">{{ guarantorFund.savingsAccount.accountNo }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Amount :</span>
+      <span fxFlex="50%">{{ guarantorFund.amount | number }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Remaining Amount :</span>
+      <span fxFlex="50%">{{ guarantorFund.amountRemaining | number }}</span>
+    </div>
+  </ng-container>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">Status :</span>
       <span fxFlex="50%">
         <span *ngIf="data.guarantorData.status">
           Active

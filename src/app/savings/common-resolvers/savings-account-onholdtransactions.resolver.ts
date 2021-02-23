@@ -25,7 +25,12 @@ export class SavingsAccountOnHoldTransactionsResolver implements Resolve<Object>
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const savingAccountId = route.parent.paramMap.get('savingAccountId');
+    let savingAccountId;
+    if(route.parent.paramMap.get('savingAccountId')){
+      savingAccountId = route.parent.paramMap.get('savingAccountId');
+    }else{
+      savingAccountId = route.params['savingsId'];
+    }
     const guarantorFundId = route.params['guarantorFundId'];
     return this.savingsService.getOnHoldTransactionsForSavingsAccount(savingAccountId, guarantorFundId);
   }
