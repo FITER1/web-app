@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { LoansService } from '../loans.service';
+import { AccountingService } from '../../accounting/accounting.service';
 
 /**
  * Loans notes data resolver.
@@ -17,7 +18,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
     /**
      * @param {LoansService} LoansService Loans service.
      */
-    constructor(private loansService: LoansService) { }
+    constructor(private loansService: LoansService,
+                private AccountingService: AccountingService) { }
 
     /**
      * Returns the Loans Notes Data.
@@ -60,7 +62,9 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.loansService.getLoanApprovalTemplate(loanId);
         } else if (loanActionButton === 'Add Loan Charge') {
             return this.loansService.getLoanChargeTemplateResource(loanId);
-        } else {
+        } else if (loanActionButton === 'Make Repayment'){
+            return this.AccountingService.getPaymentTypes();
+        }else {
             return undefined;
         }
     }
