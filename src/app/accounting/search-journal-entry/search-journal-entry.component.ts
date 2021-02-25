@@ -101,8 +101,15 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     {
       type: 'locale',
       value: 'en'
+    },
+    {
+      type: 'loanId',
+      value: ''
     }
   ];
+
+  /* loanId */
+  loanId: any;
 
   /** Paginator for journal entries table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -122,6 +129,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       }) => {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
+      });
+      this.route.queryParams.subscribe(params => 
+        {this.loanId = +params['loanId'];
+        this.applyFilterByParams(this.loanId, 'loanId');
       });
   }
 
@@ -309,6 +320,16 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       month = `0${month}`;
     }
     return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * Filters data in journal entries table based on passed value and poperty.
+   * @param {string} filterValue Value to filter data.
+   * @param {string} property Property to filter data by.
+   */
+  applyFilterByParams(filterValue: string, property: string) {
+    const findIndex = this.filterJournalEntriesBy.findIndex(filter => filter.type === property);
+    this.filterJournalEntriesBy[findIndex].value = filterValue;
   }
 
 }
