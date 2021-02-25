@@ -9,7 +9,7 @@ import {FormControl} from '@angular/forms';
 })
 export class TransactionsTabComponent implements OnInit {
 
-  /** Loan Details Data */
+  /** transactions Details Data */
   transactions: any;
   /** Show Transactions Data */
   showTransactionsData: any;
@@ -21,7 +21,8 @@ export class TransactionsTabComponent implements OnInit {
   status: string;
   /** Columns to be displayed in original schedule table. */
   displayedColumns: string[] = ['id', 'office', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
-
+  /** Loan Details Data */
+  loanDetails: any;
   /**
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -32,6 +33,7 @@ export class TransactionsTabComponent implements OnInit {
       this.transactions = data.loanDetailsData.transactions;
       this.tempTransaction = data.loanDetailsData.transactions;
       this.status = data.loanDetailsData.status.value;
+      this.loanDetails = data.loanDetailsData;
     });
   }
 
@@ -82,8 +84,22 @@ export class TransactionsTabComponent implements OnInit {
    * Stops the propagation to view pages.
    * @param $event Mouse Event
    */
-  routeEdit($event: MouseEvent) {
+  routeEdit($event: MouseEvent, transactionId: any) {
     $event.stopPropagation();
+    this.viewloantransactionjournalentries(transactionId);
+  }
+  /**
+   * @param  {} {this.router.navigate(['/accounting'
+   * @param  {} 'journal-entries']
+   * @param  {{'loanId':this.loanDetails.id}} {queryParams
+   * @param  {this.route}} relativeTo
+   */
+  viewJournalEntries(){
+    this.router.navigate(['/accounting', 'journal-entries'], {queryParams: {'loanId': this.loanDetails.id}, relativeTo : this.route});
+  }
+
+  viewloantransactionjournalentries(transactionId: any){
+    this.router.navigate(['/accounting', 'journal-entries', 'transactions', 'view', 'L'+transactionId], { relativeTo : this.route});
   }
 
 }
