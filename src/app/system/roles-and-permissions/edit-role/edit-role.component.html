@@ -21,6 +21,29 @@
               </mat-error>
             </mat-form-field>
 
+            <div fxFlexFill>
+              <span>Show Role Based roleBasedLimit  </span>
+              <span class="expandCollapsebutton" (click)="showRoleBasedLimit()">
+                <button mat-raised-button color="primary" *ngIf="showRoleBasedLimitDetails">
+                  <i class="fa fa-minus"></i>
+                </button>
+                <button mat-raised-button color="primary" *ngIf="!showRoleBasedLimitDetails">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </span>
+            </div>
+
+            <ng-container *ngIf = "showRoleBasedLimitDetails">
+              <mat-form-field>
+                <mat-label>Limit</mat-label>
+                <input matInput formControlName="maxLoanApprovalLimit">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Currency</mat-label>
+                <input matInput disabled formControlName="currency">
+              </mat-form-field>
+            </ng-container>
+
           </div>
 
       </mat-card-content>
