@@ -143,6 +143,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.clientActiveLoanData = this.loansAccountProductTemplate.clientActiveLoanOptions;
   }
 
+  updateNumberOfRepayments(){
+    this.loansAccountTermsForm.patchValue({
+      'numberOfRepayments' : this.loansAccountTermsForm.value.loanTermFrequency * this.loansAccountTermsForm.value.repaymentEvery
+    });
+  }
+
   /**
    * Returns loans account terms form value.
    */

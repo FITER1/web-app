@@ -14,7 +14,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Loan Term</mat-label>
-        <input matInput required formControlName="loanTermFrequency">
+        <input matInput required formControlName="loanTermFrequency" (change)="updateNumberOfRepayments()">
         <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequency.hasError('required')">
           Loan Term is <strong>required</strong>
         </mat-error>
@@ -40,19 +40,19 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%">
+      <!--<mat-form-field fxFlex="48%">
         <mat-label>First repayment on</mat-label>
         <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
-      </mat-form-field>
+      </mat-form-field>-->
 
       <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
 
       <mat-form-field fxFlex="48%">
         <mat-label>Repaid every</mat-label>
-        <input matInput required formControlName="repaymentEvery"
+        <input matInput required formControlName="repaymentEvery" (change)="updateNumberOfRepayments()"
           [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
         <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
           Repaid every is <strong>required</strong>
@@ -92,13 +92,13 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%">
+      <!--<mat-form-field fxFlex="48%">
         <mat-label>Interest charged from</mat-label>
         <input matInput [min]="minDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
         <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
         <mat-datepicker #interestPicker></mat-datepicker>
-      </mat-form-field>
+      </mat-form-field>-->
 
     <ng-container *ngIf="!loansAccountProductTemplate?.isLoanProductLinkedToFloatingRate">
 
