@@ -39,7 +39,7 @@ export class OriginalScheduleTabComponent implements OnInit {
       'output-type':	'PDF',
       R_selectLoan:	this.loanId
     };
-    this.reportsService.getPentahoRunReportData('Loan Repayment schedule', data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Loan Original Schedule', data, 'default', 'en', 'dd MMMM yyyy')
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});
