@@ -53,6 +53,11 @@
         <td mat-cell *matCellDef="let client"> {{ client.mobileNo }} </td>
       </ng-container>
 
+      <ng-container matColumnDef="subStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Status </th>
+        <td mat-cell *matCellDef="let client"> {{ client.subStatus.name }} </td>
+      </ng-container>
+
       <!--Gender column-->
       <ng-container matColumnDef="gender">
         <th mat-header-cell *matHeaderCellDef> Gender </th>
