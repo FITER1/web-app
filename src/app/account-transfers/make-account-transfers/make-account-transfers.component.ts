@@ -105,6 +105,10 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       'transferDate': ['', Validators.required],
       'transferDescription': ['', Validators.required],
     });
+    this.makeAccountTransferForm.patchValue({
+      toOfficeId : this.accountTransferTemplateData.fromOffice.id
+    });
+    this.getClientNames();
   }
 
   /** Sets options value */
@@ -157,6 +161,17 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.changeEvent();
       }
     });
+  }
+
+  getClientNames() {
+    this.clientsService.getFilteredClients('displayName', 'ASC', true, this.accountTransferTemplateData.fromClient.displayName)
+      .subscribe((data: any) => {
+        this.clientsData = data.pageItems;
+      });
+    this.makeAccountTransferForm.patchValue({
+      toClientId : this.accountTransferTemplateData.fromClient
+    });
+    this.changeEvent();
   }
 
   /**
