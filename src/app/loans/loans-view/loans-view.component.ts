@@ -12,6 +12,11 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DatePipe } from '@angular/common';
+import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -38,7 +43,9 @@ export class LoansViewComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               public loansService: LoansService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private datePipe: DatePipe,
+              private settingsService : SettingsService) {
     this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any}) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
@@ -141,12 +148,27 @@ export class LoansViewComponent implements OnInit {
    * Recover from guarantor action
    */
   private recoverFromGuarantor() {
-    const recoverFromGuarantorDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor', type: 'Mild' }
+    const formfields: FormfieldBase[] = [ new DatepickerBase({
+      controlName: 'recoveryDate',
+      label: 'Recovery Date',
+      value: '',
+      type: 'date',
+      required: true
+    })]
+    const recoverFromGuarantorDialogRef = this.dialog.open(FormDialogComponent, {
+      data: { title: 'Recover from Guarantor',  layout: { addButtonText: 'Confirm' }, formfields: formfields}
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.confirm) {
-        this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees').subscribe(() => {
+      if (response.data) {
+        const locale = this.settingsService.language.code;
+        const dateFormat = 'dd MMMM yyyy';
+        const dataObject = {
+          ...response.data.value,
+          recoveryDate: this.datePipe.transform(response.data.value.recoveryDate, dateFormat),
+          dateFormat,
+          locale
+        };
+        this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees', dataObject).subscribe(() => {
           this.reload();
         });
       }
