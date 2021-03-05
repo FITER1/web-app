@@ -21,7 +21,7 @@ export class ClientsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedAccounts', { static: true }) showClosedAccounts: MatCheckbox;
 
 
-  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'mobileNo', 'subStatus', 'gender', 'office'];
+  displayedColumns = ['name', 'clientno', 'externalid', 'status', 'subStatus', 'mobileNo',  'gender', 'office'];
   dataSource: ClientsDataSource;
   /** Get the required filter value. */
   searchValue = '';
