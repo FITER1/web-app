@@ -132,7 +132,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       });
       this.route.queryParams.subscribe(params => 
         {this.loanId = +params['loanId'];
-        this.applyFilterByParams(this.loanId, 'loanId');
+        if(this.loanId){this.applyFilterByParams(this.loanId, 'loanId');}
       });
   }
 
