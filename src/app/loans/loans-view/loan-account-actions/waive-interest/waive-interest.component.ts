@@ -62,14 +62,13 @@ export class WaiveInterestComponent implements OnInit {
     const transactionDate = this.loanInterestForm.value.transactionDate;
     const transactionAmount = this.loanInterestForm.value.transactionAmount;
     const dateFormat = 'dd MMMM yyyy';
-    this.loanInterestForm.patchValue({
-      transactionDate: this.datePipe.transform(transactionDate, dateFormat),
-      transactionAmount: parseInt(transactionAmount, 10)
-    });
+    
     const loanId = this.route.parent.snapshot.params['loanId'];
     const loanInterestForm = this.loanInterestForm.value;
     loanInterestForm.locale = 'en';
     loanInterestForm.dateFormat = dateFormat;
+    loanInterestForm.transactionDate= this.datePipe.transform(transactionDate, dateFormat),
+    loanInterestForm.transactionAmount= parseInt(transactionAmount, 10)
     this.loanService.submitLoanActionButton(loanId, loanInterestForm, 'waiveinterest').subscribe((response: any) => {
       this.router.navigate(['../../general'], {relativeTo: this.route});
     });

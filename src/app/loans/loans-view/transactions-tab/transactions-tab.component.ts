@@ -20,7 +20,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Stores the status of the loan account */
   status: string;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['id', 'office', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'loanBalance', 'actions'];
+  displayedColumns: string[] = ['id', 'office', 'transactionDate', 'transactionType', 'amount', 'principal', 'interest', 'fee', 'penalties', 'overpaid', 'loanBalance', 'actions'];
   /** Loan Details Data */
   loanDetails: any;
   /**
@@ -38,13 +38,13 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.hideAccrualsParam = new FormControl(false);
+    this.hideAccrualsParam = new FormControl(true);
     this.tempTransaction.forEach((element: any) => {
       if (element.type.accrual) {
         this.tempTransaction = this.removeItem(this.tempTransaction, element);
       }
     });
-    this.showTransactionsData = this.transactions;
+    this.showTransactionsData = this.tempTransaction;
   }
 
   /**
