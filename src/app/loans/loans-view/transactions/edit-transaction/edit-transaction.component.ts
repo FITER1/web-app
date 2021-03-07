@@ -119,7 +119,7 @@ export class EditTransactionComponent implements OnInit {
     transactionData.dateFormat = dateFormat;
     this.loansService.executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', transactionData, this.transactionTemplateData.id)
       .subscribe((res: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+        this.router.navigate(['../../'], { relativeTo: this.route });
       });
   }
 
