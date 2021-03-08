@@ -160,6 +160,20 @@
                      formControlName="transactionDate">
               <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #transactionDatePicker></mat-datepicker>
+                <mat-error *ngIf="clientPaymentForm.controls.transactionDate.hasError('required')">
+                  Transaction Date <strong>is required</strong>
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Bank #">
+            <th mat-header-cell *matHeaderCellDef> Bank # </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="bankNumberDatePicker" formControlName="bankNumber">
+                <mat-datepicker-toggle matSuffix [for]="bankNumberDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #bankNumberDatePicker></mat-datepicker>
               </mat-form-field>
             </td>
           </ng-container>
@@ -173,15 +187,9 @@
                   {{ paymentType.name }}
                 </mat-option>
               </mat-select>
-              </mat-form-field>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="Account #">
-            <th mat-header-cell *matHeaderCellDef> Account # </th>
-            <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-              <input matInput formControlName="accountNumber">
+                <mat-error *ngIf="clientPaymentForm.controls.paymentTypeId.hasError('required')">
+                  Payment Type <strong>is required</strong>
+                </mat-error>
               </mat-form-field>
             </td>
           </ng-container>
@@ -190,7 +198,10 @@
             <th mat-header-cell *matHeaderCellDef> Reciept # </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-                <input matInput formControlName="receiptNumber">
+                <input matInput formControlName="receiptNumber" required>
+                <mat-error *ngIf="clientPaymentForm.controls.receiptNumber.hasError('required')">
+                  Reciept Number <strong>is required</strong>
+                </mat-error>
               </mat-form-field>
             </td>
           </ng-container>
@@ -219,11 +230,11 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="Bank #">
-            <th mat-header-cell *matHeaderCellDef> Bank # </th>
+          <ng-container matColumnDef="Account #">
+            <th mat-header-cell *matHeaderCellDef> Account # </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-                <input matInput formControlName="bankNumber">
+                <input matInput formControlName="accountNumber">
               </mat-form-field>
             </td>
           </ng-container>
@@ -236,8 +247,8 @@
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
           <button type="button" mat-raised-button [routerLink]="['../../general']">Back</button>
-          <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-          <button mat-raised-button color="primary" (click)="submitAndReport()">Submit And Print</button>
+          <button mat-raised-button color="primary" (click)="submit()" [disabled]="!clientPaymentForm.valid">Submit</button>
+          <button mat-raised-button color="primary" (click)="submitAndReport()" [disabled]="!clientPaymentForm.valid">Submit And Print</button>
         </mat-card-actions>
 
         <table mat-table [dataSource]="errorResponse" *ngIf="showError">
