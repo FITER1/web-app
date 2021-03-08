@@ -49,6 +49,7 @@ export class ViewTransactionComponent {
    * Undo the loans transaction
    */
   undoTransaction() {
+    this.route = this.route;
     const accountId = this.route.parent.parent.parent.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
@@ -64,10 +65,22 @@ export class ViewTransactionComponent {
           locale
         };
         this.loansService.executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.reload();
         });
       }
     });
+  }
+
+  /**
+   * Refetches data fot the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  private reload() {
+    const url: string = this.router.url;
+    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('transactions') + 'transactions'.length);
+    console.log(url, refreshUrl);
+    this.router.navigateByUrl(refreshUrl, {skipLocationChange: false})
+      .then(() => this.router.navigate([refreshUrl]));
   }
 
 }
