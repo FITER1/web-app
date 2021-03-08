@@ -73,6 +73,9 @@
           <i class="fa fa-edit"></i>Edit</button>
       </span>
 
+      <button mat-raised-button (click)="doAction('payment')">
+        <i class="fa fa-credit-card-alt"></i>Payment</button>
+
       <button mat-raised-button [matMenuTriggerFor]="Applications">
         <i class="fa fa-file"></i>Applications</button>
       <mat-menu #Applications="matMenu">
@@ -121,7 +124,6 @@
           <button mat-menu-item (click)="doAction('View Standing Instructions')" *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'">View Standing Instructions</button>
         </span>
         <button mat-menu-item (click)="doAction('Create Self Service User')">Create Self Service User</button>
-        <button mat-menu-item (click)="doAction('payment')"> Payment </button>
         <button mat-menu-item (click)="doAction('Send SMS')"> Send SMS </button>
         <button mat-menu-item (click)="doAction('View Guarantees')"> View Guarantees </button>
       </mat-menu>
