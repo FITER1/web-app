@@ -63,7 +63,9 @@ export class LoansAccountDetailsStepComponent implements OnInit {
           'loanPurposeId': this.loansAccountTemplate.loanPurposeId,
           'fundId': this.loansAccountTemplate.fundId,
           'expectedDisbursementDate': this.loansAccountTemplate.timeline.expectedDisbursementDate && new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
-          'externalId': this.loansAccountTemplate.externalId
+          'externalId': this.loansAccountTemplate.externalId,
+          'linkAccountId': this.loansAccountTemplate.linkedAccount ? this.loansAccountTemplate.linkedAccount.id : '',
+          'createStandingInstructionAtDisbursement': this.loansAccountTemplate.createStandingInstructionAtDisbursement
         });
       }
     }

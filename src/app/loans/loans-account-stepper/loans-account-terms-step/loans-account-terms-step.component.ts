@@ -57,38 +57,67 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    */
   ngOnChanges() {
     if (this.loansAccountProductTemplate) {
-      this.loansAccountTermsForm.patchValue({
-        'principal': this.loansAccountProductTemplate.principal,
-        'loanTermFrequency': this.loansAccountProductTemplate.termFrequency,
-        'loanTermFrequencyType': this.loansAccountProductTemplate.termPeriodFrequencyType.id,
-        'numberOfRepayments': this.loansAccountProductTemplate.numberOfRepayments,
-        'repaymentEvery': this.loansAccountProductTemplate.repaymentEvery,
-        'repaymentFrequencyType': this.loansAccountProductTemplate.repaymentFrequencyType.id,
-        'interestRatePerPeriod': this.loansAccountProductTemplate.interestRatePerPeriod,
-        'amortizationType': this.loansAccountProductTemplate.amortizationType.id,
-        'isEqualAmortization': this.loansAccountProductTemplate.isEqualAmortization,
-        'interestType': this.loansAccountProductTemplate.interestType.id,
-        'isFloatingInterestRate': this.loansAccountProductTemplate.isLoanProductLinkedToFloatingRate ? false : '',
-        'interestCalculationPeriodType': this.loansAccountProductTemplate.interestCalculationPeriodType.id,
-        'allowPartialPeriodInterestCalcualtion': this.loansAccountProductTemplate.allowPartialPeriodInterestCalcualtion,
-        'inArrearsTolerance': this.loansAccountProductTemplate.inArrearsTolerance,
-        'graceOnPrincipalPayment': this.loansAccountProductTemplate.graceOnPrincipalPayment,
-        'graceOnInterestPayment': this.loansAccountProductTemplate.graceOnInterestPayment,
-        'graceOnArrearsAgeing': this.loansAccountProductTemplate.graceOnArrearsAgeing,
-        'transactionProcessingStrategyId': this.loansAccountProductTemplate.transactionProcessingStrategyId,
-        'graceOnInterestCharged': this.loansAccountProductTemplate.graceOnInterestCharged,
-        'fixedEmiAmount': this.loansAccountProductTemplate.fixedEmiAmount,
-        'maxOutstandingLoanBalance': this.loansAccountProductTemplate.maxOutstandingLoanBalance
-      });
+      if (!this.loansAccountTemplate.id) {
+        this.loansAccountTermsForm.patchValue({
+          'repaymentsStartingFromDate': this.loansAccountProductTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate),
+          'principal': this.loansAccountProductTemplate.principal,
+          'loanTermFrequency': this.loansAccountProductTemplate.termFrequency,
+          'loanTermFrequencyType': this.loansAccountProductTemplate.termPeriodFrequencyType.id,
+          'numberOfRepayments': this.loansAccountProductTemplate.numberOfRepayments,
+          'repaymentEvery': this.loansAccountProductTemplate.repaymentEvery,
+          'repaymentFrequencyType': this.loansAccountProductTemplate.repaymentFrequencyType.id,
+          'interestRatePerPeriod': this.loansAccountProductTemplate.interestRatePerPeriod,
+          'amortizationType': this.loansAccountProductTemplate.amortizationType.id,
+          'isEqualAmortization': this.loansAccountProductTemplate.isEqualAmortization,
+          'interestType': this.loansAccountProductTemplate.interestType.id,
+          'isFloatingInterestRate': this.loansAccountProductTemplate.isLoanProductLinkedToFloatingRate ? false : '',
+          'interestCalculationPeriodType': this.loansAccountProductTemplate.interestCalculationPeriodType.id,
+          'allowPartialPeriodInterestCalcualtion': this.loansAccountProductTemplate.allowPartialPeriodInterestCalcualtion,
+          'inArrearsTolerance': this.loansAccountProductTemplate.inArrearsTolerance,
+          'graceOnPrincipalPayment': this.loansAccountProductTemplate.graceOnPrincipalPayment,
+          'graceOnInterestPayment': this.loansAccountProductTemplate.graceOnInterestPayment,
+          'graceOnArrearsAgeing': this.loansAccountProductTemplate.graceOnArrearsAgeing,
+          'transactionProcessingStrategyId': this.loansAccountProductTemplate.transactionProcessingStrategyId,
+          'graceOnInterestCharged': this.loansAccountProductTemplate.graceOnInterestCharged,
+          'fixedEmiAmount': this.loansAccountProductTemplate.fixedEmiAmount,
+          'maxOutstandingLoanBalance': this.loansAccountProductTemplate.maxOutstandingLoanBalance,
+          'repaymentFrequencyNthDayType': this.loansAccountProductTemplate.repaymentFrequencyNthDayType ? this.loansAccountProductTemplate.repaymentFrequencyNthDayType.id : '',
+          'repaymentFrequencyDayOfWeekType': this.loansAccountProductTemplate.repaymentFrequencyDayOfWeekType ? this.loansAccountProductTemplate.repaymentFrequencyDayOfWeekType.id : ''
+        });
+      }
       this.setOptions();
     }
   }
 
   ngOnInit() {
+    console.log(this.loansAccountProductTemplate, this.loansAccountTemplate);
     if (this.loansAccountTemplate) {
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountTermsForm.patchValue({
-          'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
+          'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate),
+          'principal': this.loansAccountTemplate.principal,
+          'loanTermFrequency': this.loansAccountTemplate.termFrequency,
+          'loanTermFrequencyType': this.loansAccountTemplate.termPeriodFrequencyType.id,
+          'numberOfRepayments': this.loansAccountTemplate.numberOfRepayments,
+          'repaymentEvery': this.loansAccountTemplate.repaymentEvery,
+          'repaymentFrequencyType': this.loansAccountTemplate.repaymentFrequencyType.id,
+          'interestRatePerPeriod': this.loansAccountTemplate.interestRatePerPeriod,
+          'amortizationType': this.loansAccountTemplate.amortizationType.id,
+          'isEqualAmortization': this.loansAccountTemplate.isEqualAmortization,
+          'interestType': this.loansAccountTemplate.interestType.id,
+          'isFloatingInterestRate': this.loansAccountTemplate.isLoanProductLinkedToFloatingRate ? false : '',
+          'interestCalculationPeriodType': this.loansAccountTemplate.interestCalculationPeriodType.id,
+          'allowPartialPeriodInterestCalcualtion': this.loansAccountTemplate.allowPartialPeriodInterestCalcualtion,
+          'inArrearsTolerance': this.loansAccountTemplate.inArrearsTolerance,
+          'graceOnPrincipalPayment': this.loansAccountTemplate.graceOnPrincipalPayment,
+          'graceOnInterestPayment': this.loansAccountTemplate.graceOnInterestPayment,
+          'graceOnArrearsAgeing': this.loansAccountTemplate.graceOnArrearsAgeing,
+          'transactionProcessingStrategyId': this.loansAccountTemplate.transactionProcessingStrategyId,
+          'graceOnInterestCharged': this.loansAccountTemplate.graceOnInterestCharged,
+          'fixedEmiAmount': this.loansAccountTemplate.fixedEmiAmount,
+          'maxOutstandingLoanBalance': this.loansAccountTemplate.maxOutstandingLoanBalance,
+          'repaymentFrequencyNthDayType': this.loansAccountTemplate.repaymentFrequencyNthDayType ? this.loansAccountTemplate.repaymentFrequencyNthDayType.id : '',
+          'repaymentFrequencyDayOfWeekType': this.loansAccountTemplate.repaymentFrequencyDayOfWeekType ? this.loansAccountTemplate.repaymentFrequencyDayOfWeekType.id : ''
         });
       }
     }

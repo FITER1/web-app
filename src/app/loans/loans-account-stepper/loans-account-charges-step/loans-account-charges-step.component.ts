@@ -98,7 +98,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       new InputBase({
         controlName: 'amount',
         label: 'Amount',
-        value: charge.amount,
+        value: charge.amountOrPercentage,
         type: 'number',
         required: false
       }),
