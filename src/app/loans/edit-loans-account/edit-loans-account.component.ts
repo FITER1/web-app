@@ -109,7 +109,7 @@ export class EditLoansAccountComponent implements OnInit {
       clientId: this.loansAccountAndTemplate.clientId,
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
-        amount: charge.amount,
+        amount: charge.amountOrPercentage,
         dueDate: charge.dueDate && this.datePipe.transform(charge.dueDate, dateFormat),
       })),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
