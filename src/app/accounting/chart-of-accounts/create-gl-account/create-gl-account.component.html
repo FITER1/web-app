@@ -66,6 +66,15 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field fxFlex="28%">
+            <mat-label>Classification</mat-label>
+            <mat-select formControlName="classificationId">
+              <mat-option *ngFor="let glClassificationType of glClassificationTypes" [value]="glClassificationType.id">
+                {{ glClassificationType.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <div fxFlex="18%" class="manual-entries-allowed-wrapper">
             <mat-checkbox labelPosition="before" formControlName="manualEntriesAllowed" class="manual-entries-allowed">
               Manual Entries Allowed

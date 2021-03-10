@@ -34,6 +34,8 @@ export class CreateGlAccountComponent implements OnInit {
   parentId: number;
   /** Cancel route. (depending on creation of gl account or sub-ledger account) */
   cancelRoute = '../../';
+  /** Gl Account Classification data. */
+  glClassificationTypes: any;
 
   /**
    * Retrieves the chart of accounts data from `resolve`.
@@ -58,6 +60,7 @@ export class CreateGlAccountComponent implements OnInit {
       this.chartOfAccountsData = data.chartOfAccountsTemplate;
       this.accountTypeData = data.chartOfAccountsTemplate.accountTypeOptions;
       this.accountUsageData = data.chartOfAccountsTemplate.usageOptions;
+      this.glClassificationTypes = data.chartOfAccountsTemplate.GlClassificationTypes;
     });
   }
 
@@ -81,7 +84,8 @@ export class CreateGlAccountComponent implements OnInit {
       'parentId': [this.parentId || undefined],
       'tagId': [''],
       'manualEntriesAllowed': [true],
-      'description': ['']
+      'description': [''],
+      'classificationId' : ['']
     });
   }
 
