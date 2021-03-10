@@ -93,6 +93,14 @@
           {{ glAccount.description }}
         </div>
 
+        <div fxFlex="50%" class="header" *ngIf="glAccount.glAccountClassification">
+          Classification
+        </div>
+
+        <div fxFlex="50%" *ngIf="glAccount.glAccountClassification">
+          {{ glAccount.glAccountClassification.name }}
+        </div>
+
       </div>
 
     </mat-card-content>
