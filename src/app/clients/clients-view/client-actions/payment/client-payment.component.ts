@@ -228,6 +228,24 @@ export class ClientPaymentComponent implements OnInit {
       const transactionDate = this.transactionDate;
       const dueDate = this.transactionDate;
       const receiptNumber = this.receiptNumber;
+      if(transactionAmount !== 0) {
+        const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
+        const formData = {
+          dateFormat,
+          transactionDate,
+          locale,
+          transactionAmount,
+          paymentTypeId,
+          accountNumber,
+          checkNumber,
+          routingCode,
+          receiptNumber,
+          bankNumber
+        };
+        const bodyData = JSON.stringify(formData);
+        const batchData = {requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData};
+        this.batchRequests.push(batchData);
+      }
       this.savingAccounts.forEach((element1: any) => {
         if(element1.id === element){
           element1.savingsCharges.forEach((element2: any) => {
@@ -258,24 +276,6 @@ export class ClientPaymentComponent implements OnInit {
           });
         }
       });
-      if(transactionAmount !== 0) {
-        const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
-        const formData = {
-          dateFormat,
-          transactionDate,
-          locale,
-          transactionAmount,
-          paymentTypeId,
-          accountNumber,
-          checkNumber,
-          routingCode,
-          receiptNumber,
-          bankNumber
-        };
-        const bodyData = JSON.stringify(formData);
-        const batchData = {requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData};
-        this.batchRequests.push(batchData);
-      }
     });
     this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
@@ -308,8 +308,6 @@ export class ClientPaymentComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.clientPaymentForm);
-
     const dateFormat = this.settingsService.dateFormat;
     this.transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
     const transactionDate = this.transactionDate;
