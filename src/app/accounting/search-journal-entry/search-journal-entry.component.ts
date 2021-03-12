@@ -110,6 +110,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
   /* loanId */
   loanId: any;
+  /* clientId */
+  clientId:any;
 
   /** Paginator for journal entries table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -122,7 +124,8 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
     this.route.data.subscribe((data: {
         offices: any,
         glAccounts: any
@@ -132,6 +135,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       });
       this.route.queryParams.subscribe(params => 
         {this.loanId = +params['loanId'];
+        this.clientId = +params['clientId'];
         if(this.loanId){this.applyFilterByParams(this.loanId, 'loanId');}
       });
   }
@@ -330,6 +334,13 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   applyFilterByParams(filterValue: string, property: string) {
     const findIndex = this.filterJournalEntriesBy.findIndex(filter => filter.type === property);
     this.filterJournalEntriesBy[findIndex].value = filterValue;
+  }
+
+  back(){
+    if(this.loanId){
+      let path = '/clients/'+ this.clientId+ '/loans-accounts/' + this.loanId
+      this.router.navigate([path], {relativeTo: this.route});
+    }
   }
 
 }
