@@ -288,4 +288,12 @@ export class SavingsService {
     return this.http.get(`/savingsaccounts/${accountId}/onholdtransactions`, {params : httpParams});
   }
 
+  /**
+   * @param {string} accountId savings account Id
+   * @returns {Observable<any>}
+   */
+   getSavingsAccountCharges(accountId: string): Observable<any> {
+    return this.http.get(`/savingsaccounts/${accountId}/charges`);
+  }
+
 }

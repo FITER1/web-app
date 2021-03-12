@@ -439,4 +439,12 @@ export class LoansService {
     return this.http.post(`/loans/${accountId}/transactions`, data, { params: httpParams });
   }
 
+  /**
+   * @param {string} accountId loans account Id
+   * @returns {Observable<any>}
+   */
+   getLoansAccountCharges(accountId: string): Observable<any> {
+    return this.http.get(`/loans/${accountId}/charges`);
+  }
+
 }
