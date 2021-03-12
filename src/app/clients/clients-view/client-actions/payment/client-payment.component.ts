@@ -10,6 +10,11 @@ import { ClientsService } from 'app/clients/clients.service';
 import {TasksService} from "../../../../tasks/tasks.service";
 import { ReportsService } from '../../../../reports/reports.service';
 import {SettingsService} from "../../../../settings/settings.service";
+import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { LoansService } from 'app/loans/loans.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SavingsService } from 'app/savings/savings.service';
+import { WaiveChargeDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/waive-charge-dialog/waive-charge-dialog.component';
 
 /**
  * Clients Update Savings Account Component
@@ -68,6 +73,14 @@ export class ClientPaymentComponent implements OnInit {
   transactionDate: any;
   showError: boolean = false;
   showPaymentDetails = false;
+  loanCharges:any[];
+  savingsCharges:any[];
+  showLoanCharges:boolean=false;
+  showSavingsCharges:boolean =false;
+  loanId:any;
+  savingsId:any;
+
+  chargesColumns: String[] = ['Applied Charges', 'Charge Duedate', 'Amount', 'Actions'];
 
   /**
    * Fetches Client Action Data from `resolve`
@@ -84,7 +97,10 @@ export class ClientPaymentComponent implements OnInit {
               private settingsService: SettingsService,
               private datePipe: DatePipe,
               private reportsService: ReportsService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              public dialog: MatDialog,
+              public loansService: LoansService,
+              public savingsService : SavingsService) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientPaymentData = data.clientActionData;
     });
@@ -101,7 +117,7 @@ export class ClientPaymentComponent implements OnInit {
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
     this.savingAccounts = this.clientPaymentData.savingsAccounts || [];
     this.paymentTypeOptions = this.clientPaymentData.paymentTypeOptions || [];
-    //this.clientPaymentForm = this.formBuilder.group({});
+     //this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('transactionDate', new FormControl('', []));
@@ -392,4 +408,71 @@ export class ClientPaymentComponent implements OnInit {
       }
     });
   }
+
+   /**
+   * Waive's the loan charge
+   * @param {any} chargeId Charge Id
+   */
+  waiveLoanCharge(chargeId: any) {
+      const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: 'Waive Charge', dialogContext: `Are you sure you want to waive charge with id: ${chargeId}`, type: 'Basic' } });
+      waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+        if (response.confirm) {
+          this.loansService.executeLoansAccountChargesCommand(this.loanId, 'waive', {}, chargeId)
+            .subscribe(() => {
+              this.reload();
+            });
+        }
+      });
+    }
+
+     /**
+   * Stops the propagation to view charge page.
+   * @param $event Mouse Event
+   */
+  routeEdit($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
+  getLoanCharges(loanId: any){
+    this.loanCharges = [];
+    if(!this.showLoanCharges){
+      this.showLoanCharges = true;
+    }else{
+      this.showLoanCharges = false;
+    }
+    this.loanId = loanId;
+    this.loansService.getLoansAccountCharges(loanId).subscribe((response:any) => {
+      this.loanCharges = response.filter((charge:any) => charge.amountOutstanding > 0);
+    });
+  }
+
+  getSavingsCharges(savingsId: any){
+    this.savingsCharges = [];
+    if(!this.showSavingsCharges){
+      this.showSavingsCharges = true;
+    }else{
+      this.showSavingsCharges = false;
+    }
+    this.savingsId = savingsId;
+    this.savingsService.getSavingsAccountCharges(savingsId).subscribe((response:any) => {
+      this.savingsCharges = response.filter((charge:any) => charge.amountOutstanding > 0);
+    });
+  }
+
+  /**
+   * Waive's the savings charge
+   * @param {any} chargeId Charge Id
+   */
+   waiveSavingsCharge(chargeId: any) {
+    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
+    waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService.executeSavingsAccountChargesCommand(this.savingsId, 'waive', {}, chargeId)
+          .subscribe(() => {
+            this.reload();
+          });
+      }
+    });
+  }
+
 }
