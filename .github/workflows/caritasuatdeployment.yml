@@ -46,12 +46,12 @@ jobs:
           ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/stopserverui.sh'
         env:
           TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
-          TEST_SERVER_URL: mifosdemo.caritasnairobi.org
+          TEST_SERVER_URL: uatmis.caritasnairobi.org
 
       - name: deploy the war file
         uses: garygrossgarten/github-action-scp@release
         with:
-           host: mifosdemo.caritasnairobi.org
+           host: uatmis.caritasnairobi.org
            username: ubuntu
            privateKey: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
            local: "dist/web-app"
@@ -61,4 +61,4 @@ jobs:
         run: ssh -i key.pem -o StrictHostKeyChecking=no -l ubuntu $TEST_SERVER_URL '/home/ubuntu/startserver.sh'
         env:
           TEST_SERVER_SSH_KEY: ${{ secrets.CARITAS_UAT_SERVER_SSH_KEY }}
-          TEST_SERVER_URL: mifosdemo.caritasnairobi.org
+          TEST_SERVER_URL: uatmis.caritasnairobi.org
