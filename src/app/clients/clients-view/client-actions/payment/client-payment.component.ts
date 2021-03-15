@@ -418,7 +418,7 @@ export class ClientPaymentComponent implements OnInit {
         if (response.confirm) {
           this.loansService.executeLoansAccountChargesCommand(this.loanId, 'waive', {}, chargeId)
             .subscribe(() => {
-              this.reload();
+              this.refreshPage();
             });
         }
       });
@@ -468,9 +468,19 @@ export class ClientPaymentComponent implements OnInit {
       if (response.confirm) {
         this.savingsService.executeSavingsAccountChargesCommand(this.savingsId, 'waive', {}, chargeId)
           .subscribe(() => {
-            this.reload();
+            this.refreshPage();
           });
       }
+    });
+  }
+
+  /**
+   * Refresh the same page
+   */
+  refreshPage(){
+    let currentUrl = this.router.url;
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 
