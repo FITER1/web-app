@@ -28,6 +28,15 @@ export class ClientsService {
     return this.http.get('/clients', { params: httpParams });
   }
 
+  getFilteredClientsByExternalId(orderBy: string, sortOrder: string, orphansOnly: boolean, sqlSearch: string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('orphansOnly', orphansOnly.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy)
+      .set('sqlSearch', sqlSearch);
+    return this.http.get('/clients', { params: httpParams });
+  }
+
   getClients(orderBy: string, sortOrder: string, offset: number, limit: number, status : string): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
