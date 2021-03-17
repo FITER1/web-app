@@ -25,6 +25,7 @@ import { GetLoans } from './common-resolvers/getLoans.resolver';
 import { GetRescheduleLoans } from './common-resolvers/getRescheduleLoans.resolver';
 import { MakerCheckerTemplate } from './common-resolvers/makerCheckerTemplate.resolver';
 import { GetCheckerInboxDetailResolver } from './common-resolvers/getCheckerInboxDetail.resolver';
+import { ViewMakerCheckerTaskComponent } from './view-maker-checker-task/view-maker-checker-task.component';
 
 /** Tasks Routes */
 const routes: Routes = [
@@ -69,7 +70,7 @@ const routes: Routes = [
           }
         },
         {
-          path: 'reschedule-loan',
+          path: 'reschedule-loan:',
           component: RescheduleLoanComponent,
           data: { title: extract('Reschedule Loan') },
           resolve: {
@@ -91,6 +92,11 @@ const routes: Routes = [
         }
       ]
     },
+    {
+      path: 'checker-inbox-and-tasks/viewMakerCheckerTask/:commandId',
+      component: ViewMakerCheckerTaskComponent,
+      data: { title: extract('View Maker Checker Task Component'), breadcrumb :'View Maker Checker', routeParamBreadcrumb: 'commandId' },
+    }
   ])
 ];
 

@@ -37,6 +37,7 @@ import { SidenavComponent } from './shell/sidenav/sidenav.component';
 import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
+import { MakerChekerInterceptor } from './http/maker-cheker.interceptor';
 
 /**
  * Core Module
@@ -74,6 +75,7 @@ import { ContentComponent } from './shell/content/content.component';
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
     CacheInterceptor,
+    MakerChekerInterceptor,
     {
       provide: HttpClient,
       useClass: HttpService
