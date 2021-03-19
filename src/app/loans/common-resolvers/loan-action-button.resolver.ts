@@ -28,6 +28,7 @@ export class LoanActionButtonResolver implements Resolve<Object> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const loanId = route.parent.paramMap.get('loanId');
         const loanActionButton = route.paramMap.get('action');
+        const scheduleId = route.queryParams['scheduleId']
         if (loanActionButton === 'Assign Loan Officer' || loanActionButton === 'Change Loan Officer') {
             return this.loansService.getLoanTemplate(loanId);
         // } else if (loanActionButton === 'make-repayment') {
@@ -64,7 +65,9 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.loansService.getLoanChargeTemplateResource(loanId);
         } else if (loanActionButton === 'Make Repayment'){
             return this.AccountingService.getPaymentTypes();
-        }else {
+        } else if (loanActionButton === 'View Reschedule Request'){
+            return this.loansService.getRescheduleLoan(scheduleId);
+        } else {
             return undefined;
         }
     }
