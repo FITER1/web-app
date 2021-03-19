@@ -128,8 +128,8 @@ export class ViewRescheduleRequestComponent implements OnInit {
     });
   }
 
-  submit(){
-
+  newRepaymentSchedule(){
+    this.router.navigate(['../', 'Preview Loan Repayment Schedule'], {queryParams : {'scheduleId': this.loanRescheduleDetails.id}, relativeTo : this.route});
   }
 
 }
