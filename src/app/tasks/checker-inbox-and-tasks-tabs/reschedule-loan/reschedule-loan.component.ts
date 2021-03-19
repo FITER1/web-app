@@ -85,6 +85,7 @@ export class RescheduleLoanComponent implements OnInit {
     });
     rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
+        console.log(response);
         this.bulkLoanRescheduleApproval();
       }
     });
@@ -109,7 +110,7 @@ export class RescheduleLoanComponent implements OnInit {
       this.batchRequests.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
-      console.log(response);
+      console.log(response, "d");
       this.reload();
     });
   }

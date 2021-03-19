@@ -66,6 +66,7 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog
 import { LoansAccountAddCollateralDialogComponent } from './custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanAccountLoadDocumentsDialogComponent } from './custom-dialog/loan-account-load-documents-dialog/loan-account-load-documents-dialog.component';
 import { LoanAccountViewGuarantorsTransactionsComponent } from './loans-view/loan-account-actions/view-guarantors/loan-account-view-guarantors-transactions/loan-account-view-guarantors-transactions.component';
+import { ViewRescheduleRequestComponent } from './loans-view/loan-account-actions/view-reschedule-request/view-reschedule-request.component';
 
 /**
  * Loans Module
@@ -129,7 +130,8 @@ import { LoanAccountViewGuarantorsTransactionsComponent } from './loans-view/loa
     EditTransactionComponent,
     ViewRecieptComponent,
     ExportTransactionsComponent,
-    LoanAccountViewGuarantorsTransactionsComponent
+    LoanAccountViewGuarantorsTransactionsComponent,
+    ViewRescheduleRequestComponent
   ],
   providers: [DatePipe],
 })

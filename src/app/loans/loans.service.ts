@@ -447,4 +447,34 @@ export class LoansService {
     return this.http.get(`/loans/${accountId}/charges`);
   }
 
+  /**
+   * Returns the Reschedule Loan
+   */
+   getRescheduleLoan(scheduleId:any) {
+    return this.http.get('/rescheduleloans/'+scheduleId);
+  }
+ /**
+  * Reject Loan Reschedule
+  * @param scheduleId 
+  * @param command 
+  * @param data 
+  * @returns 
+  */
+  rejectLoanReschedule(scheduleId:string, command: string, data:any){
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post('/rescheduleloans/'+scheduleId, data, {params : httpParams});
+  }
+
+  /**
+   * Approve Loan Reschedule
+   * @param scheduleId 
+   * @param command 
+   * @param data 
+   * @returns 
+   */
+  approveLoanReschedule(scheduleId:string, command: string, data:any){
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post('/rescheduleloans/'+scheduleId, data, {params : httpParams});
+  }
+
 }

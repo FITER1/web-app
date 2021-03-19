@@ -70,7 +70,7 @@ const routes: Routes = [
           }
         },
         {
-          path: 'reschedule-loan:',
+          path: 'reschedule-loan',
           component: RescheduleLoanComponent,
           data: { title: extract('Reschedule Loan') },
           resolve: {
