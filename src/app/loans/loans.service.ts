@@ -477,4 +477,12 @@ export class LoansService {
     return this.http.post('/rescheduleloans/'+scheduleId, data, {params : httpParams});
   }
 
+  /**
+   * Returns the Preview Reschedule Repayment
+   */
+   getPreviewPaymentSchedule(scheduleId:string) {
+    const httpParams = new HttpParams().set('command', 'previewLoanReschedule');
+    return this.http.get('/rescheduleloans/'+scheduleId, {params : httpParams});
+  }
+
 }

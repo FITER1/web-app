@@ -67,6 +67,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
             return this.AccountingService.getPaymentTypes();
         } else if (loanActionButton === 'View Reschedule Request'){
             return this.loansService.getRescheduleLoan(scheduleId);
+        } else if (loanActionButton === 'Preview Loan Repayment Schedule'){
+            return this.loansService.getPreviewPaymentSchedule(scheduleId);
         } else {
             return undefined;
         }

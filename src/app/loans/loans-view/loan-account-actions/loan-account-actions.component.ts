@@ -35,7 +35,8 @@ export class LoanAccountActionsComponent {
             'Loan Screen Reports': boolean,
             'Approve': boolean,
             'Add Loan Charge': boolean,
-            'View Reschedule Request': boolean
+            'View Reschedule Request': boolean,
+            'Preview Loan Repayment Schedule': boolean
              } = {
               'Close': false,
               'Undo Approval': false,
@@ -59,7 +60,8 @@ export class LoanAccountActionsComponent {
               'Loan Screen Reports':  false,
               'Approve':  false,
               'Add Loan Charge':  false,
-              'View Reschedule Request': false
+              'View Reschedule Request': false,
+              'Preview Loan Repayment Schedule': false
                };
 
   actionButtonData: any;
