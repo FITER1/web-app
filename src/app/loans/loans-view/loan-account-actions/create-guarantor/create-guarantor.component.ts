@@ -123,7 +123,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          const sqlSearch: string = ' c.id =  ' + value + ' OR c.external_id LIKE \'%' + value + '%\' OR display_name LIKE \'%' + value + '%\'';
+          const sqlSearch: string = ' c.id LIKE \'%' + value + '%\' OR c.external_id LIKE \'%' + value + '%\' OR display_name LIKE \'%' + value + '%\'';
           this.clientsService.getFilteredClientsByExternalId('displayName', 'ASC', true, sqlSearch)
             .subscribe((data: any) => {
               this.clientsData = data.pageItems;
