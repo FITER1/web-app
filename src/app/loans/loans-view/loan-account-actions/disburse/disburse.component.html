@@ -74,10 +74,7 @@
 
             <mat-form-field>
               <mat-label>Bank #</mat-label>
-              <input matInput formControlName="bankNumber" required>
-              <mat-error *ngIf="disbursementLoanForm.controls.bankNumber.hasError('required')">
-                Bank #<strong>is required</strong>
-              </mat-error>
+              <input matInput formControlName="bankNumber">
             </mat-form-field>
           </ng-container>
 
