@@ -40,13 +40,13 @@
         </mat-error>
       </mat-form-field>
 
-      <!--<mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%">
         <mat-label>First repayment on</mat-label>
         <input matInput [min]="minDate" [matDatepicker]="repaymentsPicker"
           formControlName="repaymentsStartingFromDate">
         <mat-datepicker-toggle matSuffix [for]="repaymentsPicker"></mat-datepicker-toggle>
         <mat-datepicker #repaymentsPicker></mat-datepicker>
-      </mat-form-field>-->
+      </mat-form-field>
 
       <h4 fxFlex="98%" class="mat-h4">Repaid Every</h4>
 
@@ -92,13 +92,13 @@
         </mat-select>
       </mat-form-field>
 
-      <!--<mat-form-field fxFlex="48%">
+      <mat-form-field fxFlex="48%">
         <mat-label>Interest charged from</mat-label>
         <input matInput [min]="minDate" [matDatepicker]="interestPicker"
           formControlName="interestChargedFromDate">
         <mat-datepicker-toggle matSuffix [for]="interestPicker"></mat-datepicker-toggle>
         <mat-datepicker #interestPicker></mat-datepicker>
-      </mat-form-field>-->
+      </mat-form-field>
 
     <ng-container *ngIf="!loansAccountProductTemplate?.isLoanProductLinkedToFloatingRate">
 
