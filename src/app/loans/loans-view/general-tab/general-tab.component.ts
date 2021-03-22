@@ -34,11 +34,11 @@ export class GeneralTabComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
+      this.status = this.loanDetails.status;
     });
   }
 
   ngOnInit() {
-    this.status = this.loanDetails.value;
     if (this.loanDetails.summary) {
       this.setloanSummaryTableData();
       this.setloanDetailsTableData();
@@ -153,15 +153,15 @@ export class GeneralTabComponent implements OnInit {
   }
 
   showApprovedAmountBasedOnStatus() {
-    if (this.status === 'Submitted and pending approval' || this.status === 'Withdrawn by applicant' || this.status === 'Rejected') {
+    if (this.status.value === 'Submitted and pending approval' || this.status.value === 'Withdrawn by applicant' || this.status.value === 'Rejected') {
         return false;
     }
     return true;
   }
 
   showDisbursedAmountBasedOnStatus = function() {
-    if (this.status === 'Submitted and pending approval' || this.status === 'Withdrawn by applicant' || this.status === 'Rejected' ||
-        this.status === 'Approved') {
+    if (this.status.value === 'Submitted and pending approval' || this.status.value === 'Withdrawn by applicant' || this.status.value === 'Rejected' ||
+        this.status.value === 'Approved') {
         return false;
     }
     return true;
