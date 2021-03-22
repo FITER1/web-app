@@ -90,7 +90,7 @@ export class DisburseComponent implements OnInit {
       this.disbursementLoanForm.addControl('checkNumber', new FormControl(''));
       this.disbursementLoanForm.addControl('routingCode', new FormControl(''));
       this.disbursementLoanForm.addControl('receiptNumber', new FormControl('', Validators.required));
-      this.disbursementLoanForm.addControl('bankNumber', new FormControl('', Validators.required));
+      this.disbursementLoanForm.addControl('bankNumber', new FormControl(''));
     } else {
       this.disbursementLoanForm.removeControl('accountNumber');
       this.disbursementLoanForm.removeControl('checkNumber');
