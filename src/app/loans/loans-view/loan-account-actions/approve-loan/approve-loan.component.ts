@@ -81,13 +81,15 @@ export class ApproveLoanComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const approvedOnDate = this.approveLoanForm.value.approvedOnDate;
     const expectedDisbursementDate = this.approveLoanForm.value.expectedDisbursementDate;
-    
+    const approvedLoanAmount = this.approveLoanForm.value.approvedLoanAmount;
+
     const approveLoanFormData = {
       ... this.approveLoanForm.value,
       dateFormat,
       locale,
       approvedOnDate: this.datePipe.transform(approvedOnDate, dateFormat),
-      expectedDisbursementDate: this.datePipe.transform(expectedDisbursementDate, dateFormat)
+      expectedDisbursementDate: this.datePipe.transform(expectedDisbursementDate, dateFormat),
+      approvedLoanAmount : approvedLoanAmount
     };
     this.loanService.loanActionButtons(this.loanId, 'approve', approveLoanFormData).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
