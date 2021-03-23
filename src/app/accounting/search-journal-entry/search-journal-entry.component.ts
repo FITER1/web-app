@@ -133,7 +133,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
       });
-      this.route.queryParams.subscribe(params => 
+      this.route.queryParams.subscribe(params =>
         {this.loanId = +params['loanId'];
         this.clientId = +params['clientId'];
         if(this.loanId){this.applyFilterByParams(this.loanId, 'loanId');}
@@ -341,6 +341,16 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       let path = '/clients/'+ this.clientId+ '/loans-accounts/' + this.loanId
       this.router.navigate([path], {relativeTo: this.route});
     }
+  }
+
+  /**
+   * Refetches data for the component
+   * TODO: Replace by a custom reload component instead of hard-coded back-routing.
+   */
+  reload() {
+    const url: string = this.router.url;
+    this.router.navigateByUrl(`/accounting`, {skipLocationChange: true})
+      .then(() => this.router.navigate([url]));
   }
 
 }
