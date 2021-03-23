@@ -93,7 +93,7 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   capture() {
     this.isCaptured = true;
     this.video.nativeElement.pause();
-    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 150, 150);
+    this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 300, 150);
     this.clientImageDataURL = this.canvas.nativeElement.toDataURL();
   }
 
