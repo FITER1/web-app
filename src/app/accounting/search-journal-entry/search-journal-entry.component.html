@@ -38,6 +38,10 @@
     <input matInput [formControl]="transactionId">
   </mat-form-field>
 
+  <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <button type="button" mat-raised-button (click)="reload()">Reset</button>
+  </mat-card-actions>
+
 </div>
 
 
@@ -117,5 +121,5 @@
   <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" *ngIf = "loanId">
   <button color = "primary" mat-raised-button (click) ="back()" >Back</button></mat-card-actions>
   <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-  
+
 </div>
