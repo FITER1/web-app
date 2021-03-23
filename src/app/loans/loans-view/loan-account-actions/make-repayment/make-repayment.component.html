@@ -74,7 +74,10 @@
 
             <mat-form-field>
               <mat-label>Bank #</mat-label>
-              <input matInput formControlName="bankNumber" required>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="bankNumberDatePicker" required
+                     formControlName="bankNumber">
+              <mat-datepicker-toggle matSuffix [for]="bankNumberDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #bankNumberDatePicker></mat-datepicker>
               <mat-error *ngIf="repaymentLoanForm.controls.bankNumber.hasError('required')">
                 Bank #<strong>is required</strong>
               </mat-error>
