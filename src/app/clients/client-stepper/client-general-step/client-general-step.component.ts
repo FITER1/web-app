@@ -19,7 +19,7 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
-  maxDate = new Date(2100, 0, 1);
+  maxDate = new Date();
 
   /** Client Template */
   @Input() clientTemplate: any;
