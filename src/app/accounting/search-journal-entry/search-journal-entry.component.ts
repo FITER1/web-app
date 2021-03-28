@@ -65,7 +65,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Transaction ID form control. */
   transactionId = new FormControl();
   /** Columns to be displayed in journal entries table. */
-  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  displayedColumns: string[] = ['id', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
   /** Data source for journal entries table. */
   dataSource: JournalEntriesDataSource;
   /** Journal entries filter. */
