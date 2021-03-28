@@ -71,6 +71,16 @@
             <span fxFlex="50%"> {{loanDetails.interestType.value}} </span>
         </div>
 
+      <div fxFlexFill *ngIf="loanDetails.interestChargedFromDate">
+        <span fxFlex="50%"> Interest Charged From </span>
+        <span fxFlex="50%"> {{loanDetails.interestChargedFromDate | date }} </span>
+      </div>
+
+      <div fxFlexFill *ngIf="loanDetails.expectedFirstRepaymentOnDate">
+        <span fxFlex="50%"> First Repayment From</span>
+        <span fxFlex="50%"> {{loanDetails.expectedFirstRepaymentOnDate | date }} </span>
+      </div>
+
         <div fxFlexFill>
             <span fxFlex="50%"> Submitted on</span>
             <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate | date }} </span>
