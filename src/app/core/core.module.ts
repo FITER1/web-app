@@ -28,7 +28,6 @@ import { RouteReusableStrategy } from './route/route-reusable-strategy';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
-import { NotificationsModule } from '../notifications/notifications.module';
 import { SearchModule } from 'app/search/search.module';
 
 /** Custom Components */
