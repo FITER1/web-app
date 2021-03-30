@@ -29,7 +29,7 @@ export class EditGlAccountComponent implements OnInit {
   /** Tag data. */
   tagData: any;
   /** Gl Account Classification data. */
-  glClassificationTypes: any;
+  GlClassificationTypes: any;
 
   /**
    * Retrieves the chart of accounts data from `resolve`.
@@ -44,7 +44,7 @@ export class EditGlAccountComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
-      this.glClassificationTypes = data.glAccountAndChartOfAccountsTemplate.GlClassificationTypes;
+      this.GlClassificationTypes = data.glAccountAndChartOfAccountsTemplate.GlClassificationTypes;
     });
   }
 
@@ -69,7 +69,7 @@ export class EditGlAccountComponent implements OnInit {
       'tagId': [this.glAccount.tagId.id],
       'manualEntriesAllowed': [this.glAccount.manualEntriesAllowed],
       'description': [this.glAccount.description],
-      'classificationId' : [this.glAccount.classificationId]
+      'glClassificationType' : [this.glAccount.glClassificationType.id]
     });
   }
 

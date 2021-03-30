@@ -93,12 +93,12 @@
           {{ glAccount.description }}
         </div>
 
-        <div fxFlex="50%" class="header" *ngIf="glAccount.glAccountClassification">
+        <div fxFlex="50%" class="header" *ngIf="glAccount.glClassificationType">
           Classification
         </div>
 
-        <div fxFlex="50%" *ngIf="glAccount.glAccountClassification">
-          {{ glAccount.glAccountClassification.name }}
+        <div fxFlex="50%" *ngIf="glAccount.glClassificationType">
+          {{ glAccount.glClassificationType.value }}
         </div>
 
       </div>
