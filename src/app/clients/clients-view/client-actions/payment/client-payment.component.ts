@@ -69,7 +69,6 @@ export class ClientPaymentComponent implements OnInit {
   errorResponse: any[];
   pentahoUrl: any;
   showReport: boolean = false;
-  receiptNumber: string;
   transactionDate: any;
   showError: boolean = false;
   showPaymentDetails = false;
@@ -117,16 +116,15 @@ export class ClientPaymentComponent implements OnInit {
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
     this.savingAccounts = this.clientPaymentData.savingsAccounts || [];
     this.paymentTypeOptions = this.clientPaymentData.paymentTypeOptions || [];
-     //this.clientPaymentForm = this.formBuilder.group({});
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('transactionDate', new FormControl('', []));
     this.clientPaymentForm.addControl('paymentTypeId', new FormControl('', []));
-    this.clientPaymentForm.addControl('accountNumber', new FormControl(''));
-    this.clientPaymentForm.addControl('checkNumber', new FormControl(''));
-    this.clientPaymentForm.addControl('routingCode', new FormControl(''));
+    this.clientPaymentForm.addControl('accountNumber', new FormControl('', []));
+    this.clientPaymentForm.addControl('checkNumber', new FormControl('', []));
+    this.clientPaymentForm.addControl('routingCode', new FormControl('', []));
     this.clientPaymentForm.addControl('receiptNumber', new FormControl('', Validators.required));
-    this.clientPaymentForm.addControl('bankNumber', new FormControl(''));
+    this.clientPaymentForm.addControl('bankNumber', new FormControl('', []));
     this.totalPaymentArray.push(this.totalPaymentAmount);
     this.paymentDetails.push('Payment Details');
   }
@@ -194,13 +192,12 @@ export class ClientPaymentComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     this.transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
     const transactionDate = this.transactionDate;
-    const receiptNumber = this.receiptNumber;
     const locale = this.settingsService.language.code;
     const paymentTypeId = this.clientPaymentForm.value.paymentTypeId;
     const accountNumber = this.clientPaymentForm.value.accountNumber;
     const checkNumber = this.clientPaymentForm.value.checkNumber;
     const routingCode = this.clientPaymentForm.value.routingCode;
-    this.receiptNumber = this.clientPaymentForm.value.receiptNumber;
+    const receiptNumber = this.clientPaymentForm.value.receiptNumber;
     const bankNumber = this.clientPaymentForm.value.bankNumber;
     this.batchRequests = [];
     let reqId = 1;
@@ -227,7 +224,7 @@ export class ClientPaymentComponent implements OnInit {
       let transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
       const transactionDate = this.transactionDate;
       const dueDate = this.transactionDate;
-      const receiptNumber = this.receiptNumber;
+      const receiptNumber = this.clientPaymentForm.value.receiptNumber;
       if(transactionAmount !== 0) {
         const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
         const formData = {
@@ -286,7 +283,7 @@ export class ClientPaymentComponent implements OnInit {
         }
       });
       if(this.errorResponse.length === 0){
-        const R_reciptNo = this.receiptNumber;
+        const R_reciptNo = this.clientPaymentForm.value.receiptNumber;
         const R_clientId = this.clientId;
         const R_tDate = this.transactionDate;
         const formData = {
@@ -311,13 +308,12 @@ export class ClientPaymentComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     this.transactionDate = this.datePipe.transform(this.clientPaymentForm.value.transactionDate, dateFormat);
     const transactionDate = this.transactionDate;
-    const receiptNumber = this.receiptNumber;
     const locale = this.settingsService.language.code;
     const paymentTypeId = this.clientPaymentForm.value.paymentTypeId;
     const accountNumber = this.clientPaymentForm.value.accountNumber;
     const checkNumber = this.clientPaymentForm.value.checkNumber;
     const routingCode = this.clientPaymentForm.value.routingCode;
-    this.receiptNumber = this.clientPaymentForm.value.receiptNumber;
+    const receiptNumber = this.clientPaymentForm.value.receiptNumber;
     const bankNumber = this.clientPaymentForm.value.bankNumber;
     this.batchRequests = [];
     let reqId = 1;
@@ -344,7 +340,7 @@ export class ClientPaymentComponent implements OnInit {
       let transactionAmount = this.savingDeposits[this.savingIds.indexOf(element)];
       const transactionDate = this.transactionDate;
       const dueDate = this.transactionDate;
-      const receiptNumber = this.receiptNumber;
+      const receiptNumber = this.clientPaymentForm.value.receiptNumber;
       if(transactionAmount !== 0) {
         const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
         const formData = {
