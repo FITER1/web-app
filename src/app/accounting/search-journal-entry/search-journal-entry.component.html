@@ -60,7 +60,6 @@
 
 
 <div class="mat-elevation-z8 container">
-
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="id">
@@ -85,7 +84,7 @@
 
     <ng-container matColumnDef="glAccountType">
       <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountType.value }} </td>
+      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.journalEntryDetails[0].glAccountData.type.value }} </td>
     </ng-container>
 
     <ng-container matColumnDef="createdByUserName">
@@ -95,22 +94,22 @@
 
     <ng-container matColumnDef="glAccountCode">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Code </th>
-      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountCode }} </td>
+      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.journalEntryDetails[0].glAccountData.glCode }} </td>
     </ng-container>
 
     <ng-container matColumnDef="glAccountName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name </th>
-      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.glAccountName }} </td>
+      <td mat-cell *matCellDef="let journalEntry"> {{ journalEntry.journalEntryDetails[0].glAccountData.name }} </td>
     </ng-container>
 
     <ng-container matColumnDef="debit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.journalEntryDetails[0].entryType.value === 'DEBIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.journalEntryDetails[0].amount }} </span></td>
     </ng-container>
 
     <ng-container matColumnDef="credit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
-      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.amount }} </span></td>
+      <td mat-cell *matCellDef="let journalEntry"><span *ngIf="journalEntry.journalEntryDetails[0].entryType.value === 'CREDIT'"> {{ (journalEntry.currency.displaySymbol || journalEntry.currency.code) + ' ' + journalEntry.journalEntryDetails[0].amount }} </span></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
