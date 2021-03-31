@@ -169,8 +169,16 @@
               <td>{{savingsAccountData.taxGroup.name}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.onHoldFunds">
+              <td>Loan Guarantee Funds</td>
+              <td><a [routerLink] = "['./onHold']" *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.onHoldFunds | number}}</a></td>
+            </tr>
+            <tr *ngIf="savingsAccountData.onHoldFunds">
               <td>On Hold Funds</td>
-              <td><a [routerLink] = "['./onHold']" *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | number}}</a></td>
+              <td><a [routerLink] = "['./onHold']" *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.onHoldFunds | number}}</a></td>
+            </tr>
+            <tr *ngIf="savingsAccountData.savingsAmountOnHold">
+              <td>Savings Amount on hold</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.savingsAmountOnHold}}</td>
             </tr>
           </tbody>
         </table>
