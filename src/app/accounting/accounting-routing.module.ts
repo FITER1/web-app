@@ -38,6 +38,7 @@ import { ProvisioningEntriesComponent } from './provisioning-entries/provisionin
 import { CreateProvisioningEntryComponent } from './provisioning-entries/create-provisioning-entry/create-provisioning-entry.component';
 import { ViewProvisioningEntryComponent } from './provisioning-entries/view-provisioning-entry/view-provisioning-entry.component';
 import { ViewProvisioningJournalEntriesComponent } from './provisioning-entries/view-provisioning-journal-entries/view-provisioning-journal-entries.component';
+import { VouchersResolver } from './common-resolvers/vouchers.resolver';
 
 /** Custom Resolvers */
 import { OfficesResolver } from './common-resolvers/offices.resolver';
@@ -64,6 +65,7 @@ import { ProvisioningEntryEntriesResolver } from './provisioning-entries/view-pr
 import { LoanProductsResolver } from './common-resolvers/loan-products.resolver';
 import { ProvisioningCategoriesResolver } from './common-resolvers/provisioning-categories.resolver';
 import { ProvisioningJournalEntriesResolver } from './provisioning-entries/view-provisioning-journal-entries/provisioning-journal-entries.resolver';
+import {VouchersComponent} from './vouchers/vouchers.component';
 
 /** Accounting Routes */
 const routes: Routes = [
@@ -87,6 +89,17 @@ const routes: Routes = [
                 offices: OfficesResolver,
                 glAccounts: GlAccountsResolver
               },
+            },
+            {
+              path: 'vouchers',
+              component: VouchersComponent,
+              data: { title: extract('Vouchers'), breadcrumb: 'Vouchers' },
+              resolve: {
+                offices: OfficesResolver,
+                currencies: CurrenciesResolver,
+                paymentTypes: PaymentTypesResolver,
+                voucherTypes: VouchersResolver
+              }
             },
             {
               path: 'frequent-postings',

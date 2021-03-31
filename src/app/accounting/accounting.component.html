@@ -8,6 +8,14 @@
 
         <mat-nav-list>
 
+          <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'" [routerLink]="['journal-entries/vouchers']">
+            <mat-icon matListIcon>
+              <fa-icon icon="sync" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Vouchers</h4>
+            <p matLine>Creating vouchers</p>
+          </mat-list-item>
+
           <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'" [routerLink]="['journal-entries/frequent-postings']">
             <mat-icon matListIcon>
               <fa-icon icon="sync" size="sm"></fa-icon>
