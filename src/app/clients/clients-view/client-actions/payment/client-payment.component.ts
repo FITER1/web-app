@@ -127,6 +127,7 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm.addControl('bankNumber', new FormControl('', []));
     this.totalPaymentArray.push(this.totalPaymentAmount);
     this.paymentDetails.push('Payment Details');
+    console.log(this.clientPaymentForm);
   }
 
   addPaymentDetails() {
@@ -180,7 +181,7 @@ export class ClientPaymentComponent implements OnInit {
 
   reload() {
     const url: string = `/clients/`+this.clientId+`/general`;
-    this.router.navigateByUrl(`/clients/`+this.clientId+`/general`, { skipLocationChange: true })
+    this.router.navigateByUrl(`/clients/`+this.clientId+`/general`, { skipLocationChange: false })
       .then(() => this.router.navigate([url]));
   }
 
@@ -299,6 +300,12 @@ export class ClientPaymentComponent implements OnInit {
             const filecontent = URL.createObjectURL(file);
             this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
             this.showReport = true;
+            console.log(this.clientPaymentForm);
+            this.clientPaymentForm.reset();
+            this.totalPaymentArray = [];
+            this.clientPaymentForm.patchValue({
+              'transactionDate': new Date()
+            })
           });
       }
     });
