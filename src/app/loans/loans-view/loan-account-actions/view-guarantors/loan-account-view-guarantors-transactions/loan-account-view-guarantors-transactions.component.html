@@ -1,54 +1,54 @@
 <div class="tab-container mat-typography">
   <mat-card>
     <div fxLayout = "row" fxLayoutGap = "300px" class="performance-history-container">
-     <p> 
+     <p>
          <b>Client Name :</b> &nbsp;&nbsp;&nbsp;{{onHoldTransactions[0] ? onHoldTransactions[0].loanClientName : ''}}<br><br>
          <b>Deposit Account On Hold Transactions</b>
      </p>
-     <p>     
+     <p>
          <b>Loan account# :</b> &nbsp;&nbsp;{{onHoldTransactions[0] ? onHoldTransactions[0].loanAccountNo : ''}}
     </p>
     </div>
   </mat-card>
     <table mat-table [dataSource]="onHoldTransactions">
-      
+
       <ng-container matColumnDef="Transaction Id">
         <th mat-header-cell *matHeaderCellDef> Transaction Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}"> {{element.id}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Savings Account Number">
         <th mat-header-cell *matHeaderCellDef> Savings Account Number </th>
-        <td mat-cell *matCellDef="let element"><a [routerLink] = "['../../../../../savings-accounts',element.savingsId, 'transactions']">{{element.savingsAccountNo}}</a></td> 
+        <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}"><a [routerLink] = "['../../../../../savings-accounts',element.savingsId, 'transactions']">{{element.savingsAccountNo}}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="Client Name">
         <th mat-header-cell *matHeaderCellDef> Client Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.savingsClientName}} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}"> {{element.savingsClientName}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Transaction Type">
         <th mat-header-cell *matHeaderCellDef>Transaction Type </th>
-        <td mat-cell *matCellDef="let element"> {{element.transactionType.value}} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}"> {{element.transactionType.value}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Transaction Date">
           <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}">
             {{element.transactionDate|date}}
           </td>
       </ng-container>
 
       <ng-container matColumnDef="Amount">
         <th mat-header-cell *matHeaderCellDef>Amount </th>
-        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        <td mat-cell *matCellDef="let element" [ngClass]="{'strike': element.reversed}"> {{element.amount}} </td>
       </ng-container>
 
-     
+
         <tr mat-header-row *matHeaderRowDef="openLoansColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: openLoansColumns;"
            class="select-row"></tr>
-    
+
       </table>
-    
+
     </div>
