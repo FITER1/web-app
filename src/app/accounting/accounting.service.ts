@@ -398,4 +398,8 @@ export class AccountingService {
     return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
   }
 
+  getVoucherTemplate(): Observable<any> {
+    return this.http.get('/vouchers/template');
+  }
+
 }
