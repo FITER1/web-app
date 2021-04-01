@@ -17,6 +17,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { CheckboxBase } from 'app/shared/form-dialog/formfield/model/checkbox-base';
 
 /**
  * Entity to Entity Mapping Component
@@ -66,7 +67,7 @@ export class EntityToEntityMappingComponent implements OnInit {
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
-  entityMappingListColumns: string[] = ['fromentity', 'toentity', 'startdate', 'enddate', 'edit', 'delete'];
+  entityMappingListColumns: string[] = ['fromentity', 'toentity', 'startdate', 'enddate', 'allowedForChildOffices', 'edit', 'delete'];
 
   /** Paginator for entity table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -128,6 +129,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     switch (this.retrieveById) {
 
       case 1:
+        if(this.firstEntityData.length === 0 || this.secondEntityData.length === 0){
         this.systemService.getOffices().subscribe((response: any) => {
           this.firstEntityData = response;
           this.firstMappingEntity = 'Office';
@@ -136,6 +138,7 @@ export class EntityToEntityMappingComponent implements OnInit {
           this.secondEntityData = response;
           this.secondMappingEntity = 'Loan Products';
         });
+      }
         break;
       case 2:
         this.systemService.getOffices().subscribe((response: any) => {
@@ -209,7 +212,7 @@ export class EntityToEntityMappingComponent implements OnInit {
    */
   showAddScreen(selectedType: number) {
     this.relId = selectedType;
-    this.fetchRelatedData(this.relId);
+   // this.fetchRelatedData(this.relId);
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'fromId',
@@ -222,6 +225,11 @@ export class EntityToEntityMappingComponent implements OnInit {
         label: this.secondMappingEntity,
         options: { label: 'name', value: 'id', data: this.secondEntityData },
         required: true
+      }),
+      new CheckboxBase({
+        controlName: 'isAllowedForChildOffices',
+        label: 'Allowed For Child Offices',
+        required: false
       }),
       new DatepickerBase({
         controlName: 'startDate',
@@ -257,49 +265,64 @@ export class EntityToEntityMappingComponent implements OnInit {
   showEditScreen(selectedMap: number, selectedType: number) {
     this.relId = selectedType;
     this.mapIdToEdit = selectedMap;
-    this.fetchRelatedData(this.relId);
+    //this.fetchRelatedData(this.relId);
     this.systemService.getMapIdData(selectedMap).subscribe((response: any) => {
-      this.entityMap = response;
+      this.entityMap = response[0];
+      this.openEditDialog(response[0]);
     });
-    const formfields: FormfieldBase[] = [
-      new SelectBase({
-        controlName: 'fromId',
-        label: this.firstMappingEntity,
-        options: { label: 'name', value: 'id', data: this.firstEntityData },
-        required: true
-      }),
-      new SelectBase({
-        controlName: 'toId',
-        label: this.secondMappingEntity,
-        options: { label: 'name', value: 'id', data: this.secondEntityData },
-        required: true
-      }),
-      new DatepickerBase({
-        controlName: 'startDate',
-        label: 'Start Date',
-        type: 'date',
-        required: false
-      }),
-      new DatepickerBase({
-        controlName: 'endDate',
-        label: 'End Date',
-        type: 'date',
-        required: false
-      })
-    ];
-    const data = {
-      title: 'Edit Entity to Entity Mapping',
-      layout: { addButtonText: 'Confirm' },
-      formfields: formfields
-    };
-    const editEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        this.submitEdit(response.data);
-      }
-    });
+    
   }
 
+  openEditDialog(entityMap:any){
+      const formfields: FormfieldBase[] = [
+        new SelectBase({
+          controlName: 'fromId',
+          label: this.firstMappingEntity,
+          options: { label: 'name', value: 'id', data: this.firstEntityData },
+          required: true,
+          value: entityMap.fromId
+        }),
+        new SelectBase({
+          controlName: 'toId',
+          label: this.secondMappingEntity,
+          options: { label: 'name', value: 'id', data: this.secondEntityData },
+          required: true,
+          value: entityMap.toId
+        }),
+        new CheckboxBase({
+          controlName: 'isAllowedForChildOffices',
+          label: 'Allowed For Child Offices',
+          required: false,
+          value: entityMap.isAllowedForChildOffices
+        }),
+        new DatepickerBase({
+          controlName: 'startDate',
+          label: 'Start Date',
+          type: 'date',
+          required: false,
+          value: new Date(entityMap.startDate)
+        }),
+        new DatepickerBase({
+          controlName: 'endDate',
+          label: 'End Date',
+          type: 'date',
+          required: false,
+          value: new Date(entityMap.endDate)
+        })
+      ];
+      const data = {
+        title: 'Edit Entity to Entity Mapping',
+        layout: { addButtonText: 'Confirm' },
+        formfields: formfields
+      };
+      console.log(data, this.entityMap);
+      const editEntitytoEntityMappingDialogRef = this.dialog.open(FormDialogComponent, { data });
+      editEntitytoEntityMappingDialogRef.afterClosed().subscribe((response: any) => {
+        if (response.data) {
+          this.submitEdit(response.data);
+        }
+      });
+  }
 
   /**
    * Submits the new mapping
