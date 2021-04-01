@@ -3,7 +3,7 @@ name: Caritas Web UI Build
 on:
   push:
     branches:
-      - caritas-uat
+      - caritas-dev
 
 jobs:
   build:
