@@ -144,6 +144,11 @@
     <span fxFlex="60%">{{ savingProduct.daysToEscheat }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="savingProduct.releaseguarantor">
+    <span fxFlex="40%">Release Guarantors On Deposit :</span>
+    <span fxFlex="60%">{{ savingProduct.releaseguarantor ? 'Yes' : 'No' }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="savingProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
 
     <h3 class="mat-h3" fxFlexFill>Charges</h3>

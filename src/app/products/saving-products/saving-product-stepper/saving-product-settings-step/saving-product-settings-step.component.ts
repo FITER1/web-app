@@ -41,7 +41,8 @@ export class SavingProductSettingsStepComponent implements OnInit {
       'isDormancyTrackingActive': this.savingProductsTemplate.isDormancyTrackingActive,
       'daysToInactive': this.savingProductsTemplate.daysToInactive,
       'daysToDormancy': this.savingProductsTemplate.daysToDormancy,
-      'daysToEscheat': this.savingProductsTemplate.daysToEscheat
+      'daysToEscheat': this.savingProductsTemplate.daysToEscheat,
+      'releaseguarantor': this.savingProductsTemplate.releaseguarantor
     });
   }
 
@@ -56,7 +57,8 @@ export class SavingProductSettingsStepComponent implements OnInit {
       'minRequiredBalance': [''],
       'allowOverdraft': [false],
       'withHoldTax': [false],
-      'isDormancyTrackingActive': [false]
+      'isDormancyTrackingActive': [false],
+      'releaseguarantor': [false]
     });
   }
 
