@@ -32,6 +32,8 @@ export class SavingsAccountViewComponent implements OnInit {
   /** Entity Type */
   entityType: string;
 
+  hideWihhdrawalButton:boolean= false;
+
   /**
    * Fetches savings account data from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -45,6 +47,9 @@ export class SavingsAccountViewComponent implements OnInit {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
+      if(this.savingsAccountData.savingsProductName.includes('Shares')){
+        this.hideWihhdrawalButton = true;
+      }
     });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
@@ -117,6 +122,9 @@ export class SavingsAccountViewComponent implements OnInit {
         name: 'Hold Amount',
         taskPermissionName: 'HOLDAMOUNT_SAVINGSACCOUNT'
       });
+    }
+    if(this.hideWihhdrawalButton){
+      this.buttonConfig.buttonsArray = this.buttonConfig.buttonsArray.filter(item => (item.name != 'Withdraw'));
     }
   }
 
