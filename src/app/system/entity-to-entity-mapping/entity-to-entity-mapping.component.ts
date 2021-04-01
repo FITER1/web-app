@@ -293,21 +293,21 @@ export class EntityToEntityMappingComponent implements OnInit {
           controlName: 'isAllowedForChildOffices',
           label: 'Allowed For Child Offices',
           required: false,
-          value: entityMap.isAllowedForChildOffices
+          value: entityMap.isAllowedForChildOffices ? entityMap.isAllowedForChildOffices : false
         }),
         new DatepickerBase({
           controlName: 'startDate',
           label: 'Start Date',
           type: 'date',
           required: false,
-          value: new Date(entityMap.startDate)
+          value: entityMap.startDate ? new Date(entityMap.startDate) : ''
         }),
         new DatepickerBase({
           controlName: 'endDate',
           label: 'End Date',
           type: 'date',
           required: false,
-          value: new Date(entityMap.endDate)
+          value: entityMap.endDate ? new Date(entityMap.endDate) : ''
         })
       ];
       const data = {
