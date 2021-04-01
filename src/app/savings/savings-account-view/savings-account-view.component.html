@@ -38,7 +38,7 @@
         <button mat-raised-button *mifosxHasPermission="button.taskPermissionName" (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
@@ -47,7 +47,7 @@
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -232,6 +232,10 @@
                 <td>Nominal Interest Rate</td>
                 <td>{{savingsAccountData.nominalAnnualInterestRate}}%</td>
               </tr>
+              <tr *ngIf="savingsAccountData.releaseguarantor">
+                <td>Release Guarantor on Deposit</td>
+                <td>{{savingsAccountData.releaseguarantor}}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -270,7 +274,7 @@
                 <td>Total Withdrawls</td>
                 <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.summary.totalWithdrawals | number}}</td>
               </tr>
-              
+
           </table>
         </div>
 
