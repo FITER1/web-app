@@ -73,7 +73,7 @@
           <i class="fa fa-edit"></i>Edit</button>
       </span>
 
-      <button mat-raised-button (click)="doAction('payment')">
+      <button *mifosxHasPermission="'CLIENT_PAYMENTS'" mat-raised-button (click)="doAction('payment')">
         <i class="fa fa-credit-card-alt"></i>Payment</button>
 
       <button mat-raised-button [matMenuTriggerFor]="Applications">
