@@ -3,6 +3,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BnNgIdleService } from 'bn-ng-idle'; // import it to your component
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -61,7 +62,8 @@ export class WebAppComponent implements OnInit {
               public snackBar: MatSnackBar,
               private alertService: AlertService,
               private settingsService: SettingsService,
-              private authenticationService: AuthenticationService) { }
+              private authenticationService: AuthenticationService,
+              private bnIdle: BnNgIdleService) { }
 
   /**
    * Initial Setup:
@@ -156,6 +158,12 @@ export class WebAppComponent implements OnInit {
         'https://localhost:8443'
       ]);
     }
+    this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+        this.logout();
+      }
+    });
   }
 
   logout() {
