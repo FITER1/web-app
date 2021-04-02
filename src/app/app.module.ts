@@ -4,6 +4,7 @@ import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
 
 /** Tanslation Imports */
 import { TranslateModule } from '@ngx-translate/core';
@@ -78,7 +79,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [],
+  providers: [BnNgIdleService],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }
