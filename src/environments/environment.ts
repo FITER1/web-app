@@ -8,7 +8,7 @@ import env from './.env';
 
 export const environment = {
   production: false,
-  version: env.mifos_x_version + '-dev',
+  version: env.mifos_x_version,
   fineractPlatformTenantId: 'default',  // For connecting to server running elsewhere update the tenant identifier
   baseApiUrl: 'https://localhost:8443',  // For connecting to server running elsewhere update the base API URL
   allowServerSwitch: env.allow_switching_backend_instance,
