@@ -6,7 +6,7 @@
 
       <nav mat-tab-nav-bar class="navigation-tabs">
         <a mat-tab-link [routerLink]="['./checker-inbox']" routerLinkActive #checkerInbox="routerLinkActive"
-        [active]="checkerInbox.isActive" *mifosxHasPermission="'ALL_FUNCTIONS_READ'">
+        [active]="checkerInbox.isActive" *mifosxHasPermission="'CHECKER_SUPER_USER'">
           Checker Inbox
         </a>
         <a mat-tab-link [routerLink]="['./client-approval']" routerLinkActive #clientApproval="routerLinkActive"
