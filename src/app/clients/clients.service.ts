@@ -391,4 +391,11 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/guarantedLoans`);
   }
 
+  getClientsBysearchQueryAndOffice(officeId:string, sqlSearch:string){
+    const httpParams = new HttpParams()
+      .set('officeId', officeId)
+      .set('sqlSearch', sqlSearch);
+    return this.http.get('/clients', { params: httpParams });
+  }
+
 }

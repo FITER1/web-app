@@ -72,6 +72,14 @@
             <p matLine>Define Entity Data Table Checks for Organization</p>
           </mat-list-item>
 
+          <mat-list-item [routerLink]="['send-bulk-sms']" *mifosxHasPermission="'READ_SEND_BULK_SMS_CHECK'">
+            <mat-icon matListIcon>
+              <fa-icon icon="envelope" size="sm"></fa-icon>
+            </mat-icon>
+            <h4 matLine>Send Bulk Sms </h4>
+            <p matLine>Define Send Bulk Sms for Organization</p>
+          </mat-list-item>
+
         </mat-nav-list>
 
       </div>

@@ -589,5 +589,14 @@ export class SystemService {
     return this.http.put('/permissions', data, { params: httpParams });
   }
 
+  /**
+   * @param codeId Code ID.
+   * @returns {Observable<any>} Fetches Code.
+   */
+   getCodeByName(codeName: string): Observable<any> {
+    return this.http.get(`/codes/${codeName}`);
+  }
+
+
 
 }

@@ -786,4 +786,8 @@ export class OrganizationService {
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData , { params: httpParams } );
   }
 
+  sendBulkSms(smsData: any){
+    return this.http.post(`/sms/sendBulkSms`, smsData);
+  }
+
 }

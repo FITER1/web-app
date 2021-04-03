@@ -102,6 +102,7 @@ import { LoanProvisioningCriteriaTemplateResolver } from './loan-provisioning-cr
 import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning-criteria/common-resolvers/loan-provisioning-criteria-and-template.resolver';
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
+import { SendBulkSmsComponent } from './send-bulk-sms/send-bulk-sms.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -640,6 +641,11 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'send-bulk-sms',
+          component : SendBulkSmsComponent,
+          data: { title: extract('Send Bulk Sms'), breadcrumb: 'Send Bulk Sms', routeParamBreadcrumb: false },
         }
       ]
     }

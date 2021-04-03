@@ -1,0 +1,60 @@
+<div class="container">
+   <mat-card>
+    <form [formGroup]="sendBulkSmsForm" (ngSubmit)="submit()">
+       <mat-card-content>
+       <div fxLayout="column">
+        <mat-form-field >
+            <mat-label>Office</mat-label>
+            <mat-select formControlName="officeId">
+              <mat-option *ngFor="let office of officeOptions" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Sub Status</mat-label>
+            <mat-select formControlName="subStatusId">
+              <mat-option *ngFor="let subStatus of subStatusOptions" [value]="subStatus.id">
+                {{ subStatus.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Sms Provider</mat-label>
+            <mat-select formControlName="smsProviderId">
+              <mat-option *ngFor="let provider of smsProviderOptions" [value]="provider">
+                {{provider}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Clients</mat-label>
+            <mat-select required formControlName="clientId" multiple>
+              <mat-option *ngFor="let client of clientsOptions" [value]="client.id">
+                {{ client.displayName }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="sendBulkSmsForm.controls.clientId.hasError('required')">
+                Client is <strong>required</strong>
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Message</mat-label>
+            <textarea required matInput formControlName="message"></textarea>
+            <mat-error *ngIf="sendBulkSmsForm.controls.message.hasError('required')">
+                Message Is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>    
+       </mat-card-content>
+       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <button type="button" mat-raised-button [routerLink]="['../../', 'general']">Cancel</button>
+        <button mat-raised-button color="primary" [disabled]="!sendBulkSmsForm.valid">Submit</button>
+      </mat-card-actions>
+    </form>   
+   </mat-card>
+</div>
