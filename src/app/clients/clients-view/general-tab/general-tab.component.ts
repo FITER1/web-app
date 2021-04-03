@@ -55,6 +55,8 @@ export class GeneralTabComponent {
   showClosedFixedAccounts = false;
   status: boolean = true;
 
+  hideWihhdrawalButton:boolean= false;
+
   /** Client Id */
   clientid: any;
   isFixed = false;
@@ -92,6 +94,8 @@ export class GeneralTabComponent {
       if(fixAccounts.length > 0){this.isFixed = true;}
       if(recAccounts.length > 0){this.isRecurring = true;}
       if(savAccounts.length > 0){this.isSavings = true;}
+
+      
   });
   }
 
@@ -183,6 +187,13 @@ export class GeneralTabComponent {
   routeTransferFund(loanId: any) {
     const queryParams: any = { loanId: loanId, accountType: 'fromloans' };
     this.router.navigate(['../', 'loans-accounts', loanId, 'transfer-funds', 'make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+  }
+
+  hideWithdrawalForSharesAccount(account:any){
+    console.log(account);
+      if(account.productName.includes('Shares')){
+       return true;
+      }
   }
 
 }

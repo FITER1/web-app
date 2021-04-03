@@ -268,7 +268,7 @@
           (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
           <i class="fa fa-arrow-up"></i>
         </button>
-        <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
+        <button *ngIf="element.status.active && !hideWithdrawalForSharesAccount(element)" class="account-action-button" mat-raised-button color="primary"
           (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
           <i class="fa fa-arrow-down"></i>
         </button>
