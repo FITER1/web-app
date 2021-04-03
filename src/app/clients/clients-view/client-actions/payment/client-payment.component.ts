@@ -119,7 +119,7 @@ export class ClientPaymentComponent implements OnInit {
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('transactionDate', new FormControl('', []));
-    this.clientPaymentForm.addControl('paymentTypeId', new FormControl('', []));
+    this.clientPaymentForm.addControl('paymentTypeId', new FormControl('', Validators.required));
     this.clientPaymentForm.addControl('accountNumber', new FormControl('', []));
     this.clientPaymentForm.addControl('checkNumber', new FormControl('', []));
     this.clientPaymentForm.addControl('routingCode', new FormControl('', []));

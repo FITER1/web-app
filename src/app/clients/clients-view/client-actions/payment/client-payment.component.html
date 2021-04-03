@@ -153,37 +153,37 @@
 
           <tr mat-header-row *matHeaderRowDef="openSavingsColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: openSavingsColumns;"></tr>
-          <div class = "charge-table">
-            <table mat-table [dataSource]="savingsCharges" *ngIf = "showSavingsCharges">
-    
-              <ng-container matColumnDef="Applied Charges">
-                <th mat-header-cell *matHeaderCellDef> Applied Charges </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-              </ng-container>
-    
-              <ng-container matColumnDef="Charge Duedate">
-                <th mat-header-cell *matHeaderCellDef> Charge Due Date </th>
-                <td mat-cell *matCellDef="let element"> {{element.dueDate|date}} </td>
-              </ng-container>
-    
-              <ng-container matColumnDef="Amount">
-                <th mat-header-cell *matHeaderCellDef>Amount</th>
-                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-              </ng-container>
-    
-              <ng-container matColumnDef="Actions">
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let element">
-                  <button type="button" mat-raised-button *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" matTooltip="Waive Charge"
-                  (click)="routeEdit($event); waiveSavingsCharge(element.id)"><i class="fa fa-flag"></i></button>
-                </td>
-              </ng-container>
-    
-              <tr mat-header-row *matHeaderRowDef="chargesColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: chargesColumns;"></tr>
-            </table>  </div>
 
         </table>
+        <div class = "charge-table">
+          <table mat-table [dataSource]="savingsCharges" *ngIf = "showSavingsCharges">
+  
+            <ng-container matColumnDef="Applied Charges">
+              <th mat-header-cell *matHeaderCellDef> Applied Charges </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Charge Duedate">
+              <th mat-header-cell *matHeaderCellDef> Charge Due Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.dueDate|date}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Amount">
+              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element">
+                <button type="button" mat-raised-button *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" matTooltip="Waive Charge"
+                (click)="routeEdit($event); waiveSavingsCharge(element.id)"><i class="fa fa-flag"></i></button>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="chargesColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargesColumns;"></tr>
+          </table>  </div>
         
 
         <table mat-table [dataSource]="totalPaymentArray">
@@ -242,7 +242,7 @@
             <th mat-header-cell *matHeaderCellDef> Payment Type </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field>
-              <mat-select formControlName="paymentTypeId">
+              <mat-select required formControlName="paymentTypeId">
                 <mat-option *ngFor="let paymentType of paymentTypeOptions" [value]="paymentType.id">
                   {{ paymentType.name }}
                 </mat-option>
