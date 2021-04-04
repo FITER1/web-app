@@ -22,7 +22,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Frequency</mat-label>
-        <mat-select required formControlName="loanTermFrequencyType">
+        <mat-select required formControlName="loanTermFrequencyType" [disabled]="true">
           <mat-option *ngFor="let type of termFrequencyTypeData" [value]="type.id">
             {{ type.value }}
           </mat-option>
