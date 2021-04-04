@@ -12,7 +12,7 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">Submitted On</span>
-    <span fxFlex="60%">{{ recurringDepositAccountData.submittedOnDate | date:'dd-mm-yy' }}</span>
+    <span fxFlex="60%">{{ recurringDepositAccountData.submittedOnDate | date:'dd-MM-yy' }}</span>
   </div>
 
   <div fxFlexFill>
@@ -96,7 +96,7 @@
   <ng-container *ngIf="!recurringDepositsAccountProductTemplate.isCalendarInherited">
     <div fxFlexFill>
       <span fxFlex="40%">Deposit Start Date:</span>
-      <span fxFlex="60%">{{ recurringDepositAccountData.expectedFirstDepositOnDate | date:'dd-mm-yy'}}</span>
+      <span fxFlex="60%">{{ recurringDepositAccountData.expectedFirstDepositOnDate | date:'dd-MM-yy'}}</span>
     </div>
 
     <div fxFlexFill>
@@ -139,12 +139,12 @@
 
     <div fxFlexFill>
       <span fxFlex="40%">Valid from Date:</span>
-      <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.fromDate | date:'dd-mm-yy' }}</span>
+      <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.fromDate | date:'dd-MM-yy' }}</span>
     </div>
 
     <div fxFlexFill *ngIf="recurringDepositsAccountProductTemplate?.accountChart.endDate">
       <span fxFlex="40%">End Date:</span>
-      <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.endDate | date:'dd-mm-yy' }}</span>
+      <span fxFlex="60%">{{ recurringDepositsAccountProductTemplate?.accountChart.endDate | date:'dd-MM-yy' }}</span>
     </div>
 
     <div fxFlexFill *ngIf="recurringDepositsAccountProductTemplate?.accountChart.description">
@@ -308,10 +308,10 @@
         <td mat-cell *matCellDef="let charge">
           <span
             *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-            {{(charge.dueDate | date:'dd-mm-yy') || 'Unassigned'}}
+            {{(charge.dueDate | date:'dd-MM-yy') || 'Unassigned'}}
           </span>
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{(charge.feeOnMonthDay | date:'dd-mm-yy') || 'Unassigned'}}
+            {{(charge.feeOnMonthDay | date:'dd-MM-yy') || 'Unassigned'}}
           </span>
           <span
             *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'

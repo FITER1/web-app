@@ -55,7 +55,7 @@
         </div>
 
         <div fxFlex="50%" *ngIf="clientData.dateOfBirth">
-          {{ clientData.dateOfBirth | date:'dd-mm-yy' }}
+          {{ clientData.dateOfBirth | date:'dd-MM-yy' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.mobileNo">
@@ -71,7 +71,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ clientData.activationDate | date:'dd-mm-yy' }}
+          {{ clientData.activationDate | date:'dd-MM-yy' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.officeName">

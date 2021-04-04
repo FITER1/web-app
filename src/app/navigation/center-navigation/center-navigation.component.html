@@ -30,7 +30,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ centerData.activationDate | date:'dd-mm-yy' }}
+          {{ centerData.activationDate | date:'dd-MM-yy' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
@@ -86,7 +86,7 @@
         </div>
 
         <div fxFlex="50%" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]">
-          {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | date:'dd-mm-yy' }}
+          {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | date:'dd-MM-yy' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable">

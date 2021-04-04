@@ -39,7 +39,7 @@
                   </tr>
                   <tr *ngIf = "changeRepaymentDate">
                     <td>Installment Rescheduled to</td>
-                    <td>{{loanRescheduleDetails.adjustedDueDate | date:'dd-mm-yy'}}</td>
+                    <td>{{loanRescheduleDetails.adjustedDueDate | date:'dd-MM-yy'}}</td>
                   </tr>
                   <tr>
                     <td><mat-checkbox disabled [checked] = "introduceGracePeriods">Introduce Mid-term grace periods</mat-checkbox></td>

@@ -114,7 +114,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
               <td>Last Active Transaction Date</td>
-              <td>{{savingsAccountData.lastActiveTransactionDate | date:'dd-mm-yy'}}</td>
+              <td>{{savingsAccountData.lastActiveTransactionDate | date:'dd-MM-yy'}}</td>
             </tr>
             <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">
               <td>Substatus</td>
@@ -162,7 +162,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
               <td>Interest Recalculation Date</td>
-              <td>{{savingsAccountData.summary.lastInterestCalculationDate | date:'dd-mm-yy'}}</td>
+              <td>{{savingsAccountData.summary.lastInterestCalculationDate | date:'dd-MM-yy'}}</td>
             </tr>
             <tr *ngIf="savingsAccountData.withHoldTax">
               <td>Withhold Tax Group</td>
@@ -191,7 +191,7 @@
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date:'dd-mm-yy') : 'Not Activated'}}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date:'dd-MM-yy') : 'Not Activated'}}</td>
               </tr>
               <tr>
                 <td>Currency</td>
@@ -214,7 +214,7 @@
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date:'dd-mm-yy') : 'Not Activated'}}</td>
+                <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate | date:'dd-MM-yy') : 'Not Activated'}}</td>
               </tr>
               <tr>
                 <td>Field Officer</td>

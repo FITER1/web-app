@@ -38,7 +38,7 @@
 
       <ng-container matColumnDef="validity">
         <th mat-header-cell *matHeaderCellDef> Validity </th>
-        <td mat-cell *matCellDef="let instruction">{{instruction.validFrom | date:'dd-mm-yy'}} to {{instruction.validTill | date:'dd-mm-yy'}}
+        <td mat-cell *matCellDef="let instruction">{{instruction.validFrom | date:'dd-MM-yy'}} to {{instruction.validTill | date:'dd-MM-yy'}}
         </td>
       </ng-container>
 

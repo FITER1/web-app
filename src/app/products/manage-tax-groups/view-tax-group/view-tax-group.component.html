@@ -42,11 +42,11 @@
           </div>
 
           <div fxFlex="33%">
-            {{ taxcomponent.startDate | date:'dd-mm-yy' }}
+            {{ taxcomponent.startDate | date:'dd-MM-yy' }}
           </div>
 
           <div fxFlex="33%" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
-            {{ taxcomponent.endDate | date:'dd-mm-yy' }}
+            {{ taxcomponent.endDate | date:'dd-MM-yy' }}
           </div>
 
       </div>
