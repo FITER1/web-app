@@ -52,8 +52,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Repaid every</mat-label>
-        <input matInput required formControlName="repaymentEvery" (change)="updateNumberOfRepayments()"
-          [disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.repaymentEvery">
+        <input matInput required formControlName="repaymentEvery" (change)="updateNumberOfRepayments()" readonly>
         <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
           Repaid every is <strong>required</strong>
         </mat-error>
@@ -104,7 +103,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Nominal interest rate</mat-label>
-        <input type="number" matInput formControlName="interestRatePerPeriod">
+        <input type="number" matInput formControlName="interestRatePerPeriod" readonly>
       </mat-form-field>
 
         <mat-form-field fxFlex="48%">
