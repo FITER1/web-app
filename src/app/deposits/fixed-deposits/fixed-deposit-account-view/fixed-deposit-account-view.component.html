@@ -38,7 +38,7 @@
         <button mat-raised-button (click)="doAction(button.name)">
           <i class="{{button.icon}}"></i> {{button.name}}</button>
       </ng-container>
-  
+
       <ng-container *ngIf="buttonConfig.options.length">
         <button mat-raised-button [matMenuTriggerFor]="More">More</button>
         <mat-menu #More="matMenu">
@@ -47,7 +47,7 @@
         </span>
         </mat-menu>
       </ng-container>
-  
+
     </mat-card-actions>
 
   </mat-card-header>
@@ -64,11 +64,11 @@
             <tbody>
               <tr>
                 <td>Activated On</td>
-                <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate | date) : 'Not Activated'}}</td>
+                <td>{{fixedDepositsAccountData.timeline.activatedOnDate ? (fixedDepositsAccountData.timeline.activatedOnDate | date:'dd-mm-yy') : 'Not Activated'}}</td>
               </tr>
               <tr *ngIf="fixedDepositsAccountData.timeline.closedOnDate">
                 <td>Closed On</td>
-                <td>{{fixedDepositsAccountData.timeline.closedOnDate | date}}</td>
+                <td>{{fixedDepositsAccountData.timeline.closedOnDate | date:'dd-mm-yy'}}</td>
               </tr>
               <tr>
                 <td>Field Officer</td>
@@ -76,7 +76,7 @@
               </tr>
               <tr>
                 <td>Maturity Date</td>
-                <td>{{fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate | date) : 'N/A'}}</td>
+                <td>{{fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate | date:'dd-mm-yy') : 'N/A'}}</td>
               </tr>
               <tr>
                 <td>Deposit Period</td>

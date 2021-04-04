@@ -4,7 +4,7 @@
      <h2 mat-title >View Reschedule Request Details</h2>
 
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="end" fxLayoutGap="5px">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'REJECTRESCHEDULE_LOAN'" (click)="reject()"> 
+      <button mat-raised-button color="warn" *mifosxHasPermission="'REJECTRESCHEDULE_LOAN'" (click)="reject()">
         Reject
      </button>
      <button mat-raised-button color="primary" *mifosxHasPermission="'APPROVERESCHEDULE_LOAN'" (click)="approve()">
@@ -37,9 +37,9 @@
                     <td><mat-checkbox disabled [checked] = "changeRepaymentDate">Change Repayment Date</mat-checkbox> </td>
                     <td></td>
                   </tr>
-                  <tr *ngIf = "changeRepaymentDate"> 
+                  <tr *ngIf = "changeRepaymentDate">
                     <td>Installment Rescheduled to</td>
-                    <td>{{loanRescheduleDetails.adjustedDueDate | date}}</td>
+                    <td>{{loanRescheduleDetails.adjustedDueDate | date:'dd-mm-yy'}}</td>
                   </tr>
                   <tr>
                     <td><mat-checkbox disabled [checked] = "introduceGracePeriods">Introduce Mid-term grace periods</mat-checkbox></td>
@@ -77,11 +77,10 @@
                 <button type="button" mat-raised-button [routerLink]="['../../general']">Cancel</button>
                 <button mat-raised-button color="primary" (click) = "newRepaymentSchedule()">View New Repayment Schedule</button>
           </mat-card-actions>
-      
+
         </mat-card-content>
-      
+
     </mat-card>
-    
+
 </div>
-      
-  
+

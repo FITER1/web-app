@@ -22,7 +22,7 @@
       <h3 matLine>{{groupNote.note}} </h3>
       <p matLine>
         <span>Created by: {{groupNote.createdByUsername}}</span><br />
-        <span>Date: {{groupNote.createdOn | date}}</span>
+        <span>Date: {{groupNote.createdOn | date:'dd-mm-yy'}}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
         <button mat-button color="primary" (click)="editNote(groupNote.id,groupNote.note,i)">
@@ -33,7 +33,7 @@
         </button>
       </div>
     </mat-list-item>
-    
+
   </mat-list>
 
 </div>

@@ -4,10 +4,10 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ employeeData.displayName }} 
+          {{ employeeData.displayName }}
           <span [className]="employeeData.isActive === true ? 'true' : 'false'">
             <fa-icon matTooltip="{{ employeeData.isActive === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
-          </span>        
+          </span>
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
@@ -16,7 +16,7 @@
         </p>
       </mat-card-subtitle>
     </div>
-  </mat-card-title-group> 
+  </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>
@@ -27,7 +27,7 @@
     </div>
 
     <div fxFlex="50%">
-      {{ employeeData.joiningDate | date }}
+      {{ employeeData.joiningDate | date:'dd-mm-yy' }}
     </div>
 
     <div fxFlex="50%" class="mat-body-strong">

@@ -7,7 +7,7 @@
     </mat-list-item>
 
     <mat-list-item>
-      Opened On : {{ officeData.openingDate ? (officeData.openingDate | date) : 'Unassigned' }}
+      Opened On : {{ officeData.openingDate ? (officeData.openingDate | date:'dd-mm-yy') : 'Unassigned' }}
     </mat-list-item>
 
     <mat-list-item>
@@ -17,7 +17,7 @@
     <mat-list-item>
       External Id : {{ officeData.externalId ? officeData.externalId : 'Unassigned' }}
     </mat-list-item>
-    
+
   </mat-list>
 
 </div>

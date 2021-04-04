@@ -6,10 +6,10 @@
       <mat-label>Meeting Date</mat-label>
       <mat-select [formControl]="meetingDate">
         <mat-option *ngFor="let date of meetingDates" [value]="date">
-          {{ date | date }}
+          {{ date | date:'dd-mm-yy' }}
         </mat-option>
       </mat-select>
-      <mat-hint>Next Meeting on: {{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date }}</mat-hint>
+      <mat-hint>Next Meeting on: {{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | date:'dd-mm-yy' }}</mat-hint>
     </mat-form-field>
 
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource">

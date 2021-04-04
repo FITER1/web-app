@@ -4,7 +4,7 @@
     <div class="mat-typography">
       <mat-card-title>
         <h2>
-          {{ officeData.name }} 
+          {{ officeData.name }}
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
@@ -13,7 +13,7 @@
         </p>
       </mat-card-subtitle>
     </div>
-  </mat-card-title-group>      
+  </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>
@@ -24,7 +24,7 @@
     </div>
 
     <div fxFlex="50%">
-      {{ officeData.openingDate | date }}
+      {{ officeData.openingDate | date:'dd-mm-yy' }}
     </div>
 
     <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">

@@ -73,32 +73,32 @@
 
       <div fxFlexFill *ngIf="loanDetails.interestChargedFromDate">
         <span fxFlex="50%"> Interest Charged From </span>
-        <span fxFlex="50%"> {{loanDetails.interestChargedFromDate | date }} </span>
+        <span fxFlex="50%"> {{loanDetails.interestChargedFromDate | date:'dd-mm-yy' }} </span>
       </div>
 
       <div fxFlexFill *ngIf="loanDetails.expectedFirstRepaymentOnDate">
         <span fxFlex="50%"> First Repayment From</span>
-        <span fxFlex="50%"> {{loanDetails.expectedFirstRepaymentOnDate | date }} </span>
+        <span fxFlex="50%"> {{loanDetails.expectedFirstRepaymentOnDate | date:'dd-mm-yy' }} </span>
       </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Submitted on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate | date:'dd-mm-yy' }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Approved on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.approvedOnDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.approvedOnDate | date:'dd-mm-yy'}} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Disbursed on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.actualDisbursementDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.actualDisbursementDate | date:'dd-mm-yy' }} </span>
         </div>
 
         <div fxFlexFill>
             <span fxFlex="50%"> Matures on</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.expectedMaturityDate | date }} </span>
+            <span fxFlex="50%"> {{loanDetails.timeline.expectedMaturityDate | date:'dd-mm-yy' }} </span>
         </div>
 
         <div fxFlexFill *ngIf="loanDetails.canDefineInstallmentAmount">
