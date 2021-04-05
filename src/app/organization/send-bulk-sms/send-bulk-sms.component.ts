@@ -30,6 +30,9 @@ export class SendBulkSmsComponent implements OnInit {
 
   sqlQuery:string;
 
+  selectedOfficeId:any;
+  selectedSubStatusId:any;
+
   constructor(private formBuilder: FormBuilder,
               private organizationService : OrganizationService,
               private systemService: SystemService,
@@ -72,23 +75,32 @@ export class SendBulkSmsComponent implements OnInit {
   }
 
   buildDependency(){
-    console.log("cbm");
-    let selectedOfficeId:any;
-    let selectedSubStatusId:any;
+    
     this.sendBulkSmsForm.get('officeId').valueChanges.subscribe((officeId:any) => {
-      selectedOfficeId = officeId;
-      this.getClientsBySubstatusAndOffice(selectedOfficeId, selectedSubStatusId);
+      this.selectedOfficeId = officeId;
+      this.getClientsBySubstatusAndOffice(this.selectedOfficeId, this.selectedSubStatusId);
     })
     this.sendBulkSmsForm.get('subStatusId').valueChanges.subscribe((subStatusId:any) => {
-      selectedSubStatusId = subStatusId;
-      this.getClientsBySubstatusAndOffice(selectedOfficeId, selectedSubStatusId);
+      this.selectedSubStatusId = subStatusId;
+      this.getClientsBySubstatusAndOffice(this.selectedOfficeId, this.selectedSubStatusId);
     })
+      console.log('ggg', this.sendBulkSmsForm.value.subStatusId);
+  }
+
+  getAllClients(){
+    this.selectedSubStatusId = 0;
+    this.sqlQuery = '';
+    if(this.sendBulkSmsForm.value.officeId){
+    this.clientService.getClientsBysearchQueryAndOffice(this.sendBulkSmsForm.value.officeId, this.sqlQuery).subscribe((clients:any) => {
+      this.clientsOptions = clients.pageItems.filter((data:any) => (data.mobileNo) && (data.mobileNo.length === 12));
+      });
+    }
   }
 
   getClientsBySubstatusAndOffice(selectedOfficeId:any, selectedSubStatusId:any){
+    console.log(this.selectedSubStatusId, this.selectedOfficeId, selectedOfficeId, selectedSubStatusId);
     if(selectedOfficeId && selectedSubStatusId){
-      console.log(selectedSubStatusId);
-      this.sqlQuery = 'c.sub_status=' + selectedSubStatusId;
+      if(this.selectedSubStatusId != 0){this.sqlQuery = 'c.sub_status=' + selectedSubStatusId;}
       this.clientService.getClientsBysearchQueryAndOffice(selectedOfficeId, this.sqlQuery).subscribe((clients:any) => {
       this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
       })
@@ -96,6 +108,7 @@ export class SendBulkSmsComponent implements OnInit {
   }
 
   submit(){
+    
     const formdata = {
       'clientIds': this.sendBulkSmsForm.value.clientId,
       'message': this.sendBulkSmsForm.get('message').value
