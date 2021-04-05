@@ -307,8 +307,8 @@
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
           <button type="button" mat-raised-button [routerLink]="['../../general']">Back</button>
-          <button mat-raised-button color="primary" (click)="submit()" [disabled]="!clientPaymentForm.valid">Submit</button>
-          <button mat-raised-button color="primary" (click)="submitAndReport()" [disabled]="!clientPaymentForm.valid">Submit And Print</button>
+          <button mat-raised-button color="primary" (click)="submit()" [disabled]="!clientPaymentForm.valid || totalPaymentArray[0] === 0">Submit</button>
+          <button mat-raised-button color="primary" (click)="submitAndReport()" [disabled]="!clientPaymentForm.valid || totalPaymentArray[0] === 0">Submit And Print</button>
         </mat-card-actions>
 
         <table mat-table [dataSource]="errorResponse" *ngIf="showError">
