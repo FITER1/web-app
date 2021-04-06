@@ -115,7 +115,7 @@ export class ClientPaymentComponent implements OnInit {
     this.clientId = this.clientPaymentData.clientData.id;
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
     this.savingAccounts = this.clientPaymentData.savingsAccounts || [];
-    this.paymentTypeOptions = this.clientPaymentData.paymentTypeOptions || [];
+    this.paymentTypeOptions = this.clientPaymentData.paymentTypes || [];
     this.clientPaymentForm.addControl('repaymentAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('depositAmount', new FormControl('', []));
     this.clientPaymentForm.addControl('transactionDate', new FormControl('', []));
