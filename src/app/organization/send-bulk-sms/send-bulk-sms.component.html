@@ -35,7 +35,8 @@
 
           <mat-form-field>
             <mat-label>Clients</mat-label>
-            <mat-select required formControlName="clientId" multiple>
+            <mat-select #mySel required formControlName="clientId" multiple>
+              <mat-option [value]="0" (click)="toggleAllSelection()">All</mat-option>
               <mat-option *ngFor="let client of clientsOptions" [value]="client.id">
                 {{ client.displayName }}
               </mat-option>

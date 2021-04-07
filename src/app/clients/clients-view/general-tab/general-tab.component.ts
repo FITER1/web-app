@@ -190,7 +190,6 @@ export class GeneralTabComponent {
   }
 
   hideWithdrawalForSharesAccount(account:any){
-    console.log(account);
       if(account.productName.includes('Shares')){
        return true;
       }

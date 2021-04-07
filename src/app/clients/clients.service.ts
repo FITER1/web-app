@@ -392,10 +392,16 @@ export class ClientsService {
   }
 
   getClientsBysearchQueryAndOffice(officeId:string, sqlSearch:string){
-    const httpParams = new HttpParams()
+    let httpParams = new HttpParams()
       .set('officeId', officeId)
-    if(sqlSearch != ''){httpParams.set('sqlSearch', sqlSearch);}  
+    if(sqlSearch != '' && sqlSearch != undefined){httpParams = httpParams.set('sqlSearch', sqlSearch);}  
     return this.http.get('/clients', { params: httpParams });
+  }
+
+  getClientsWithLoans(officeId:string){
+    let httpParams = new HttpParams()
+      .set('officeId', officeId) 
+    return this.http.get('/clients/clientWithLoans', { params: httpParams });
   }
 
 }
