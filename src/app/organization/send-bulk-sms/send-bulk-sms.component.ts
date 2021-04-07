@@ -1,5 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { SystemService } from 'app/system/system.service';
@@ -33,6 +35,10 @@ export class SendBulkSmsComponent implements OnInit {
   selectedOfficeId:any;
   selectedSubStatusId:any;
 
+  allSelected = false;
+
+  @ViewChild('mySel') skillSel: MatSelect;
+
   constructor(private formBuilder: FormBuilder,
               private organizationService : OrganizationService,
               private systemService: SystemService,
@@ -60,8 +66,6 @@ export class SendBulkSmsComponent implements OnInit {
         });
       }
     });
-   
-     
   }
 
   createSmsForm(){
@@ -98,17 +102,23 @@ export class SendBulkSmsComponent implements OnInit {
   }
 
   getClientsBySubstatusAndOffice(selectedOfficeId:any, selectedSubStatusId:any){
-    console.log(this.selectedSubStatusId, this.selectedOfficeId, selectedOfficeId, selectedSubStatusId);
     if(selectedOfficeId && selectedSubStatusId){
-      if(this.selectedSubStatusId != 0){this.sqlQuery = 'c.sub_status=' + selectedSubStatusId;}
-      this.clientService.getClientsBysearchQueryAndOffice(selectedOfficeId, this.sqlQuery).subscribe((clients:any) => {
-      this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
-      })
+      if(this.selectedSubStatusId != 0 && this.selectedSubStatusId != 'CWL' && this.selectedOfficeId != 'LIA'){
+        this.sqlQuery = 'c.sub_status=' + selectedSubStatusId;
+      }
+      if(this.selectedSubStatusId != 'CWL' && this.selectedOfficeId != 'LIA'){
+        this.clientService.getClientsBysearchQueryAndOffice(selectedOfficeId, this.sqlQuery).subscribe((clients:any) => {
+          this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
+        });
+      }else {
+        this.clientService.getClientsWithLoans(selectedOfficeId).subscribe((clients:any) => {
+          this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
+        });
+      }
     }
   }
 
   submit(){
-    
     const formdata = {
       'clientIds': this.sendBulkSmsForm.value.clientId,
       'message': this.sendBulkSmsForm.get('message').value
@@ -123,7 +133,18 @@ export class SendBulkSmsComponent implements OnInit {
     this.router.navigateByUrl('../', {skipLocationChange: true}).then(() => {
         this.router.navigate([currentUrl]);
     });
-}
+  }
+
+  toggleAllSelection() {
+    this.allSelected = !this.allSelected;  // to control select-unselect
+    
+    if (this.allSelected) {
+      this.skillSel.options.forEach( (item : MatOption) => {item.value === 0 ? item.deselect() : item.select(); });
+    } else {
+      this.skillSel.options.forEach( (item : MatOption) => {item.deselect()});
+    }
+    this.skillSel.close();
+  }
 
 
 }
