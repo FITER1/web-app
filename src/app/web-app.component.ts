@@ -158,7 +158,7 @@ export class WebAppComponent implements OnInit {
         'https://localhost:8443'
       ]);
     }
-    this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(600).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         console.log('session expired');
         this.logout();
