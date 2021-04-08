@@ -394,6 +394,7 @@ export class ClientsService {
   getClientsBysearchQueryAndOffice(officeId:string, sqlSearch:string){
     let httpParams = new HttpParams()
       .set('officeId', officeId)
+      .set('withoutLimit', '0')
     if(sqlSearch != '' && sqlSearch != undefined){httpParams = httpParams.set('sqlSearch', sqlSearch);}  
     return this.http.get('/clients', { params: httpParams });
   }
