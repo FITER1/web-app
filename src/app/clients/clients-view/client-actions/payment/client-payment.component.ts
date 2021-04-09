@@ -199,7 +199,8 @@ export class ClientPaymentComponent implements OnInit {
     const checkNumber = this.clientPaymentForm.value.checkNumber;
     const routingCode = this.clientPaymentForm.value.routingCode;
     const receiptNumber = this.clientPaymentForm.value.receiptNumber;
-    const bankNumber = this.clientPaymentForm.value.bankNumber;
+    const prevbankNumber = this.clientPaymentForm.value.bankNumber;
+    const bankNumber = this.datePipe.transform(prevbankNumber, dateFormat);
     this.batchRequests = [];
     let reqId = 1;
     this.loanIds.forEach((element: any) => {
@@ -321,7 +322,8 @@ export class ClientPaymentComponent implements OnInit {
     const checkNumber = this.clientPaymentForm.value.checkNumber;
     const routingCode = this.clientPaymentForm.value.routingCode;
     const receiptNumber = this.clientPaymentForm.value.receiptNumber;
-    const bankNumber = this.clientPaymentForm.value.bankNumber;
+    const prevbankNumber = this.clientPaymentForm.value.bankNumber;
+    const bankNumber = this.datePipe.transform(prevbankNumber, dateFormat);
     this.batchRequests = [];
     let reqId = 1;
     this.loanIds.forEach((element: any) => {

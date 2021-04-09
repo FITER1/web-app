@@ -110,6 +110,10 @@ export class MakeRepaymentComponent implements OnInit {
     this.repaymentLoanForm.patchValue({
       transactionDate: this.datePipe.transform(prevTransactionDate, dateFormat)
     });
+    const prevBankNumber: Date = this.repaymentLoanForm.value.bankNumber;
+    this.repaymentLoanForm.patchValue({
+      bankNumber: this.datePipe.transform(prevBankNumber, dateFormat)
+    });
     const repaymentLoanData = this.repaymentLoanForm.value;
     repaymentLoanData.locale = this.settingsService.language.code;
     repaymentLoanData.dateFormat = dateFormat;
