@@ -275,7 +275,7 @@ export class ClientPaymentComponent implements OnInit {
         }
       });
     });
-    this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitClientPayments(this.batchRequests, this.clientId, receiptNumber).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
         this.errorResponse = [];
         if (responseEle.statusCode != '200') {
@@ -397,7 +397,7 @@ export class ClientPaymentComponent implements OnInit {
         }
       });
     });
-    this.tasksService.submitBatchTransactionalData(this.batchRequests).subscribe((response: any) => {
+    this.tasksService.submitClientPayments(this.batchRequests, this.clientId, receiptNumber).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
         this.errorResponse = [];
         if (responseEle.statusCode != '200') {

@@ -84,9 +84,10 @@ export class TasksService {
     return this.http.post('/batches', data);
   }
 
-  submitBatchTransactionalData(data: any): Observable<any> {
-    const httpParams = new HttpParams().set('enclosingTransaction', 'true');
-    return this.http.post('/batches', data, {params: httpParams});
+  submitClientPayments(data: any, clientId: any, receiptNumber: any): Observable<any> {
+    const httpParams = new HttpParams().set('enclosingTransaction', 'true')
+      .set('receiptNumber', receiptNumber).set('clientId', clientId);
+    return this.http.post('/clientpayment', data, {params: httpParams});
   }
 
   /**
