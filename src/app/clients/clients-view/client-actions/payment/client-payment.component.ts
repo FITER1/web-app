@@ -31,7 +31,7 @@ export class ClientPaymentComponent implements OnInit {
   /** Open Savings Accounts Columns */
   openSavingsColumns: string[] = ['Account No', 'Saving Account', 'Balance', 'Account Type', 'Type', 'Deposit Amount', 'Charges', 'Add Savings Charges'];
   totalColumns: String[] = ['Total Payment', 'More'];
-  paymentDetailsColumns1: String[] = ['Transaction Date', 'Bank #', 'Payment Type', 'Reciept #'];
+  paymentDetailsColumns1: String[] = ['Transaction Date', 'Payment Type', 'Reciept #', 'Bank #'];
   paymentDetailsColumns2: String[] = ['Cheque #', 'Routing Code', 'Account #'];
   errorResponseColumns: String[] = ['Errors'];
   /** Client Update Savings Account form. */
