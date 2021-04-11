@@ -207,6 +207,14 @@ export class LoansAccountButtonConfiguration {
                     },
                 ];
                 break;
+            case 'Closed (obligations met)':
+                this.optionArray = [
+                  {
+                      name: 'View Guarantors',
+                      taskPermissionName: 'READ_GUARANTOR',
+                  }
+                ];
+                break;
             default:
                 this.optionArray = [];
         }
