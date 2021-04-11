@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
+import { SettingsService } from 'app/settings/settings.service';
 
 /**
  * Export Client Loans Transactions Component
@@ -43,7 +44,8 @@ export class ExportTransactionsComponent implements OnInit {
               private reportsService: ReportsService,
               private formBuilder: FormBuilder,
               private datePipe: DatePipe,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private settingsService: SettingsService) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loansAccountId = data.loanDetailsData.accountNo;
     });
@@ -68,13 +70,14 @@ export class ExportTransactionsComponent implements OnInit {
    * Generates client loans transactions report.
    */
   generate() {
+    const dateFormat = this.settingsService.dateFormat;
     const data = {
       'output-type':	'PDF',
-      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, 'yyyy-MM-dd'),
-      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, 'yyyy-MM-dd'),
+      R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, dateFormat),
+      R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, dateFormat),
       R_selectLoan:	this.loansAccountId
     };
-    this.reportsService.getPentahoRunReportData('Client Loan Account Schedule', data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Client Loan Account Schedule', data, 'default', 'en', dateFormat)
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});
