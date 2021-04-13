@@ -17,7 +17,7 @@ import { SettingsService } from 'app/settings/settings.service';
 export class ClientGeneralStepComponent implements OnInit {
 
   /** Minimum date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1900, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
 
@@ -45,7 +45,7 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Saving Product Options */
   savingProductOptions: any;
 
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"; 
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
