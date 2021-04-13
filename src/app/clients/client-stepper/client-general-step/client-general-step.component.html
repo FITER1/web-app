@@ -133,6 +133,14 @@
       <input matInput formControlName = "nationalId">
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%">
+      <mat-label>Email Address</mat-label>
+      <input matInput formControlName="emailAddress">
+      <mat-error *ngIf="createClientForm.controls.emailAddress.hasError('email')">
+        Email Not Valid
+      </mat-error>
+    </mat-form-field>
+
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="active" class="margin-v">
       Active?
     </mat-checkbox>

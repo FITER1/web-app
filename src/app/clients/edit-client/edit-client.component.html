@@ -143,6 +143,14 @@
             <input matInput formControlName = "nationalId">
           </mat-form-field>
 
+          <mat-form-field fxFlex="48%">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="emailAddress">
+            <mat-error *ngIf="editClientForm.controls.emailAddress.hasError('email')">
+              Email Not Valid
+            </mat-error>
+          </mat-form-field>
+
           <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" formGroupName="clientNonPersonDetails"
             *ngIf="editClientForm.contains('clientNonPersonDetails')">
 

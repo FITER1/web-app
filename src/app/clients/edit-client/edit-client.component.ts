@@ -85,7 +85,8 @@ export class EditClientComponent implements OnInit {
       'clientClassificationId': this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
       'submittedOnDate': this.clientDataAndTemplate.timeline.submittedOnDate && new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
       'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate),
-      'nationalId': this.clientDataAndTemplate.nationalId
+      'nationalId': this.clientDataAndTemplate.nationalId,
+      'emailAddress': this.clientDataAndTemplate.emailAddress
     });
   }
 
@@ -108,7 +109,8 @@ export class EditClientComponent implements OnInit {
       'clientClassificationId': [''],
       'submittedOnDate': [''],
       'activationDate': ['', Validators.required],
-      'nationalId':['']
+      'nationalId':[''],
+      'emailAddress':['', Validators.email]
     });
   }
 

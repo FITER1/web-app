@@ -45,6 +45,8 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Saving Product Options */
   savingProductOptions: any;
 
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"; 
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {DatePipe} datePipe Date Pipe
@@ -80,7 +82,8 @@ export class ClientGeneralStepComponent implements OnInit {
       'clientTypeId': [''],
       'clientClassificationId': [''],
       'submittedOnDate': [''],
-      'nationalId':['']
+      'nationalId':[''],
+      'emailAddress':['', Validators.email]
     });
   }
 
