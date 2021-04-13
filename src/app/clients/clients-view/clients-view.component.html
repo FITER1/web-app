@@ -54,6 +54,7 @@
             | Age : {{age}} </span>
             | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             <br />
+            Email Address : {{(clientViewData.emailAddress)?(clientViewData.emailAddress) :'Unassigned'}} | 
             Sub Status : {{(clientViewData.subStatus.name)?(clientViewData.subStatus.name) :'Update Pending'}}
             <br />
             <span *ngIf ="clientViewData.status.value === 'Closed'">
