@@ -23,7 +23,7 @@ export class EditOfficeComponent implements OnInit {
   /** Office form. */
   officeForm: FormGroup;
   /** Minimum Date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1900, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
 
@@ -72,7 +72,7 @@ export class EditOfficeComponent implements OnInit {
   submit() {
     const openedOn: Date = this.officeForm.value.openingDate;
     const dateFormat = this.settingsService.dateFormat;
-    
+
     const office = this.officeForm.value;
     office.openingDate = this.datepipe.transform(openedOn, dateFormat);
     office.locale = this.settingsService.language.code;

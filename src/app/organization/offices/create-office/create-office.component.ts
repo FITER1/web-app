@@ -23,7 +23,7 @@ export class CreateOfficeComponent implements OnInit {
   /** Office Data */
   officeData: any;
   /** Minimum Date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1900, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
 
@@ -71,7 +71,7 @@ export class CreateOfficeComponent implements OnInit {
     const prevOpeningDate: Date = this.officeForm.value.openingDate;
     // TODO: Update once language and date settings are setup
     const dateFormat = this.settingsService.dateFormat;
-    
+
     const office = this.officeForm.value;
     office.openingDate = this.datePipe.transform(prevOpeningDate, dateFormat);
     office.locale = this.settingsService.language.code;
