@@ -55,16 +55,26 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
     if (this.savingProductsTemplate.accountingRule.id === 2) {
         this.savingProductAccountingForm.patchValue({
-          'savingsReferenceAccountId': this.savingProductsTemplate.accountingMappings.savingsReferenceAccount.id,
-          'overdraftPortfolioControlId': this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl.id,
-          'savingsControlAccountId': this.savingProductsTemplate.accountingMappings.savingsControlAccount.id,
-          'transfersInSuspenseAccountId': this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
-          'interestOnSavingsAccountId': this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount.id,
-          'writeOffAccountId': this.savingProductsTemplate.accountingMappings.writeOffAccount.id,
-          'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
-          'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
-          'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
-          'escheatLiabilityId': this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id,
+          'savingsReferenceAccountId': this.savingProductsTemplate.accountingMappings.savingsReferenceAccount ?
+           this.savingProductsTemplate.accountingMappings.savingsReferenceAccount.id : '',
+          'overdraftPortfolioControlId': this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl ? 
+           this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl.id : '',
+          'savingsControlAccountId': this.savingProductsTemplate.accountingMappings.savingsControlAccount ? 
+           this.savingProductsTemplate.accountingMappings.savingsControlAccount.id : '',
+          'transfersInSuspenseAccountId': this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount ? 
+           this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount.id : '',
+          'interestOnSavingsAccountId': this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount ? 
+           this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount.id :'',
+          'writeOffAccountId': this.savingProductsTemplate.accountingMappings.writeOffAccount ? 
+           this.savingProductsTemplate.accountingMappings.writeOffAccount.id : '',
+          'incomeFromFeeAccountId': this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount ? 
+           this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id : '',
+          'incomeFromPenaltyAccountId': this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount ? 
+           this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id : '',
+          'incomeFromInterestId': this.savingProductsTemplate.accountingMappings.incomeFromInterest ? 
+           this.savingProductsTemplate.accountingMappings.incomeFromInterest.id : '',
+          'escheatLiabilityId': this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount ? 
+           this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id : '',
           'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
         });
 
