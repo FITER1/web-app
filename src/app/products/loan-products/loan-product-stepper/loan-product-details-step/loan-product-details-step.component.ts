@@ -15,7 +15,7 @@ export class LoanProductDetailsStepComponent implements OnInit {
 
   fundData: any;
 
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1900, 0, 1);
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
 
   constructor(private formBuilder: FormBuilder,
