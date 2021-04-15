@@ -94,28 +94,10 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {any} charge Charge
    */
   editChargeAmount(charge: any) {
-    const formfields: FormfieldBase[] = [
-      new InputBase({
-        controlName: 'amount',
-        label: 'Amount',
-        value: charge.amountOrPercentage,
-        type: 'number',
-        required: false
-      }),
-    ];
-    const data = {
-      title: 'Edit Charge Amount',
-      layout: { addButtonText: 'Confirm' },
-      formfields: formfields
-    };
-    const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
-    editNoteDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        const newCharge = { ...charge, amount: response.data.value.amount };
-        this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
-        this.chargesDataSource = this.chargesDataSource.concat([]);
-      }
-    });
+    const amount = parseFloat(( < HTMLInputElement > document.getElementById('amount')).value);
+    const newCharge = { ...charge, amount: amount };
+    this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
+    this.chargesDataSource = this.chargesDataSource.concat([]);
     this.pristine = false;
   }
 
