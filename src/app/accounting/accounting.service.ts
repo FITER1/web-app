@@ -80,7 +80,7 @@ export class AccountingService {
   getJournalEntry(transactionId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('transactionId', transactionId)
-      .set('transactionDetails', 'true');
+      .set('transactionDetails', 'false');
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
