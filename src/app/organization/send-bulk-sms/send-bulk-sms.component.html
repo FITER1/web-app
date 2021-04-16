@@ -33,7 +33,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <!-- <mat-form-field>
             <mat-label>Clients</mat-label>
             <mat-select #mySel required formControlName="clientId" multiple>
               <mat-option [value]="0" (click)="toggleAllSelection()">All</mat-option>
@@ -44,7 +44,7 @@
             <mat-error *ngIf="sendBulkSmsForm.controls.clientId.hasError('required')">
                 Client is <strong>required</strong>
               </mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field>
             <mat-label>Message</mat-label>

@@ -39,6 +39,8 @@ export class SendBulkSmsComponent implements OnInit {
 
   @ViewChild('mySel') skillSel: MatSelect;
 
+  formData:any={}
+
   constructor(private formBuilder: FormBuilder,
               private organizationService : OrganizationService,
               private systemService: SystemService,
@@ -73,7 +75,7 @@ export class SendBulkSmsComponent implements OnInit {
       'officeId': [''],
       'subStatusId': [''],
       'smsProviderId': [''],
-      'clientId': ['', Validators.required],
+      //'clientId': ['', Validators.required],
       'message': ['', Validators.required]
     });
   }
@@ -82,50 +84,27 @@ export class SendBulkSmsComponent implements OnInit {
     
     this.sendBulkSmsForm.get('officeId').valueChanges.subscribe((officeId:any) => {
       this.selectedOfficeId = officeId;
-      this.getClientsBySubstatusAndOffice(this.selectedOfficeId, this.selectedSubStatusId);
     })
     this.sendBulkSmsForm.get('subStatusId').valueChanges.subscribe((subStatusId:any) => {
       this.selectedSubStatusId = subStatusId;
-      this.getClientsBySubstatusAndOffice(this.selectedOfficeId, this.selectedSubStatusId);
     })
-      console.log('ggg', this.sendBulkSmsForm.value.subStatusId);
   }
 
   getAllClients(){
     this.selectedSubStatusId = 0;
-    this.sqlQuery = '';
-    if(this.sendBulkSmsForm.value.officeId){
-    this.clientService.getClientsBysearchQueryAndOffice(this.sendBulkSmsForm.value.officeId, this.sqlQuery).subscribe((clients:any) => {
-      this.clientsOptions = clients.pageItems.filter((data:any) => (data.mobileNo) && (data.mobileNo.length === 12));
-      });
-    }
-  }
-
-  getClientsBySubstatusAndOffice(selectedOfficeId:any, selectedSubStatusId:any){
-    if(selectedOfficeId && selectedSubStatusId){
-      if(this.selectedSubStatusId != 0 && this.selectedSubStatusId != 'CWL' && this.selectedOfficeId != 'LIA'){
-        this.sqlQuery = 'c.sub_status=' + selectedSubStatusId;
-      }
-      if(this.selectedSubStatusId != 'CWL' && this.selectedOfficeId != 'LIA'){
-        this.clientService.getClientsBysearchQueryAndOffice(selectedOfficeId, this.sqlQuery).subscribe((clients:any) => {
-          this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
-        });
-      }else {
-        this.clientService.getClientsWithLoans(selectedOfficeId).subscribe((clients:any) => {
-          this.clientsOptions = clients.pageItems.filter((data:any) => data.mobileNo.length === 12);
-        });
-      }
-    }
   }
 
   submit(){
-    const formdata = {
-      'clientIds': this.sendBulkSmsForm.value.clientId,
+    this.formData = {
+      'officeId': this.selectedOfficeId,
       'message': this.sendBulkSmsForm.get('message').value
     }
-    this.organizationService.sendBulkSms(formdata).subscribe((data: any) => {
-     this.reloadCurrentRoute();
+    if(this.selectedSubStatusId != 0 && this.selectedSubStatusId != 'CWL' && this.selectedSubStatusId != 'LIA'){
+      this.formData.subStatus = this.selectedSubStatusId;
+    }
+    this.organizationService.sendBulkSms(this.formData).subscribe((data: any) => {
     });
+    this.reloadCurrentRoute();
   }
 
   reloadCurrentRoute() {
