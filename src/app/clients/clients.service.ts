@@ -391,11 +391,13 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/guarantedLoans`);
   }
 
-  getClientsBysearchQueryAndOffice(officeId:string, sqlSearch:string){
-    let httpParams = new HttpParams()
-      .set('officeId', officeId)
-      .set('withoutLimit', '0')
-    if(sqlSearch != '' && sqlSearch != undefined){httpParams = httpParams.set('sqlSearch', sqlSearch);}  
+  getFilteredClientsByExternalIdAndOffice(orderBy: string, sortOrder: string, orphansOnly: boolean, sqlSearch: string, officeId:string): Observable<any> {
+    const httpParams = new HttpParams()
+      .set('orphansOnly', orphansOnly.toString())
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy)
+      .set('sqlSearch', sqlSearch)
+      .set('officeId', officeId);
     return this.http.get('/clients', { params: httpParams });
   }
 
