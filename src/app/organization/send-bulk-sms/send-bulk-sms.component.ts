@@ -140,6 +140,9 @@ export class SendBulkSmsComponent implements OnInit {
        && this.selectedSubStatusId != 's2'){
       this.formData.subStatus = this.selectedSubStatusId;
     }
+    if(this.selectedSubStatusId === 'CWL' || this.selectedSubStatusId === 'LIA'){
+      delete this.formData.officeId;
+    }
     if(this.clientIds){
       this.formData.clientIds = this.clientIds;
     }
