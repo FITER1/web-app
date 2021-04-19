@@ -56,7 +56,10 @@
 
             <mat-form-field>
               <mat-label>Cheque #</mat-label>
-              <input matInput formControlName="checkNumber">
+              <input matInput formControlName="checkNumber" required>
+              <mat-error *ngIf="disbursementLoanForm.controls.checkNumber.hasError('required')">
+                Check Number #<strong>is required</strong>
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -66,10 +69,7 @@
 
             <mat-form-field>
               <mat-label>Reciept #</mat-label>
-              <input matInput formControlName="receiptNumber" required>
-              <mat-error *ngIf="disbursementLoanForm.controls.receiptNumber.hasError('required')">
-                Reciept #<strong>is required</strong>
-              </mat-error>
+              <input matInput formControlName="receiptNumber" >
             </mat-form-field>
 
             <mat-form-field>
