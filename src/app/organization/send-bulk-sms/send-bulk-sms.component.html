@@ -16,6 +16,7 @@
             <mat-label>Sub Status</mat-label>
             <mat-select formControlName="subStatusId">
               <mat-option [value]="0" (click) = "getAllClients()">All Clients</mat-option>
+              <mat-option [value]="'s2'">Selected Clients</mat-option>
               <mat-option *ngFor="let subStatus of subStatusOptions" [value]="subStatus.id">
                 {{ subStatus.name }}
               </mat-option>
@@ -32,6 +33,33 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          
+          <ng-container *ngIf = "selectedClients">
+          <mat-form-field>
+            <mat-label>Client Name</mat-label>
+            <input matInput formControlName="clientName" [matAutocomplete]="clientsAutocomplete">
+            <mat-error *ngIf="sendBulkSmsForm.controls.clientName.hasError('required')">
+              Name <strong>is required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient"
+          (optionSelected)='clientSelected($event.option.value)'>
+            <mat-option *ngFor="let client of clientsData" [value]="client">
+              {{ client.displayName }}
+            </mat-option>
+          </mat-autocomplete>
+        </ng-container>
+
+        <ng-container *ngIf="!(sendBulkSmsForm.controls.clientName === undefined)">
+          <div class="mat-table">
+            <div class="mat-row">
+              <div class="mat-cell">Selected Clients</div>
+              <div class="mat-cell" *ngFor= "let client of selectedClientsDetails">
+                {{client.name}}</div>
+            </div>
+          </div>
+        </ng-container>
 
           <!-- <mat-form-field>
             <mat-label>Clients</mat-label>

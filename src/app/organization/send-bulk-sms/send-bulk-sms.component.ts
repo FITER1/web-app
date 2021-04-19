@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,10 +41,17 @@ export class SendBulkSmsComponent implements OnInit {
 
   formData:any={}
 
+   /** Client data. */
+   clientsData: any = [];
+
+   selectedClients:boolean = false;
+   selectedClientsDetails:any=[];
+   clientIds:any=[];
+
   constructor(private formBuilder: FormBuilder,
               private organizationService : OrganizationService,
               private systemService: SystemService,
-              private clientService: ClientsService,
+              private clientsService: ClientsService,
               private route: ActivatedRoute,
                   private router: Router) { 
   }
@@ -75,7 +82,6 @@ export class SendBulkSmsComponent implements OnInit {
       'officeId': [''],
       'subStatusId': [''],
       'smsProviderId': [''],
-      //'clientId': ['', Validators.required],
       'message': ['', Validators.required]
     });
   }
@@ -87,6 +93,11 @@ export class SendBulkSmsComponent implements OnInit {
     })
     this.sendBulkSmsForm.get('subStatusId').valueChanges.subscribe((subStatusId:any) => {
       this.selectedSubStatusId = subStatusId;
+      if(this.selectedSubStatusId === 's2'){
+       this.selectedClients = true;
+       this.sendBulkSmsForm.addControl('clientName', new FormControl('', [Validators.required]));
+       this.getSelectedClients();
+      }
     })
   }
 
@@ -94,13 +105,43 @@ export class SendBulkSmsComponent implements OnInit {
     this.selectedSubStatusId = 0;
   }
 
+  getSelectedClients() {
+      this.sendBulkSmsForm.get('clientName').valueChanges.subscribe((value: string) => {
+        if (value.length >= 2) {
+          const sqlSearch: string = ' c.id LIKE \'%' + value + '%\' OR c.external_id LIKE \'%' + value + '%\' OR display_name LIKE \'%' + value + '%\'';
+          this.clientsService.getFilteredClientsByExternalIdAndOffice('displayName', 'ASC', false, sqlSearch, this.selectedOfficeId)
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
+        }
+      });
+  }
+
+  /**
+   * Displays Client name in form control input.
+   * @param {any} client Client data.
+   * @returns {string} Client name if valid otherwise undefined.
+   */
+   displayClient(client: any): string | undefined {
+    return client ? client.displayName : undefined;
+  }
+
+  clientSelected(clientDetails: any) {
+    this.selectedClientsDetails.push({'name': clientDetails.displayName, 'id':clientDetails.id});
+    this.clientIds.push(clientDetails.id);
+  }
+
   submit(){
     this.formData = {
       'officeId': this.selectedOfficeId,
       'message': this.sendBulkSmsForm.get('message').value
     }
-    if(this.selectedSubStatusId != 0 && this.selectedSubStatusId != 'CWL' && this.selectedSubStatusId != 'LIA'){
+    if(this.selectedSubStatusId != 0 && this.selectedSubStatusId != 'CWL' && this.selectedSubStatusId != 'LIA'
+       && this.selectedSubStatusId != 's2'){
       this.formData.subStatus = this.selectedSubStatusId;
+    }
+    if(this.clientIds){
+      this.formData.clientIds = this.clientIds;
     }
     this.organizationService.sendBulkSms(this.formData).subscribe((data: any) => {
     });
@@ -114,16 +155,8 @@ export class SendBulkSmsComponent implements OnInit {
     });
   }
 
-  toggleAllSelection() {
-    this.allSelected = !this.allSelected;  // to control select-unselect
-    
-    if (this.allSelected) {
-      this.skillSel.options.forEach( (item : MatOption) => {item.value === 0 ? item.deselect() : item.select(); });
-    } else {
-      this.skillSel.options.forEach( (item : MatOption) => {item.deselect()});
-    }
-    this.skillSel.close();
-  }
+  
+
 
 
 }
