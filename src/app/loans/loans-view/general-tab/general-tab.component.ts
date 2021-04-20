@@ -31,6 +31,8 @@ export class GeneralTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   detailsDataSource: MatTableDataSource<any>;
 
+  netDisbursedAmount:any;
+
   constructor(private route: ActivatedRoute) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
       this.loanDetails = data.loanDetailsData;
@@ -39,6 +41,7 @@ export class GeneralTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getNetDisbursedAmount();
     if (this.loanDetails.summary) {
       this.setloanSummaryTableData();
       this.setloanDetailsTableData();
@@ -129,6 +132,10 @@ export class GeneralTabComponent implements OnInit {
         'key': 'Disburse Amount',
         'value': this.loanDetails.principal,
       },
+      {
+        'key': 'Net Disburse Amount',
+        'value': this.netDisbursedAmount,
+      }
     ];
     this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
 
@@ -166,4 +173,19 @@ export class GeneralTabComponent implements OnInit {
     }
     return true;
   };
+
+  getNetDisbursedAmount(){
+    let amount = 0;
+    if(this.loanDetails.charges){
+      let charges = this.loanDetails.charges.filter((charge:any) => charge.chargePaymentMode.value === 'Regular');
+      charges.forEach((charge:any) => {
+        amount = amount+charge.amountPaid;
+      });
+    }
+    if(this.loanDetails.isTopup){
+      this.netDisbursedAmount = this.loanDetails.principal - this.loanDetails.topupAmount - amount;
+    }else{
+      this.netDisbursedAmount = this.loanDetails.principal - amount;
+    }
+  }
 }
