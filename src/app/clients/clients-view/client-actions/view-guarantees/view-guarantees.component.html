@@ -17,12 +17,12 @@
 
   <ng-container matColumnDef="Principal Amount">
     <th mat-header-cell *matHeaderCellDef>Principal Amount </th>
-    <td mat-cell *matCellDef="let element"> {{element.originalLoan}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.originalLoan | number}} </td>
   </ng-container>
 
   <ng-container matColumnDef="Hold Amount">
       <th mat-header-cell *matHeaderCellDef>Hold Amount </th>
-      <td mat-cell *matCellDef="let element"> {{element.onHoldAmount}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.onHoldAmount | number}} </td>
   </ng-container>
 
 

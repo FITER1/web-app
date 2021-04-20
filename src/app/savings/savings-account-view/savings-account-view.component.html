@@ -178,7 +178,7 @@
             </tr>
             <tr *ngIf="savingsAccountData.savingsAmountOnHold">
               <td>Savings Amount on hold</td>
-              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.savingsAmountOnHold}}</td>
+              <td>{{savingsAccountData.currency.displaySymbol}}&nbsp;{{savingsAccountData.savingsAmountOnHold | number}}</td>
             </tr>
           </tbody>
         </table>
