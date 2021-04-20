@@ -99,8 +99,8 @@
             <span *ngIf="!loanDetails.externalId"> Not Available </span>
           </ng-container>
 
-          <ng-container *ngIf="ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount'">
-            {{ ele.value }}
+          <ng-container *ngIf="ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount' || ele.key === 'Net Disburse Amount'">
+            {{ ele.value | number}}
           </ng-container>
         </td>
       </ng-container>
@@ -186,6 +186,11 @@
         <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
           <span fxFlex="50%">Disburse Amount:</span>
           <span fxFlex="50%">{{ loanDetails.principal | number }}</span>
+        </div>
+
+        <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
+          <span fxFlex="50%">Net Disburse Amount:</span>
+          <span fxFlex="50%">{{ netDisbursedAmount | number }}</span>
         </div>
 
         <div fxFlexFill>
