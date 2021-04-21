@@ -95,7 +95,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param  {this.route}} relativeTo
    */
   viewJournalEntries(){
-    this.router.navigate(['/accounting', 'journal-entries'], {queryParams: {'loanId': this.loanDetails.id, 'clientId': this.loanDetails.clientId}, relativeTo : this.route});
+    this.router.navigate(['/accounting', 'journal-entries'], {queryParams: {'loanId': this.loanDetails.id, 'clientId': this.loanDetails.clientId, 'officeId' : this.loanDetails.clientOfficeId}, relativeTo : this.route});
   }
 
   viewloantransactionjournalentries(transactionId: any){

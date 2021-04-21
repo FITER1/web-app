@@ -105,6 +105,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     {
       type: 'loanId',
       value: ''
+    },
+    {
+      type: 'savingsId',
+      value: ''
     }
   ];
 
@@ -112,6 +116,11 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   loanId: any;
   /* clientId */
   clientId:any;
+  /* officeId */
+  officeId:any;
+  /* officeId */
+  savingsId:any;
+
 
   /** Paginator for journal entries table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -133,10 +142,13 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         this.officeData = data.offices;
         this.glAccountData = data.glAccounts;
       });
+      
       this.route.queryParams.subscribe(params =>
         {this.loanId = +params['loanId'];
         this.clientId = +params['clientId'];
-        if(this.loanId){this.applyFilterByParams(this.loanId, 'loanId');}
+        this.officeId = +params['officeId'];
+        this.savingsId = +params['savingsId'];
+        this.setFilters()
       });
   }
 
@@ -341,6 +353,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       let path = '/clients/'+ this.clientId+ '/loans-accounts/' + this.loanId
       this.router.navigate([path], {relativeTo: this.route});
     }
+    if(this.savingsId){
+      let path = '/clients/'+ this.clientId+ '/savings-accounts/' + this.savingsId
+      this.router.navigate([path], {relativeTo: this.route});
+    }
   }
 
   /**
@@ -351,6 +367,18 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     const url: string = this.router.url;
     this.router.navigateByUrl(`/accounting`, {skipLocationChange: true})
       .then(() => this.router.navigate([url]));
+  }
+
+  setFilters(){
+    if(this.officeId){
+      let office = this.officeData.filter((office:any) => office.id === this.officeId);
+      this.officeName.patchValue({'id': office[0].id, 'name': office[0].name});
+    }else if(!this.savingsId){
+      this.officeName.patchValue({'id': this.officeData[0].id, 'name': this.officeData[0].name});
+    }
+    if(this.loanId){this.applyFilterByParams(this.loanId, 'loanId');}
+    if(this.officeId){this.applyFilterByParams(this.officeId, 'officeId');}
+    if(this.savingsId){this.applyFilterByParams(this.savingsId, 'savingsId');}
   }
 
 }

@@ -22,6 +22,9 @@ export class TransactionsTabComponent implements OnInit {
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Savings account data */
+  savingsAccountData:any;
+
   /**
    * Retrieves savings account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -29,6 +32,7 @@ export class TransactionsTabComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
+      this.savingsAccountData = data.savingsAccountData;
       this.transactionsData = data.savingsAccountData.transactions?.filter((transaction: any) => !transaction.reversed);
       this.status = data.savingsAccountData.status.value;
     });
@@ -76,6 +80,10 @@ export class TransactionsTabComponent implements OnInit {
    */
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
+  }
+
+  viewJournalEntries(){
+    this.router.navigate(['/accounting', 'journal-entries'], {queryParams: {'savingsId': this.savingsAccountData.id, 'clientId': this.savingsAccountData.clientId}, relativeTo : this.route});
   }
 
 }
