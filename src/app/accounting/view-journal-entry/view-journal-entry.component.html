@@ -26,71 +26,72 @@
 
     <tr>
       <th>Type</th>
-      <td>{{ data.journalEntry.glAccountType.value }}</td>
+      <td>{{ data.journalEntry.journalEntryDetails[0].glAccountData.type.value }}</td>
     </tr>
 
     <tr>
       <th>Account Code</th>
-      <td>{{ data.journalEntry.glAccountId }}</td>
+      <td>{{ data.journalEntry.journalEntryDetails[0].glAccountData.id }}</td>
     </tr>
 
     <tr>
       <th>Account Name</th>
-      <td>{{ data.journalEntry.glAccountName }}</td>
+      <td>{{ data.journalEntry.journalEntryDetails[0].glAccountData.name }}</td>
     </tr>
 
     <tr>
       <th>
-        <span *ngIf="data.journalEntry.entryType.value === 'CREDIT'">Credit</span>
-        <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">Debit</span>
+        <span *ngIf="data.journalEntry.journalEntryDetails[0].entryType.value === 'CREDIT'">Credit</span>
+        <span *ngIf="data.journalEntry.journalEntryDetails[0].entryType.value === 'DEBIT'">Debit</span>
       </th>
       <td>
-        {{ (data.journalEntry.currency.displaySymbol || data.journalEntry.currency.code) + ' ' + data.journalEntry.amount }}
+        {{(data.journalEntry.currency.displaySymbol || data.journalEntry.currency.code)}}&nbsp;{{data.journalEntry.journalEntryDetails[0].amount | number}}
       </td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.referenceNumber">
+    <tr >
       <th>Reference Number</th>
-      <td>{{ data.journalEntry.referenceNumber }}</td>
+      <td *ngIf="data.journalEntry.referenceNumber">{{ data.journalEntry.referenceNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.comments">
+    <tr >
       <th>Comments</th>
-      <td>{{ data.journalEntry.comments }}</td>
+      <td *ngIf="data.journalEntry.comments">{{ data.journalEntry.comments }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails">
+    <tr>
       <th colspan="2" class="header">Payment Details</th>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.paymentType">
+    <tr>
       <th>Payment Type</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.paymentType.name }}</td>
+      <td *ngIf="paymentDetails">
+        {{paymentDetails.paymentType ? paymentDetails.paymentType.name : ''}}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.accountNumber">
+    <tr>
       <th>Account Number</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.accountNumber }}</td>
+      <td *ngIf="paymentDetails">{{ paymentDetails.accountNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.checkNumber">
+    <tr>
       <th>Cheque Number</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.checkNumber }}</td>
+      <td *ngIf="paymentDetails">{{ paymentDetails.checkNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.routingCode">
+    <tr>
       <th>Routing Code</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.routingCode }}</td>
+      <td *ngIf="paymentDetails">{{ paymentDetails.routingCode }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.receiptNumber">
+    <tr>
       <th>Receipt Number</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.receiptNumber }}</td>
+      <td *ngIf="paymentDetails">{{ paymentDetails.receiptNumber }}</td>
     </tr>
 
-    <tr *ngIf="data.journalEntry.transactionDetails.paymentDetails?.bankNumber">
+    <tr>
       <th>Bank Number</th>
-      <td>{{ data.journalEntry.transactionDetails.paymentDetails.bankNumber }}</td>
+      <td *ngIf="paymentDetails">{{ paymentDetails.bankNumber }}</td>
     </tr>
 
     <tr>

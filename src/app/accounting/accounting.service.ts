@@ -80,7 +80,7 @@ export class AccountingService {
   getJournalEntry(transactionId: string): Observable<any> {
     const httpParams = new HttpParams()
       .set('transactionId', transactionId)
-      .set('transactionDetails', 'false');
+      .set('transactionDetails', 'true');
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
@@ -400,6 +400,10 @@ export class AccountingService {
 
   getVoucherTemplate(): Observable<any> {
     return this.http.get('/vouchers/template');
+  }
+
+  getPaymentDetails(paymentDetailId:string){
+    return this.http.get(`/paymentdetails/${paymentDetailId}`);
   }
 
 }
