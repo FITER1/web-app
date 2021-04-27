@@ -96,9 +96,20 @@ export class ClientsService {
     return this.http.put(`/datatables/${datatableName}/${clientId}`, data, { params: httpParams });
   }
 
+  updateDatatableEntry(clientId: string, datatableId: string, datatableName: string, data: any) {
+    console.log(datatableId);
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${clientId}/${datatableId}`, data, { params: httpParams });
+  }
+
   deleteDatatableContent(clientId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
     return this.http.delete(`/datatables/${datatableName}/${clientId}`, { params: httpParams });
+  }
+
+  deleteDatatableEntry(clientId: string, datatableName: string, datatableId: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${clientId}/${datatableId}`, { params: httpParams });
   }
 
   getClientAccountData(clientId: string) {
