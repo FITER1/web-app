@@ -117,7 +117,9 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
           'fixedEmiAmount': this.loansAccountTemplate.fixedEmiAmount,
           'maxOutstandingLoanBalance': this.loansAccountTemplate.maxOutstandingLoanBalance,
           'repaymentFrequencyNthDayType': this.loansAccountTemplate.repaymentFrequencyNthDayType ? this.loansAccountTemplate.repaymentFrequencyNthDayType.id : '',
-          'repaymentFrequencyDayOfWeekType': this.loansAccountTemplate.repaymentFrequencyDayOfWeekType ? this.loansAccountTemplate.repaymentFrequencyDayOfWeekType.id : ''
+          'repaymentFrequencyDayOfWeekType': this.loansAccountTemplate.repaymentFrequencyDayOfWeekType ? this.loansAccountTemplate.repaymentFrequencyDayOfWeekType.id : '',
+          'isTopup': this.loansAccountTemplate.isTopup,
+          'loanIdToClose': this.loansAccountTemplate.loanIdToClose
         });
       }
     }
