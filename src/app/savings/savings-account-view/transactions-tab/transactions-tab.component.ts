@@ -18,7 +18,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept'];
+  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'createdDate', 'createdBy', 'debit', 'credit', 'balance', 'viewReciept'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 
