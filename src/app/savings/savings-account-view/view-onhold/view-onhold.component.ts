@@ -12,7 +12,7 @@ export class ViewOnholdComponent implements OnInit {
   guaranteesAccounts : any = [];
   savingsAccountData: any;
 
-  openLoansColumns: string[] = ['Loan Product', 'Loan Account No', 'Amount', 'Remaining Amount', 'Status', 'View Transactions'];
+  openLoansColumns: string[] = ['Loan Product', 'Name', 'Loan Account No', 'Amount', 'Remaining Amount', 'Status', 'View Transactions'];
 
  /**
   * 
