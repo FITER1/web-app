@@ -46,6 +46,7 @@
             <span *ngIf="!clientViewData.groups">Unassigned</span>
             <span *ngIf ="clientViewData.status.value != 'Closed'">
             | Mobile No. : {{(clientViewData.mobileNo)?(clientViewData.mobileNo) :'Unassigned'}}
+            | Alternate Mobile No. : {{(clientViewData.alternateMobileNo)?(clientViewData.alternateMobileNo) :'Unassigned'}}
             | National Id : {{(clientViewData.nationalId)?(clientViewData.nationalId) :'Unassigned'}}<br />
             Gender : {{(clientViewData.gender)?(clientViewData.gender.name) :'Unassigned'}}
             | Client Classification : {{(clientViewData.clientClassification)?(clientViewData.clientClassification.name) :'Unassigned'}}
@@ -54,7 +55,7 @@
             | Age : {{age}} </span>
             | Client Type : {{(clientViewData.clientType)?(clientViewData.clientType.name) :'Unassigned'}}
             <br />
-            Email Address : {{(clientViewData.emailAddress)?(clientViewData.emailAddress) :'Unassigned'}} | 
+            Email Address : {{(clientViewData.emailAddress)?(clientViewData.emailAddress) :'Unassigned'}} |
             Sub Status : {{(clientViewData.subStatus.name)?(clientViewData.subStatus.name) :'Update Pending'}}
             <br />
             <span *ngIf ="clientViewData.status.value === 'Closed'">
