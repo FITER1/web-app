@@ -43,6 +43,23 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
+          Created On
+        </div>
+
+        <div fxFlex="50%">
+          {{ transactionData.submittedOnDate | date:'dd-MM-yy' }}
+        </div>
+
+        <div fxFlex="50%" class="mat-body-strong">
+          Created By
+        </div>
+
+        <div fxFlex="50%">
+          {{ transactionData.submittedByUsername }}
+        </div>
+
+
+        <div fxFlex="50%" class="mat-body-strong">
           Currency
         </div>
 
@@ -57,23 +74,7 @@
         <div fxFlex="50%">
           {{ transactionData.amount }}
         </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Created On
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.submittedOnDate }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          Created By
-        </div>
-
-        <div fxFlex="50%">
-          {{ transactionData.submittedByUsername }}
-        </div>
-
+       
         <ng-container *ngIf="transactionData.paymentDetailData">
 
           <div *ngIf="transactionData.paymentDetailData.paymentType" fxFlex="50%" class="mat-body-strong">
