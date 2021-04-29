@@ -18,7 +18,7 @@ export class TransactionsTabComponent implements OnInit {
   /** Transactions Data */
   transactionsData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['id', 'transactionDate', 'transactionType', 'createdDate', 'createdBy', 'debit', 'credit', 'balance', 'viewReciept'];
+  displayedColumns: string[] = ['id', 'transactionDate', 'createdDate', 'createdBy', 'transactionType', 'debit', 'credit', 'balance', 'viewReciept', 'viewJournal'];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -84,6 +84,10 @@ export class TransactionsTabComponent implements OnInit {
 
   viewJournalEntries(){
     this.router.navigate(['/accounting', 'journal-entries'], {queryParams: {'savingsId': this.savingsAccountData.id, 'clientId': this.savingsAccountData.clientId}, relativeTo : this.route});
+  }
+
+  viewloantransactionjournalentries(transactionId: any){
+    this.router.navigate(['/accounting', 'journal-entries', 'transactions', 'view', 'S'+transactionId], { relativeTo : this.route});
   }
 
 }
