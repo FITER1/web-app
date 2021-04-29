@@ -15,6 +15,12 @@
         </p>
       </mat-list-item>
       
+      <div class="message" *ngIf = "searchResults.length === 0">
+        <i class="fa fa-exclamation-circle alert-check fa-2x"></i>
+        No Matching Result Found.
+      </div>
+      
+      
     </mat-list>
 
   </mat-card>
