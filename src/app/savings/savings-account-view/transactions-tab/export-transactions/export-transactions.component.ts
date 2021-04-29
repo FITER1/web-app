@@ -71,13 +71,14 @@ export class ExportTransactionsComponent implements OnInit {
    */
   generate() {
     const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
     const data = {
       'output-type':	'PDF',
       R_startDate:	this.datePipe.transform(this.transactionsReportForm.value.fromDate, dateFormat),
       R_endDate:	this.datePipe.transform(this.transactionsReportForm.value.toDate, dateFormat),
       R_savingsAccountId:	this.savingsAccountId
     };
-    this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', 'en', 'dd MMMM yyyy')
+    this.reportsService.getPentahoRunReportData('Client Saving Transactions', data, 'default', locale, dateFormat)
       .subscribe( (res: any) => {
         const contentType = res.headers.get('Content-Type');
         const file = new Blob([res.body], {type: contentType});
