@@ -90,6 +90,11 @@
       <input matInput type="number" formControlName="mobileNo">
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%">
+      <mat-label>Alternate Mobile No</mat-label>
+      <input matInput type="number" formControlName="alternateMobileNo">
+    </mat-form-field>
+
     <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
       <mat-label>Gender</mat-label>
       <mat-select formControlName="genderId">

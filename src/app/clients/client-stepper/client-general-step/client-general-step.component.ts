@@ -78,6 +78,7 @@ export class ClientGeneralStepComponent implements OnInit {
       'externalId': [''],
       'genderId': [''],
       'mobileNo': [''],
+      'alternateMobileNo':[''],
       'dateOfBirth': [''],
       'clientTypeId': [''],
       'clientClassificationId': [''],
