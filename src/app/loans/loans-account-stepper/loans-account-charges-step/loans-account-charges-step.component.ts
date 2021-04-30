@@ -95,7 +95,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    */
   editChargeAmount(charge: any) {
     const amount = parseFloat(( < HTMLInputElement > document.getElementById('amount')).value);
-    const newCharge = { ...charge, amount: amount };
+    const newCharge = { ...charge, amountOrPercentage: amount };
     this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
     this.chargesDataSource = this.chargesDataSource.concat([]);
     this.pristine = false;
