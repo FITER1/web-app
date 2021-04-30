@@ -24,7 +24,7 @@ export class ReportsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.reportsService.getReports();
+    return this.reportsService.getReports(true);
   }
 
 }
