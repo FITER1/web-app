@@ -25,6 +25,7 @@ import { SettingsService } from 'app/settings/settings.service';
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
 
+  myobj:any = [];
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
   // @Imput loansAccountTemplate: LoansAccountTemplate
@@ -65,6 +66,11 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if ( this.loansAccountTemplate.charges) {
       this.chargesDataSource = this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      if(this.chargesDataSource.length != 0){
+        this.chargesDataSource.forEach((charge:any) => {
+          this.myobj.push(charge.amountOrPercentage);
+        })
+      }
     }
   }
 
@@ -84,6 +90,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * Add a charge
    */
   addCharge(charge: any) {
+    this.myobj.push(charge.value.amount);
     this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
     charge.value = '';
     this.pristine = false;
@@ -93,8 +100,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * Edits the Charge Amount
    * @param {any} charge Charge
    */
-  editChargeAmount(charge: any) {
-    const amount = parseFloat(( < HTMLInputElement > document.getElementById('amount')).value);
+ 
+  editChargeAmount(charge: any, index:any) {
+    const amount = this.myobj[index]; //parseFloat(( < HTMLInputElement > document.getElementById('amount')).value);
     const newCharge = { ...charge, amountOrPercentage: amount };
     this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
     this.chargesDataSource = this.chargesDataSource.concat([]);
