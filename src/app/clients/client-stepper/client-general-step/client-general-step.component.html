@@ -5,7 +5,7 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Office</mat-label>
       <mat-select required formControlName="officeId">
-        <mat-option *ngFor="let office of officeOptions" [value]="office.id">
+        <mat-option chosen="officeOptions" *ngFor="let office of officeOptions" [value]="office.id">
           {{ office.name }}
         </mat-option>
       </mat-select>

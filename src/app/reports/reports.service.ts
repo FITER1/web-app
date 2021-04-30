@@ -27,8 +27,9 @@ export class ReportsService {
   /**
    * @returns {Observable<any>} Reports data
    */
-  getReports(): Observable<any> {
-    return this.http.get('/reports');
+  getReports(onlyActive: boolean): Observable<any> {
+    const httpParams = new HttpParams().set('onlyActive',onlyActive);
+    return this.http.get('/reports', { params: httpParams });
   }
 
   /**
