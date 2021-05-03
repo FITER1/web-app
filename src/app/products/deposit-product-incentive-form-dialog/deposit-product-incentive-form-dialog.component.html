@@ -33,7 +33,7 @@
         {{ attributeValue.name }}
       </mat-option>
     </mat-select>
-    <input type="number" matInput formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName === 3" required>
+    <input type="text" mifosxNumberFormatDirective matInput formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName === 3" required>
     <mat-error>
       Value is <strong>required</strong>
     </mat-error>
@@ -53,7 +53,7 @@
 
   <mat-form-field>
     <mat-label>Interest</mat-label>
-    <input type="number" matInput formControlName="amount" required>
+    <input type="text" mifosxNumberFormatDirective matInput formControlName="amount" required>
     <mat-error>
       Interest is <strong>required</strong>
     </mat-error>

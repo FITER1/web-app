@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Decimal Places</mat-label>
-      <input type="number" matInput formControlName="digitsAfterDecimal" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="digitsAfterDecimal" required>
       <mat-error>
         Decimal Places is <strong>required</strong>
       </mat-error>
@@ -24,7 +24,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Currency in multiples of</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOf" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="inMultiplesOf" required>
       <mat-error>
         Currency in multiples of is <strong>required</strong>
       </mat-error>

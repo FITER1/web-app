@@ -9,12 +9,12 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Decimal Places</mat-label>
-      <input type="number" matInput formControlName="decimal">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="decimal">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Nominal Annual Interest Rate</mat-label>
-      <input type="number" matInput formControlName="nominalAnnualInterestRate" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="nominalAnnualInterestRate" required>
       <mat-error>
         Nominal Annual Interest is <strong>required</strong>
       </mat-error>
@@ -34,7 +34,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Currency in multiples of</mat-label>
-      <input type="number" matInput formControlName="currencyMultiple" >
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="currencyMultiple" >
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -75,7 +75,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Opening Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredOpeningBalance">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minRequiredOpeningBalance">
     </mat-form-field>
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
@@ -86,7 +86,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="lockinPeriodFrequency">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -110,17 +110,17 @@
 
       <mat-form-field fxFlex="31%">
         <mat-label>Minimum Overdraft Required for Interest Calculation</mat-label>
-        <input type="number" matInput formControlName="minOverdraftForInterestCalculation">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="minOverdraftForInterestCalculation">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Nominal Annual Interest for Overdraft</mat-label>
-        <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="nominalAnnualInterestRateOverdraft">
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
         <mat-label>Maximum Overdraft Amount Limit</mat-label>
-        <input type="number" matInput formControlName="overdraftLimit">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="overdraftLimit">
       </mat-form-field>
 
     </div>
@@ -133,12 +133,12 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Minimum Balance</mat-label>
-      <input type="number" matInput formControlName="minRequiredBalance">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minRequiredBalance">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" *ngIf="savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value">
       <mat-label>Balance Required for Interest Calculation</mat-label>
-      <input type="number" matInput formControlName="minBalanceForInterestCalculation">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minBalanceForInterestCalculation">
     </mat-form-field>
 
   </div>

@@ -6,12 +6,12 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Minimum</mat-label>
-      <input type="number" matInput formControlName="minimumShares">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minimumShares">
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
       <mat-label>Default</mat-label>
-      <input type="number" matInput formControlName="nominalShares" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="nominalShares" required>
       <mat-error>
         Default Shares per Client is <strong>required</strong>
       </mat-error>
@@ -19,14 +19,14 @@
 
     <mat-form-field fxFlex="31%">
       <mat-label>Maximum</mat-label>
-      <input type="number" matInput formControlName="maximumShares">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="maximumShares">
     </mat-form-field>
 
     <h4 fxFlex="98%" class="mat-h4">Minimum Active Period</h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="minimumActivePeriodForDividends">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minimumActivePeriodForDividends">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -42,7 +42,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="lockinPeriodFrequency">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">

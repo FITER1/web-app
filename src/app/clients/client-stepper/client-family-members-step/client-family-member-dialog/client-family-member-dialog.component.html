@@ -32,7 +32,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Age</mat-label>
-      <input type="number" formControlName="age" matInput />
+      <input type="text" mifosxNumberFormatDirective formControlName="age" matInput />
       <mat-error *ngIf="familyMemberForm.controls.age.hasError('required')">
         Age is <strong>required</strong>
       </mat-error>

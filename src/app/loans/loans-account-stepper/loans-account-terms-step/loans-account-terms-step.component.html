@@ -4,7 +4,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Principal {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
-        <input type="number" matInput formControlName="principal">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="principal">
         <mat-error *ngIf="loansAccountTermsForm.controls.principal.hasError('required')">
           Principal is <strong>required</strong>
         </mat-error>
@@ -34,7 +34,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Number of repayments</mat-label>
-        <input type="number" matInput formControlName="numberOfRepayments">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="numberOfRepayments">
         <mat-error *ngIf="loansAccountTermsForm.controls.numberOfRepayments.hasError('required')">
           Number of repayments is <strong>required</strong>
         </mat-error>
@@ -103,7 +103,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>Nominal interest rate</mat-label>
-        <input type="number" matInput formControlName="interestRatePerPeriod">
+        <input type="text" mifosxNumberFormatDirective matInput formControlName="interestRatePerPeriod">
       </mat-form-field>
 
         <mat-form-field fxFlex="48%">
@@ -188,7 +188,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Arrears tolerance {{loansAccountProductTemplate?.currency.displaySymbol}}</mat-label>
-      <input matInput type="number"
+      <input matInput type="text" mifosxNumberFormatDirective
         [attr.disabled]="!loansAccountProductTemplate?.product.allowAttributeOverrides.inArrearsTolerance"
         formControlName="inArrearsTolerance">
     </mat-form-field>
@@ -233,7 +233,7 @@
 
     <mat-form-field fxFlex="48%" *ngIf="loansAccountProductTemplate?.canDefineInstallmentAmount">
       <mat-label>Installment Amount</mat-label>
-      <input type="number" matInput formControlName="fixedEmiAmount">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="fixedEmiAmount">
     </mat-form-field>
 
     <ng-container *ngIf="loansAccountProductTemplate?.canUseForTopup">

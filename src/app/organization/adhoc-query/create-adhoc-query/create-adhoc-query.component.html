@@ -59,7 +59,7 @@
 
           <mat-form-field *ngIf="adhocQueryForm.controls.reportRunFrequency.value === 5">
             <mat-label>Custom Report Run Frequency (Days)</mat-label>
-            <input type="number" matInput required formControlName="reportRunEvery">
+            <input type="text" mifosxNumberFormatDirective matInput required formControlName="reportRunEvery">
             <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('required')">
               Custom Report Run Frequency is <strong>required</strong>
             </mat-error>

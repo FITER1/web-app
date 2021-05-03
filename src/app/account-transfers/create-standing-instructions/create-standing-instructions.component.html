@@ -155,7 +155,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Amount</mat-label>
-            <input type="number" matInput required formControlName="amount">
+            <input type="text" mifosxNumberFormatDirective matInput required formControlName="amount">
             <mat-error *ngIf="createStandingInstructionsForm.controls.amount.hasError('required')">
               Amount is <strong>required</strong>
             </mat-error>
@@ -197,7 +197,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Interval</mat-label>
-            <input type="number" matInput required formControlName="recurrenceInterval">
+            <input type="text" mifosxNumberFormatDirective matInput required formControlName="recurrenceInterval">
             <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
               Recurrence Interval is <strong>required</strong>
             </mat-error>

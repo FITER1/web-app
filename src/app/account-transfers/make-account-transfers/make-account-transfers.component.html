@@ -98,7 +98,7 @@
 
           <mat-form-field fxFlex="98%">
             <mat-label>Amount</mat-label>
-            <input type="number" matInput required formControlName="transferAmount">
+            <input type="text" mifosxNumberFormatDirective matInput required formControlName="transferAmount">
             <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
               Amount is <strong>required</strong>
             </mat-error>

@@ -18,7 +18,7 @@
 
       <mat-form-field>
         <mat-label>Interest Rate</mat-label>
-        <input matInput type="number" required formControlName="interestRate">
+        <input matInput type="text" mifosxNumberFormatDirective required formControlName="interestRate">
         <mat-error *ngIf="floatingRatePeriodForm.controls.interestRate.hasError('required')">
           Interest Rate is <strong>required</strong>
         </mat-error>

@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Deposit Amount</mat-label>
-      <input type="number" matInput formControlName="depositAmount" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="depositAmount" required>
       <mat-error>
         Fixed Deposit Amount is <strong>required</strong>
       </mat-error>
@@ -14,7 +14,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Deposit Period Frequency</mat-label>
-      <input type="number" matInput formControlName="depositPeriod" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="depositPeriod" required>
       <mat-error>
         Deposit Period Frequency is <strong>required</strong>
       </mat-error>
