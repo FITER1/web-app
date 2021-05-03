@@ -5,7 +5,7 @@
         <form [formGroup]="savingAccountHoldAmountForm" (ngSubmit)="submit()">
 
             <mat-card-content fxLayout="column">
-      
+
               <mat-form-field>
                 <mat-label>Transaction Date</mat-label>
                 <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker"
@@ -16,23 +16,23 @@
                   Transaction Date is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-      
+
               <mat-form-field>
                 <mat-label>Transaction Amount</mat-label>
-                <input type="number" formControlName="transactionAmount" required matInput />
+                <input type="text" mifosxNumberFormatDirective formControlName="transactionAmount" required matInput />
                 <mat-error *ngIf="savingAccountHoldAmountForm.controls.transactionAmount.hasError('required')">
                   Transaction Amount is <strong>required</strong>
                 </mat-error>
               </mat-form-field>
-      
+
               <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
                 <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
                 <button mat-raised-button color="primary" [disabled]="!savingAccountHoldAmountForm.valid">Submit</button>
               </mat-card-actions>
 
             </mat-card-content>
-      
+
         </form>
-      
+
     </mat-card>
 </div>

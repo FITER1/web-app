@@ -6,7 +6,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="lockinPeriodFrequency">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -23,7 +23,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="minDepositTerm" required>
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="minDepositTerm" required>
       <mat-error>
         Minimum Deposit Term Frequency is <strong>required</strong>
       </mat-error>
@@ -45,7 +45,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOfDepositTerm">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="inMultiplesOfDepositTerm">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -61,7 +61,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Frequency</mat-label>
-      <input type="number" matInput formControlName="maxDepositTerm">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="maxDepositTerm">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -103,7 +103,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>Penal Interest (%)</mat-label>
-      <input type="number" matInput formControlName="preClosurePenalInterest">
+      <input type="text" mifosxNumberFormatDirective matInput formControlName="preClosurePenalInterest">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -123,14 +123,14 @@
       <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-p">
         Is Withhold Tax Applicable?
       </mat-checkbox>
-  
+
       <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25">
         <mat-label>Tax Group</mat-label>
         <input matInput formControlName="taxGroupId">
       </mat-form-field>
 
     </ng-container>
-   
+
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">

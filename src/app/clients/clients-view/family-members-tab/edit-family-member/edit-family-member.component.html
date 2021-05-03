@@ -32,7 +32,7 @@
 
       <mat-form-field fxFlex="calc(50% - 25px)">
         <mat-label>Age</mat-label>
-        <input type="number" formControlName="age" required matInput />
+        <input type="text" mifosxNumberFormatDirective formControlName="age" required matInput />
         <mat-error *ngIf="editFamilyMemberForm.controls.age.hasError('required')">
           Age is <strong>required</strong>
         </mat-error>
@@ -98,7 +98,7 @@
       </mat-form-field>
 
     </div>
-    
+
     <div fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="center">
       <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
       <button type="submit" mat-raised-button color="primary" [disabled]="editFamilyMemberForm.pristine||!editFamilyMemberForm.valid">Submit</button>

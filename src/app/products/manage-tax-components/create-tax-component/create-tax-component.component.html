@@ -18,7 +18,7 @@
 
           <mat-form-field>
             <mat-label>Percentage</mat-label>
-            <input type="number" matInput required formControlName="percentage">
+            <input type="text" mifosxNumberFormatDirective matInput required formControlName="percentage">
             <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('required')">
               Percentage is <strong>required</strong>
             </mat-error>
