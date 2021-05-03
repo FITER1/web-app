@@ -42,9 +42,6 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
           case 'LIABILITY': accountOptions = glAccountData.liabilityHeaderAccountOptions;
           break;
         }
-        glAccountData.parent = accountOptions.find((accountOption: any) => {
-          return accountOption.id === glAccountData.parentId;
-        });
         return glAccountData;
       })
     );

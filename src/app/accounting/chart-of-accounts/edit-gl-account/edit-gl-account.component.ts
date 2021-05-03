@@ -28,8 +28,8 @@ export class EditGlAccountComponent implements OnInit {
   parentData: any;
   /** Tag data. */
   tagData: any;
-  /** Gl Account Classification data. */
-  GlClassificationTypes: any;
+  /** Cancel route. (depending on creation of gl account or sub-ledger account) */
+  cancelRoute = '../../';
 
   /**
    * Retrieves the chart of accounts data from `resolve`.
@@ -44,7 +44,6 @@ export class EditGlAccountComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
-      this.GlClassificationTypes = data.glAccountAndChartOfAccountsTemplate.GlClassificationTypes;
     });
   }
 
@@ -69,7 +68,7 @@ export class EditGlAccountComponent implements OnInit {
       'tagId': [this.glAccount.tagId.id],
       'manualEntriesAllowed': [this.glAccount.manualEntriesAllowed],
       'description': [this.glAccount.description],
-      'glClassificationType' : [this.glAccount.glClassificationType.id]
+      'disabled': [this.glAccount.disabled]
     });
   }
 
