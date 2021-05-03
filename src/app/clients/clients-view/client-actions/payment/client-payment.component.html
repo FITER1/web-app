@@ -46,7 +46,7 @@
             <th mat-header-cell *matHeaderCellDef> Repayment Amount </th>
             <td mat-cell *matCellDef="let element">
             <mat-form-field *ngIf="clientPaymentForm.contains('repaymentAmount')">
-              <input matInput formControlName="repaymentAmount" [defaultValue]="0" (change)="captureLoanAmount(element.id)">
+              <input type="text" mifosxNumberFormatDirective matInput formControlName="repaymentAmount" [defaultValue]="0" (change)="captureLoanAmount(element.id)">
             </mat-form-field>
             </td>
           </ng-container>
@@ -96,7 +96,7 @@
 
           <tr mat-header-row *matHeaderRowDef="chargesColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: chargesColumns;"></tr>
-        </table>  
+        </table>
       </div>
         <div mat-header-cell><b>Saving Accounts</b></div>
         <table *ngIf="!showClosedSavingAccounts && isSavings" mat-table
@@ -133,7 +133,7 @@
             <th mat-header-cell *matHeaderCellDef> Deposit Amount </th>
             <td mat-cell *matCellDef="let element">
               <mat-form-field *ngIf="clientPaymentForm.contains('depositAmount')">
-                <input matInput formControlName="depositAmount" [defaultValue]="0" (change)="captureSavingsAmount(element.id)">
+                <input type="text" mifosxNumberFormatDirective matInput formControlName="depositAmount" [defaultValue]="0" (change)="captureSavingsAmount(element.id)">
               </mat-form-field>
             </td>
           </ng-container>
@@ -157,22 +157,22 @@
         </table>
         <div class = "charge-table">
           <table mat-table [dataSource]="savingsCharges" *ngIf = "showSavingsCharges">
-  
+
             <ng-container matColumnDef="Applied Charges">
               <th mat-header-cell *matHeaderCellDef> Applied Charges </th>
               <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Charge Duedate">
               <th mat-header-cell *matHeaderCellDef> Charge Due Date </th>
               <td mat-cell *matCellDef="let element"> {{element.dueDate|date}} </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Amount">
               <th mat-header-cell *matHeaderCellDef>Amount</th>
               <td mat-cell *matCellDef="let element"> {{element.amount | number}} </td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Actions">
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let element">
@@ -180,11 +180,11 @@
                 (click)="routeEdit($event); waiveSavingsCharge(element.id)"><i class="fa fa-flag"></i></button>
               </td>
             </ng-container>
-  
+
             <tr mat-header-row *matHeaderRowDef="chargesColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: chargesColumns;"></tr>
           </table>  </div>
-        
+
 
         <table mat-table [dataSource]="totalPaymentArray">
           <ng-container matColumnDef="Total Payment">
