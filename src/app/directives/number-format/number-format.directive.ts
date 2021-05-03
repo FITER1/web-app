@@ -22,16 +22,20 @@ export class NumberFormatDirective implements OnInit {
     this.format(event.clipboardData.getData('text/plain'));
   }
 
-  format(val: string) {
-    // 1. test for non-number characters and replace/remove them
-    const numberFormat = parseInt(String(val).replace(this.currencyChars, ''), NaN);
-    // console.log(numberFormat); // raw number
+  format(nStr: string) {
 
-    // 2. format the number (add commas)
-    const usd = this.decimalPipe.transform(numberFormat, '1.0', 'en-US');
-
-    // 3. replace the input value with formatted numbers
-    this.renderer.setProperty(this.el.nativeElement, 'value', usd);
+    nStr += '';
+    const comma = /,/g;
+    nStr = nStr.replace(comma,'');
+    const x = nStr.split('.');
+    let x1 = x[0];
+    const x2 = x.length > 1 ? '.' + x[1] : '';
+    const rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    const numberFormat =  x1 + x2;
+    this.renderer.setProperty(this.el.nativeElement, 'value', numberFormat);
   }
 
 }
