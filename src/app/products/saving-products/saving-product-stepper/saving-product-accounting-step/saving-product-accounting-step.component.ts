@@ -38,6 +38,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
               public dialog: MatDialog) {
     this.createsavingProductAccountingForm();
     this.setConditionalControls();
+    
   }
 
   ngOnInit() {
@@ -77,10 +78,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
            this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id : '',
           'advancedAccountingRules': (this.savingProductsTemplate.paymentChannelToFundSourceMappings || this.savingProductsTemplate.feeToIncomeAccountMappings || this.savingProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
         });
-
+        console.log(this.savingProductsTemplate.paymentChannelToFundSourceMappings);
         this.savingProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
           this.formBuilder.array((this.savingProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
-          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
+          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id, mappingId: paymentFundSource.mappingId }))));
         this.savingProductAccountingForm.setControl('feeToIncomeAccountMappings',
           this.formBuilder.array((this.savingProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
           ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
@@ -193,6 +194,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   delete(formArray: FormArray, index: number) {
+    console.log(formArray);
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `this` }
     });
