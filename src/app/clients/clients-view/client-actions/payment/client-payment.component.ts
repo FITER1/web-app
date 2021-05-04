@@ -2,14 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
-import {TasksService} from "../../../../tasks/tasks.service";
+import {TasksService} from '../../../../tasks/tasks.service';
 import { ReportsService } from '../../../../reports/reports.service';
-import {SettingsService} from "../../../../settings/settings.service";
+import {SettingsService} from '../../../../settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -48,14 +48,14 @@ export class ClientPaymentComponent implements OnInit {
   showClosedSavingAccounts = false;
   isSavings = true;
   /** local variables */
-  totalPaymentAmount: number = 0;
-  LoanPaymentAmount: number = 0;
-  savingsDepositAmount: number = 0;
+  totalPaymentAmount = 0;
+  LoanPaymentAmount = 0;
+  savingsDepositAmount = 0;
   loanIds: bigint[] = [];
   savingIds: bigint[] = [];
   loanRepayments: number[] = [];
   savingDeposits: number[] = [];
-  existingPlace: number = -1;
+  existingPlace = -1;
   totalPaymentArray: number[] = [];
   paymentDetails: any[] = [];
   transactionDetails: any[] = [];
@@ -68,16 +68,16 @@ export class ClientPaymentComponent implements OnInit {
   clientId: bigint;
   errorResponse: any[];
   pentahoUrl: any;
-  showReport: boolean = false;
+  showReport = false;
   transactionDate: any;
-  showError: boolean = false;
+  showError = false;
   showPaymentDetails = false;
-  loanCharges:any[];
-  savingsCharges:any[];
-  showLoanCharges:boolean=false;
-  showSavingsCharges:boolean =false;
-  loanId:any;
-  savingsId:any;
+  loanCharges: any[];
+  savingsCharges: any[];
+  showLoanCharges = false;
+  showSavingsCharges = false;
+  loanId: any;
+  savingsId: any;
 
   chargesColumns: String[] = ['Applied Charges', 'Charge Duedate', 'Amount', 'Actions'];
 
@@ -99,7 +99,7 @@ export class ClientPaymentComponent implements OnInit {
               private sanitizer: DomSanitizer,
               public dialog: MatDialog,
               public loansService: LoansService,
-              public savingsService : SavingsService) {
+              public savingsService: SavingsService) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientPaymentData = data.clientActionData;
     });
@@ -110,7 +110,7 @@ export class ClientPaymentComponent implements OnInit {
       'transactionDate': [new Date(), Validators.required],
       'transactionAmount': [''],
       'paymentTypeId': '',
-      'note':''
+      'note': ''
     });
     this.clientId = this.clientPaymentData.clientData.id;
     this.loanAccounts = this.clientPaymentData.loanAccounts || [];
@@ -134,44 +134,44 @@ export class ClientPaymentComponent implements OnInit {
     this.showPaymentDetails = !this.showPaymentDetails;
   }
 
-  captureLoanAmount(loanId: bigint){
+  captureLoanAmount(loanId: bigint) {
     this.totalPaymentArray = [];
     this.totalPaymentAmount = 0;
     this.LoanPaymentAmount = 0;
     this.existingPlace = -1;
     const generalDetails = this.clientPaymentForm.value;
     this.existingPlace = this.loanIds.indexOf(loanId);
-    if(this.existingPlace != -1){
-      this.loanRepayments.splice(this.existingPlace,1);
-      this.loanIds.splice(this.existingPlace,1);
+    if (this.existingPlace != -1) {
+      this.loanRepayments.splice(this.existingPlace, 1);
+      this.loanIds.splice(this.existingPlace, 1);
     }
-    if(generalDetails.repaymentAmount != 0) {
+    if (generalDetails.repaymentAmount != 0) {
       this.loanIds.push(loanId);
-      this.loanRepayments.push(generalDetails.repaymentAmount);
+      this.loanRepayments.push(generalDetails.repaymentAmount.replace(',', ''));
     }
-    for(var i=0;i<this.loanRepayments.length;i++){
+    for (let i = 0; i < this.loanRepayments.length; i++) {
       this.LoanPaymentAmount = +this.LoanPaymentAmount + +this.loanRepayments[i];
     }
     this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
     this.totalPaymentArray.push(this.totalPaymentAmount);
   }
 
-  captureSavingsAmount(savingId: bigint){
+  captureSavingsAmount(savingId: bigint) {
     this.totalPaymentArray = [];
     this.totalPaymentAmount = 0;
     this.savingsDepositAmount = 0;
     this.existingPlace = -1;
     const generalDetails = this.clientPaymentForm.value;
     this.existingPlace = this.savingIds.indexOf(savingId);
-    if(this.existingPlace != -1){
-      this.savingDeposits.splice(this.existingPlace,1);
-      this.savingIds.splice(this.existingPlace,1);
+    if (this.existingPlace != -1) {
+      this.savingDeposits.splice(this.existingPlace, 1);
+      this.savingIds.splice(this.existingPlace, 1);
     }
-    if(generalDetails.depositAmount != 0) {
+    if (generalDetails.depositAmount != 0) {
       this.savingIds.push(savingId);
-      this.savingDeposits.push(generalDetails.depositAmount);
+      this.savingDeposits.push(generalDetails.depositAmount.replace(',', ''));
     }
-    for(var i=0;i<this.savingDeposits.length;i++){
+    for (let i = 0; i < this.savingDeposits.length; i++) {
       this.savingsDepositAmount = +this.savingsDepositAmount + +this.savingDeposits[i];
     }
     this.totalPaymentAmount = +this.savingsDepositAmount + +this.LoanPaymentAmount;
@@ -180,8 +180,8 @@ export class ClientPaymentComponent implements OnInit {
 
 
   reload() {
-    const url: string = `/clients/`+this.clientId+`/general`;
-    this.router.navigateByUrl(`/clients/`+this.clientId+`/general`, { skipLocationChange: false })
+    const url: string = `/clients/` + this.clientId + `/general`;
+    this.router.navigateByUrl(`/clients/` + this.clientId + `/general`, { skipLocationChange: false })
       .then(() => this.router.navigate([url]));
   }
 
@@ -227,7 +227,7 @@ export class ClientPaymentComponent implements OnInit {
       const transactionDate = this.transactionDate;
       const dueDate = this.transactionDate;
       const receiptNumber = this.clientPaymentForm.value.receiptNumber;
-      if(transactionAmount !== 0) {
+      if (transactionAmount !== 0) {
         const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
         const formData = {
           dateFormat,
@@ -246,13 +246,13 @@ export class ClientPaymentComponent implements OnInit {
         this.batchRequests.push(batchData);
       }
       this.savingAccounts.forEach((element1: any) => {
-        if(element1.id === element){
+        if (element1.id === element) {
           element1.savingsCharges.forEach((element2: any) => {
             let amount = 0;
-            if(transactionAmount > element2.amountOutstanding){
+            if (transactionAmount > element2.amountOutstanding) {
               amount = element2.amountOutstanding;
               transactionAmount = +transactionAmount - +element2.amountOutstanding;
-            }else{
+            } else {
               amount = transactionAmount;
               transactionAmount = 0;
             }
@@ -284,7 +284,7 @@ export class ClientPaymentComponent implements OnInit {
           this.errorResponse.push(responseEle.body);
         }
       });
-      if(this.errorResponse.length === 0){
+      if (this.errorResponse.length === 0) {
         const R_reciptNo = this.clientPaymentForm.value.receiptNumber;
         const R_clientId = this.clientId;
         const R_tDate = this.transactionDate;
@@ -306,7 +306,7 @@ export class ClientPaymentComponent implements OnInit {
             this.totalPaymentArray = [];
             this.clientPaymentForm.patchValue({
               'transactionDate': new Date()
-            })
+            });
           });
       }
     });
@@ -350,7 +350,7 @@ export class ClientPaymentComponent implements OnInit {
       const transactionDate = this.transactionDate;
       const dueDate = this.transactionDate;
       const receiptNumber = this.clientPaymentForm.value.receiptNumber;
-      if(transactionAmount !== 0) {
+      if (transactionAmount !== 0) {
         const url = 'savingsaccounts/' + element + '/transactions?command=deposit';
         const formData = {
           dateFormat,
@@ -369,13 +369,13 @@ export class ClientPaymentComponent implements OnInit {
         this.batchRequests.push(batchData);
       }
       this.savingAccounts.forEach((element1: any) => {
-        if(element1.id === element){
+        if (element1.id === element) {
           element1.savingsCharges.forEach((element2: any) => {
             let amount = 0;
-            if(transactionAmount > element2.amountOutstanding){
+            if (transactionAmount > element2.amountOutstanding) {
               amount = element2.amountOutstanding;
               transactionAmount = +transactionAmount - +element2.amountOutstanding;
-            }else{
+            } else {
               amount = transactionAmount;
               transactionAmount = 0;
             }
@@ -407,7 +407,7 @@ export class ClientPaymentComponent implements OnInit {
           this.errorResponse.push(responseEle.body);
         }
       });
-      if(this.errorResponse.length === 0){
+      if (this.errorResponse.length === 0) {
         this.reload();
       }
     });
@@ -437,29 +437,29 @@ export class ClientPaymentComponent implements OnInit {
     $event.stopPropagation();
   }
 
-  getLoanCharges(loanId: any){
+  getLoanCharges(loanId: any) {
     this.loanCharges = [];
-    if(!this.showLoanCharges){
+    if (!this.showLoanCharges) {
       this.showLoanCharges = true;
-    }else{
+    } else {
       this.showLoanCharges = false;
     }
     this.loanId = loanId;
-    this.loansService.getLoansAccountCharges(loanId).subscribe((response:any) => {
-      this.loanCharges = response.filter((charge:any) => charge.amountOutstanding > 0);
+    this.loansService.getLoansAccountCharges(loanId).subscribe((response: any) => {
+      this.loanCharges = response.filter((charge: any) => charge.amountOutstanding > 0);
     });
   }
 
-  getSavingsCharges(savingsId: any){
+  getSavingsCharges(savingsId: any) {
     this.savingsCharges = [];
-    if(!this.showSavingsCharges){
+    if (!this.showSavingsCharges) {
       this.showSavingsCharges = true;
-    }else{
+    } else {
       this.showSavingsCharges = false;
     }
     this.savingsId = savingsId;
-    this.savingsService.getSavingsAccountCharges(savingsId).subscribe((response:any) => {
-      this.savingsCharges = response.filter((charge:any) => charge.amountOutstanding > 0);
+    this.savingsService.getSavingsAccountCharges(savingsId).subscribe((response: any) => {
+      this.savingsCharges = response.filter((charge: any) => charge.amountOutstanding > 0);
     });
   }
 
@@ -482,8 +482,8 @@ export class ClientPaymentComponent implements OnInit {
   /**
    * Refresh the same page
    */
-  refreshPage(){
-    let currentUrl = this.router.url;
+  refreshPage() {
+    const currentUrl = this.router.url;
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
       this.router.navigate([currentUrl]);
     });
