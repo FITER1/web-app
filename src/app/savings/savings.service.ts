@@ -270,7 +270,7 @@ export class SavingsService {
   }
 
   /**
-   * 
+   *
    * @param {string} accountId  Savings Account Id
    * @returns {Observable<any>}
    */
@@ -279,7 +279,7 @@ export class SavingsService {
   }
 
   /**
-   * 
+   *
    * @param {string} accountId  Savings Account Id
    * @returns {Observable<any>}
    */
@@ -293,7 +293,8 @@ export class SavingsService {
    * @returns {Observable<any>}
    */
    getSavingsAccountCharges(accountId: string): Observable<any> {
-    return this.http.get(`/savingsaccounts/${accountId}/charges`);
+    const httpParams = new HttpParams().set('chargeStatus', 'activeUnPaid');
+    return this.http.get(`/savingsaccounts/${accountId}/charges`, {params : httpParams});
   }
 
 }
