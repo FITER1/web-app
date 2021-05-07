@@ -11,7 +11,7 @@ export class ViewGuaranteesComponent implements OnInit {
   /** Client Guarantors Accounts */
   clientGuaranteesAccounts : any = [];
 
-  openLoansColumns: string[] = ['Loan Account No', 'Status', 'Principal Amount', 'Hold Amount', 'Loan Product'];
+  openLoansColumns: string[] = ['name', 'Loan Account No', 'Status', 'Principal Amount', 'Hold Amount', 'Loan Product'];
 
  /**
   * 
