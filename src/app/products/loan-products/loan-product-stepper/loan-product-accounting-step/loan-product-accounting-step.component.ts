@@ -78,7 +78,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
         this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
           this.formBuilder.array((this.loanProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) =>
-          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id }))));
+          ({ paymentTypeId: paymentFundSource.paymentType.id, fundSourceAccountId: paymentFundSource.fundSourceAccount.id, mappingId : paymentFundSource.mappingId }))));
         this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings',
           this.formBuilder.array((this.loanProductsTemplate.feeToIncomeAccountMappings || []).map((feesIncome: any) =>
           ({ chargeId: feesIncome.charge.id, incomeAccountId: feesIncome.incomeAccount.id }))));
