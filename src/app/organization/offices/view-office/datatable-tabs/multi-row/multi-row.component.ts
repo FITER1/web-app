@@ -70,6 +70,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
     this.datatableColumns = this.dataObject.columnHeaders.map((columnHeader: any) => {
       return columnHeader.columnName;
     });
+    this.datatableColumns.push('Actions');
     this.datatableData = this.dataObject.data;
     this.showDeleteBotton = this.datatableData[0] ? true : false;
   }
@@ -163,6 +164,118 @@ export class MultiRowComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  edit(values:any){
+    let selectedValue:any;
+    let dataTableEntryObject: any = {
+      locale: this.settingsService.language.code
+    };
+    const dateTransformColumns: string[] = [];
+    const columns = this.dataObject.columnHeaders.filter((column: any) => {
+      return ((column.columnName !== 'id') && (column.columnName !== 'office_id'));
+    });
+    let count = 2;
+    columns.forEach((column:any) => {
+      if(column.columnDisplayType != 'CODELOOKUP'){
+        column.columnValues.push(values[count]);
+      }else{
+        selectedValue = column.columnValues.filter((item:any) => {
+         return (item.id === Number(values[count]));
+        }) 
+      }
+      count++;
+    });
+    const formfields: FormfieldBase[] = columns.map((column: any) => {
+      switch (column.columnDisplayType) {
+        case 'INTEGER':
+        case 'STRING':
+        case 'DECIMAL':
+        case 'TEXT': return new InputBase({
+          controlName: column.columnName,
+          label: column.columnName,
+          value: column.columnValues[column.columnValues.length-1],
+          type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
+          required: (column.isColumnNullable) ? false : true
+        });
+        case 'BOOLEAN': return new CheckboxBase({
+          controlName: column.columnName,
+          label: column.columnName,
+          value: column.columnValues[column.columnValues.length-1],
+          type: 'checkbox',
+         // required: (column.isColumnNullable) ? false : true
+        });
+        case 'CODELOOKUP': return new SelectBase({
+          controlName: column.columnName,
+          label: column.columnName,
+          value: selectedValue[0].id,
+          options: { label: 'value', value: 'id', data: column.columnValues },
+          required: (column.isColumnNullable) ? false : true
+        });
+        case 'DATE': {
+          dateTransformColumns.push(column.columnName);
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd';
+          return new InputBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: column.columnValues[column.columnValues.length-1],
+            type: 'date',
+            required: (column.isColumnNullable) ? false : true
+          });
+        }
+        case 'DATETIME': {
+          dateTransformColumns.push(column.columnName);
+          dataTableEntryObject.dateFormat = 'yyyy-MM-dd HH:mm';
+          return new InputBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: column.columnValues[column.columnValues.length-1],
+            type: 'datetime-local',
+            required: (column.isColumnNullable) ? false : true
+          });
+        }
+      }
+    });
+    const data = {
+      title: 'Edit ' + this.datatableName,
+      formfields: formfields,
+      layout: { addButtonText: 'Submit' },
+    };
+    const addDialogRef = this.dialog.open(FormDialogComponent, { data });
+    addDialogRef.afterClosed().subscribe((response: any) => {
+      console.log(response);
+      if (response.data) {
+        // format Dates
+        dateTransformColumns.forEach((column) => {
+          response.data.value[column] = this.datePipe.transform(response.data.value[column], dataTableEntryObject.dateFormat);
+        });
+        dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
+        this.organizationService.updateDatatableEntry(this.officeId, values[0], this.datatableName, dataTableEntryObject).subscribe(() => {
+          this.organizationService.getOfficeDatatable(this.officeId, this.datatableName).subscribe((dataObject: any) => {
+            this.datatableData = dataObject.data;
+            this.dataTableRef.renderRows();
+          });
+        });
+      }
+    });
+}
+
+
+  deleteOne(row: any){
+    const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `the entry of ${this.datatableName}` }
+    });
+    deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.organizationService.deleteDatatableEntry(this.officeId, this.datatableName, row[0]).subscribe(() => {
+          this.organizationService.getOfficeDatatable(this.officeId, this.datatableName).subscribe((dataObject: any) => {
+            this.datatableData = dataObject.data;
+            this.showDeleteBotton = false;
+            this.dataTableRef.renderRows();
+           });
+        });
+      }
+    });
+  } 
 
   /**
    * Deletes all rows of the given multi row data table.

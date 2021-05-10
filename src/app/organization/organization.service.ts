@@ -177,6 +177,29 @@ export class OrganizationService {
   /**
    * @param officeId Office Id of office to get add datatable entry for.
    * @param datatableName Data Table name.
+   * @param data Data.
+   * @returns {Observable<any>}
+   */
+  updateDatatableEntry(clientId: string, datatableId: string, datatableName: string, data: any) {
+    console.log(datatableId);
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.put(`/datatables/${datatableName}/${clientId}/${datatableId}`, data, { params: httpParams });
+  }
+
+
+  /**
+   * @param officeId Office Id of office to get add datatable entry for.
+   * @param datatableName Data Table name.
+   * @returns {Observable<any>}
+   */
+  deleteDatatableEntry(officeId: string, datatableName: string, datatableId: string) {
+    const httpParams = new HttpParams().set('genericResultSet', 'true');
+    return this.http.delete(`/datatables/${datatableName}/${officeId}/${datatableId}`, { params: httpParams });
+  }
+
+  /**
+   * @param officeId Office Id of office to get add datatable entry for.
+   * @param datatableName Data Table name.
    * @returns {Observable<any>}
    */
   deleteDatatableContent(officeId: string, datatableName: string): Observable<any> {
