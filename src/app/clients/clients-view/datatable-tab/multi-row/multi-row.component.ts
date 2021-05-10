@@ -152,7 +152,6 @@ export class MultiRowComponent implements OnInit, OnChanges {
         }
         count++;
       });
-      console.log(columns, values, selectedValue);
       const formfields: FormfieldBase[] = columns.map((column: any) => {
         switch (column.columnDisplayType) {
           case 'INTEGER':
@@ -161,14 +160,14 @@ export class MultiRowComponent implements OnInit, OnChanges {
           case 'TEXT': return new InputBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: column.columnValues[0],
+            value: column.columnValues[column.columnValues.length-1],
             type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
             required: (column.isColumnNullable) ? false : true
           });
           case 'BOOLEAN': return new CheckboxBase({
             controlName: column.columnName,
             label: column.columnName,
-            value: column.columnValues[0],
+            value: column.columnValues[column.columnValues.length-1],
             type: 'checkbox',
             required: (column.isColumnNullable) ? false : true
           });
@@ -185,7 +184,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
             return new InputBase({
               controlName: column.columnName,
               label: column.columnName,
-              value: column.columnValues[0],
+              value: column.columnValues[column.columnValues.length-1],
               type: 'date',
               required: (column.isColumnNullable) ? false : true
             });
@@ -196,7 +195,7 @@ export class MultiRowComponent implements OnInit, OnChanges {
             return new InputBase({
               controlName: column.columnName,
               label: column.columnName,
-              value: column.columnValues[0],
+              value: column.columnValues[column.columnValues.length-1],
               type: 'datetime-local',
               required: (column.isColumnNullable) ? false : true
             });

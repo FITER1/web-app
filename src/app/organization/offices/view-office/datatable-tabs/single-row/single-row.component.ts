@@ -104,7 +104,11 @@ export class SingleRowComponent implements OnInit {
     });
     let formfields: FormfieldBase[] = this.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
     formfields = formfields.map((formfield: FormfieldBase, index: number) => {
-      formfield.value = (this.dataObject.data[0].row[index + 1]) ? this.dataObject.data[0].row[index + 1] : '';
+    if(!(formfield.controlType === 'checkbox' || formfield.controlType === 'select'))
+      {
+        formfield.value = (this.dataObject.data[0].row[index + 1]) ? this.dataObject.data[0].row[index + 1] : '';
+        return formfield;
+      }
       return formfield;
     });
     const data = {
@@ -112,6 +116,8 @@ export class SingleRowComponent implements OnInit {
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
+    console.log(data);
+    
     const editDialogRef = this.dialog.open(FormDialogComponent, { data });
     editDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -126,6 +132,7 @@ export class SingleRowComponent implements OnInit {
         });
       }
     });
+    
   }
 
   /**
@@ -154,7 +161,9 @@ export class SingleRowComponent implements OnInit {
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
+    let count = 0
     return columns.map((column: any) => {
+      count++;
       switch (column.columnDisplayType) {
         case 'INTEGER':
         case 'STRING':
@@ -169,14 +178,14 @@ export class SingleRowComponent implements OnInit {
         case 'BOOLEAN': return new CheckboxBase({
           controlName: column.columnName,
           label: column.columnName,
-          value: '',
+          value: (column.isColumnNullable) ? false : Boolean(JSON.parse(this.dataObject.data[0].row[count])),
           type: 'checkbox',
-          required: (column.isColumnNullable) ? false : true
+          //required: (column.isColumnNullable) ? false : true
         });
         case 'CODELOOKUP': return new SelectBase({
           controlName: column.columnName,
           label: column.columnName,
-          value: '',
+          value: (column.isColumnNullable) ? '' : Number(this.dataObject.data[0].row[count]),
           options: { label: 'value', value: 'id', data: column.columnValues },
           required: (column.isColumnNullable) ? false : true
         });
