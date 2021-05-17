@@ -1,7 +1,9 @@
 /** Angular Imports */
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
@@ -33,7 +35,9 @@ export class EditClosureComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private accountingService: AccountingService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private datePipe: DatePipe,
+              private settingService: SettingsService) {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
@@ -53,7 +57,7 @@ export class EditClosureComponent implements OnInit {
   createAccountingClosureForm() {
     this.accountingClosureForm = this.formBuilder.group({
       'officeId': [{ value: '', disabled: true }, Validators.required],
-      'closingDate': [{ value: '', disabled: true }, Validators.required],
+      'closingDate': [{ value: ''}, Validators.required],
       'comments': ['']
     });
   }
@@ -74,8 +78,14 @@ export class EditClosureComponent implements OnInit {
    * if successful redirects to view updated closure.
    */
   submit() {
+    let data = { 
+      comments: this.accountingClosureForm.value.comments,
+      locale: this.settingService.language.code,  
+      dateFormat: this.settingService.dateFormat,
+      closingDate: this.datePipe.transform(this.accountingClosureForm.value.closingDate, this.settingService.dateFormat)
+    }
     this.accountingService.updateAccountingClosure(this.glAccountClosure.id,
-      { comments: this.accountingClosureForm.value.comments })
+      data)
       .subscribe((response: any) => {
         this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
       });
