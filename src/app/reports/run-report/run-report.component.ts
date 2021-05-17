@@ -192,7 +192,7 @@ export class RunReportComponent implements OnInit {
           formattedResponse[newKey] = value['id'];
           break;
         case 'date':
-          const dateFormat = this.settingsService.dateFormat;
+          const dateFormat = 'yyyy-MM-dd';
           formattedResponse[newKey] = this.datePipe.transform(value, dateFormat);
           break;
         case 'none':
