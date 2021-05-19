@@ -52,8 +52,8 @@ export class SavingsService {
    * @param accountId Savings Account Id of account to get data for.
    * @returns {Observable<any>} Savings data.
    */
-  getSavingsAccountData(accountId: string): Observable<any> {
-    const httpParams = new HttpParams().set('associations', 'all' );
+  getSavingsAccountData(accountId: string, checkOfficeHierarchy:boolean): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'all').set('checkOfficeHierarchy', checkOfficeHierarchy.toString());
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
 
