@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 /** Tanslation Imports */
 import { TranslateModule } from '@ngx-translate/core';
@@ -79,7 +80,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
   ],
   declarations: [WebAppComponent, NotFoundComponent],
-  providers: [BnNgIdleService],
+  providers: [BnNgIdleService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [WebAppComponent]
 })
 export class AppModule { }
