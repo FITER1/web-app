@@ -24,7 +24,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Type</mat-label>
             <mat-select required formControlName="transferType" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let transferType of transferTypeData" [value]="transferType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="transferTypeData" 
+                 (filteredReturn)="filteredTransferTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let transferType of filteredTransferTypeData" [value]="transferType.id">
                 {{ transferType.value }}
               </mat-option>
             </mat-select>
@@ -36,7 +38,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Priority</mat-label>
             <mat-select required formControlName="priority">
-              <mat-option *ngFor="let priorityType of priorityTypeData" [value]="priorityType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="priorityTypeData" 
+                 (filteredReturn)="filteredPriorityTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let priorityType of filteredPriorityTypeData" [value]="priorityType.id">
                 {{ priorityType.value }}
               </mat-option>
             </mat-select>
@@ -48,7 +52,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Status</mat-label>
             <mat-select required formControlName="status">
-              <mat-option *ngFor="let statusType of statusTypeData" [value]="statusType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="statusTypeData" 
+                 (filteredReturn)="filteredStatusTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let statusType of filteredStatusTypeData" [value]="statusType.id">
                 {{ statusType.value }}
               </mat-option>
             </mat-select>
@@ -60,7 +66,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>From Account Type</mat-label>
             <mat-select required formControlName="fromAccountType" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let fromAccountType of fromAccountTypeData" [value]="fromAccountType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="fromAccountTypeData" 
+                 (filteredReturn)="filteredFromAccountTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let fromAccountType of filteredFromAccountTypeData" [value]="fromAccountType.id">
                 {{ fromAccountType.value }}
               </mat-option>
             </mat-select>
@@ -72,7 +80,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>From Account</mat-label>
             <mat-select required formControlName="fromAccountId" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let fromAccount of fromAccountData" [value]="fromAccount.id">
+              <mat-select-filter [displayMember]="'productName'" [array]="fromAccountData" 
+                 (filteredReturn)="filteredFromAccountData =$event"></mat-select-filter>
+              <mat-option *ngFor="let fromAccount of filteredFromAccountData" [value]="fromAccount.id">
                 {{ fromAccount.productName }} - {{ fromAccount.accountNo }}
               </mat-option>
             </mat-select>
@@ -84,7 +94,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Destination</mat-label>
             <mat-select required formControlName="destination">
-              <mat-option *ngFor="let destinationType of destinationTypeData" [value]="destinationType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="destinationTypeData" 
+                 (filteredReturn)="filteredDestinationTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let destinationType of filteredDestinationTypeData" [value]="destinationType.id">
                 {{ destinationType.value }}
               </mat-option>
             </mat-select>
@@ -96,7 +108,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>To Office</mat-label>
             <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
+              <mat-select-filter [displayMember]="'name'" [array]="toOfficeTypeData" 
+                 (filteredReturn)="filteredToOfficeTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let toOfficeType of filteredToOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
             </mat-select>
@@ -108,7 +122,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Beneficiary</mat-label>
             <mat-select required formControlName="toClientId" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let toClientType of toClientTypeData" [value]="toClientType.id">
+              <mat-select-filter [displayMember]="'displayName'" [array]="toClientTypeData" 
+                 (filteredReturn)="filteredToClientTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let toClientType of filteredToClientTypeData" [value]="toClientType.id">
                 {{ toClientType.displayName }}
               </mat-option>
             </mat-select>
@@ -120,7 +136,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>To Account Type</mat-label>
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="toAccountTypeData" 
+                 (filteredReturn)="filteredToAccountTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let toAccountType of filteredToAccountTypeData" [value]="toAccountType.id">
                 {{ toAccountType.value }}
               </mat-option>
             </mat-select>
@@ -132,7 +150,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>To Account</mat-label>
             <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
+              <mat-select-filter [displayMember]="'productName'" [array]="toAccountData" 
+                 (filteredReturn)="filteredToAccountData =$event"></mat-select-filter>
+              <mat-option *ngFor="let toAccount of filteredToAccountData" [value]="toAccount.id">
                 {{ toAccount.productName }} - {{ toAccount.accountNo }}
               </mat-option>
             </mat-select>
@@ -144,7 +164,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Standing Instruction Type</mat-label>
             <mat-select formControlName="instructionType">
-              <mat-option *ngFor="let instructionsType of instructionTypeData" [value]="instructionsType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="instructionTypeData" 
+                 (filteredReturn)="filteredInstructionTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let instructionsType of filteredInstructionTypeData" [value]="instructionsType.id">
                 {{ instructionsType.value }}
               </mat-option>
             </mat-select>
@@ -186,7 +208,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Recurrence Type</mat-label>
             <mat-select required formControlName="recurrenceType">
-              <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
+              <mat-select-filter [displayMember]="'value'" [array]="recurrenceTypeData" 
+                 (filteredReturn)="filteredRecurrenceTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let recurrenceType of filteredRecurrenceTypeData" [value]="recurrenceType.id">
                 {{ recurrenceType.value }}
               </mat-option>
             </mat-select>
@@ -206,7 +230,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Recurrence Frequency</mat-label>
             <mat-select required formControlName="recurrenceFrequency">
-              <mat-option *ngFor="let recurrenceFrequencyType of recurrenceFrequencyTypeData"
+              <mat-select-filter [displayMember]="'value'" [array]="recurrenceFrequencyTypeData" 
+                 (filteredReturn)="filteredRecurrenceFrequencyTypeData =$event"></mat-select-filter>
+              <mat-option *ngFor="let recurrenceFrequencyType of filteredRecurrenceFrequencyTypeData"
                 [value]="recurrenceFrequencyType.id">
                 {{ recurrenceFrequencyType.value }}
               </mat-option>

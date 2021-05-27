@@ -43,7 +43,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Relationship</mat-label>
       <mat-select formControlName="relationshipId" required>
-        <mat-option *ngFor="let relation of data.options.relationshipIdOptions" [value]="relation.id">
+        <mat-select-filter [displayMember]="'name'" [array]="data.options.relationshipIdOptions" 
+         (filteredReturn)="filteredRelationshipIdOptions =$event"></mat-select-filter>
+        <mat-option *ngFor="let relation of filteredRelationshipIdOptions" [value]="relation.id">
           {{ relation.name  }}
         </mat-option>
       </mat-select>
@@ -55,7 +57,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Gender</mat-label>
       <mat-select formControlName="genderId">
-        <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
+        <mat-select-filter [displayMember]="'name'" [array]="data.options.genderIdOptions" 
+         (filteredReturn)="filteredGenderList =$event"></mat-select-filter>
+        <mat-option *ngFor="let gender of filteredGenderList" [value]="gender.id">
           {{ gender.name }}
         </mat-option>
       </mat-select>
@@ -67,7 +71,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Profession</mat-label>
       <mat-select formControlName="professionId">
-        <mat-option *ngFor="let profession of data.options.professionIdOptions" [value]="profession.id">
+        <mat-select-filter [displayMember]="'name'" [array]="data.options.professionIdOptions" 
+         (filteredReturn)="filteredprofessionList =$event"></mat-select-filter>
+        <mat-option *ngFor="let profession of filteredprofessionList" [value]="profession.id">
           {{ profession.name }}
         </mat-option>
       </mat-select>
@@ -76,7 +82,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Marital Status</mat-label>
       <mat-select formControlName="maritalStatusId">
-        <mat-option *ngFor="let maritalStatus of data.options.maritalStatusIdOptions"
+        <mat-select-filter [displayMember]="'name'" [array]="data.options.maritalStatusIdOptions" 
+         (filteredReturn)="filteredMaritalStatusList =$event"></mat-select-filter>
+        <mat-option *ngFor="let maritalStatus of filteredMaritalStatusList"
           [value]="maritalStatus.id">
           {{ maritalStatus.name }}
         </mat-option>

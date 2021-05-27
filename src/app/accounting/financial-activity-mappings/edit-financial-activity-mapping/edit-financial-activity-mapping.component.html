@@ -11,7 +11,9 @@
           <mat-form-field>
             <mat-label>Financial Activity</mat-label>
             <mat-select required formControlName="financialActivityId">
-              <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
+              <mat-select-filter [displayMember]="'name'" [array]="financialActivityData" 
+              (filteredReturn)="filteredFinancialActivityData =$event"></mat-select-filter>
+              <mat-option *ngFor="let financialActivity of filteredFinancialActivityData" [value]="financialActivity.id">
                 {{ financialActivity.name }}
               </mat-option>
             </mat-select>
@@ -20,7 +22,9 @@
           <mat-form-field>
             <mat-label>Account</mat-label>
             <mat-select required formControlName="glAccountId">
-              <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
+              <mat-select-filter [displayMember]="'name'" [array]="glAccountData" 
+              (filteredReturn)="filteredGlAccountData =$event"></mat-select-filter>
+              <mat-option *ngFor="let glAccount of filteredGlAccountData" [value]="glAccount.id">
                 {{ glAccount.name + ' (' + glAccount.glCode + ')' }}
               </mat-option>
             </mat-select>

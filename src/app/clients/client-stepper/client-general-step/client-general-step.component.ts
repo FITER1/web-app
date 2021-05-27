@@ -45,6 +45,17 @@ export class ClientGeneralStepComponent implements OnInit {
   /** Saving Product Options */
   savingProductOptions: any;
 
+  /** Filter list */
+  filteredOfficeList:any;
+  filteredStaffList:any;
+  filteredLegalFormList:any;
+  filteredClientTypeList:any;
+  filteredClientClassificationList:any;
+  filteredBusinessLineList:any;
+  filteredConstitutionList:any;
+  filteredGenderList:any;
+  filteredSavingProductList:any;
+
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   /**
@@ -101,6 +112,17 @@ export class ClientGeneralStepComponent implements OnInit {
     this.constitutionOptions = this.clientTemplate.clientNonPersonConstitutionOptions;
     this.genderOptions = this.clientTemplate.genderOptions;
     this.savingProductOptions = this.clientTemplate.savingProductOptions;
+
+    this.filteredOfficeList = this.officeOptions.slice();
+    this.filteredStaffList = this.staffOptions.slice();
+    this.filteredLegalFormList =  this.legalFormOptions.slice();
+    this.filteredClientTypeList = this.clientTypeOptions.slice();
+    this.filteredClientClassificationList = this.clientClassificationTypeOptions.slice();
+    this.filteredBusinessLineList = this.businessLineOptions.slice();
+    this.filteredConstitutionList = this.constitutionOptions.slice();
+    this.filteredGenderList = this.genderOptions.slice();
+    this.filteredSavingProductList = this.savingProductOptions.slice();
+  
   }
 
   /**
@@ -179,4 +201,5 @@ export class ClientGeneralStepComponent implements OnInit {
     return generalDetails;
   }
 
+ 
 }

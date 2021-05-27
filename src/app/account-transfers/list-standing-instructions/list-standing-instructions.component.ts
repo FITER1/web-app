@@ -57,6 +57,9 @@ export class ListStandingInstructionsComponent implements OnInit {
   /** Paginator for centers table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  /* filters */ 
+  filteredTransferTypesData: any; 
+
 
   /**
    * Retrieves Standing Instructions Data from `resolve`.
@@ -77,6 +80,8 @@ export class ListStandingInstructionsComponent implements OnInit {
       }
       this.setParams();
       this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
+      /** filters options */
+      this.filteredTransferTypesData = this.transferTypeDatas.slice();
     });
   }
 

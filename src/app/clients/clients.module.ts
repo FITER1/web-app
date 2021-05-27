@@ -7,6 +7,7 @@ import { ClientsRoutingModule } from './clients-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 /** Custom Components */
 import { ClientsComponent } from './clients.component';
@@ -73,7 +74,8 @@ import { ViewGuaranteesComponent } from './clients-view/client-actions/view-guar
     SharedModule,
     ClientsRoutingModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
+    MatSelectFilterModule
   ],
   declarations: [
     ClientsComponent,

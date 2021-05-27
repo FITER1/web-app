@@ -30,6 +30,12 @@ export class CreateRuleComponent implements OnInit {
   /** Credit tag data. */
   creditTagData: any;
 
+  filteredOfficeData:any;
+  filteredDebitGlAccountData: any;
+  filteredCreditGlAccountData: any;
+  filteredDebitTagData: any;
+  filteredCreditTagData: any;
+
   /**
    * Retrieves the offices, gl accounts, debit tags and credit tags data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,6 +52,13 @@ export class CreateRuleComponent implements OnInit {
       this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
       this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
       this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
+
+      /**filter options */
+      this.filteredOfficeData = this.officeData.slice();
+      this.filteredDebitGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+      this.filteredCreditGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+      this.filteredDebitTagData = this.debitTagData.slice();
+      this.filteredCreditTagData = this.creditTagData.slice();
     });
   }
 

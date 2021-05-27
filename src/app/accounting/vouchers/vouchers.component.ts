@@ -38,6 +38,15 @@ export class VouchersComponent implements OnInit {
   allowMultipleDebitEntries: boolean;
   voucherTypes: any;
 
+  /**filters */
+  /**filters */
+  filteredOfficeData:any;
+  filteredCurrencyData:any;
+  filteredDebitGlAccountData:any;
+  filteredCreditGlAccountData:any;
+  filteredPaymentTypeData:any;
+  filteredVoucherTypes:any;
+
   /**
    * Retrieves the offices, accounting rules, currencies and payment types data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -59,6 +68,12 @@ export class VouchersComponent implements OnInit {
         this.currencyData = data.currencies.selectedCurrencyOptions;
         this.paymentTypeData = data.paymentTypes;
         this.voucherTypes = data.voucherTypes;
+
+         /**filter options */
+         this.filteredOfficeData = this.officeData ? this.officeData.slice() : this.officeData;
+         this.filteredCurrencyData = this.currencyData ? this.currencyData.slice() : this.currencyData;
+         this.filteredPaymentTypeData = this.paymentTypeData ? this.paymentTypeData.slice() : this.paymentTypeData;
+         this.filteredVoucherTypes = this.voucherTypes ? this.voucherTypes.slice() : this.voucherTypes;
       });
   }
 
@@ -107,6 +122,8 @@ export class VouchersComponent implements OnInit {
       this.allowMultipleCreditEntries = accountingRule.allowMultipleCreditEntries;
       this.debitAccountData = accountingRule.debitAccounts;
       this.creditAccountData = accountingRule.creditAccounts;
+      this.filteredDebitGlAccountData = this.debitAccountData ? this.debitAccountData.slice() : this.debitAccountData;
+      this.filteredCreditGlAccountData = this.creditAccountData ? this.creditAccountData.slice() : this.creditAccountData;
       this.addAffectedGLEntry(this.debits);
       this.addAffectedGLEntry(this.credits);
     });

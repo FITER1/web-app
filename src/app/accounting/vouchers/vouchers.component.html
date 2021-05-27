@@ -11,6 +11,8 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Office</mat-label>
             <mat-select required formControlName="officeId">
+              <mat-select-filter [displayMember]="'name'" [array]="officeData" 
+              (filteredReturn)="filteredOfficeData =$event"></mat-select-filter>
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
@@ -23,7 +25,9 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Accounting Rule</mat-label>
             <mat-select required formControlName="accountingRule">
-              <mat-option *ngFor="let accountingRule of voucherTypes" [value]="accountingRule">
+              <mat-select-filter [displayMember]="'name'" [array]="voucherTypes" 
+              (filteredReturn)="filteredVoucherTypes =$event"></mat-select-filter>
+              <mat-option *ngFor="let accountingRule of filteredVoucherTypes" [value]="accountingRule">
                 {{ accountingRule.name }}
               </mat-option>
             </mat-select>
@@ -35,6 +39,8 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Currency</mat-label>
             <mat-select required formControlName="currencyCode">
+              <mat-select-filter [displayMember]="'name'" [array]="currencyData" 
+              (filteredReturn)="filteredCurrencyData =$event"></mat-select-filter>
               <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
                 {{ currency.displayLabel }}
               </mat-option>
@@ -54,6 +60,8 @@
               <mat-form-field fxFlex="48%">
                 <mat-label>Affected GL Entry (Debit)</mat-label>
                 <mat-select required formControlName="glAccountId">
+                  <mat-select-filter [displayMember]="'name'" [array]="glAccountData" 
+                  (filteredReturn)="filteredDebitGlAccountData =$event"></mat-select-filter>
                   <mat-option *ngFor="let affectedGLEntryDebit of debitAccountData" [value]="affectedGLEntryDebit.id">
                     {{ affectedGLEntryDebit.name }}
                   </mat-option>
@@ -92,6 +100,8 @@
               <mat-form-field fxFlex="48%">
                 <mat-label>Affected GL Entry (Credit)</mat-label>
                 <mat-select required formControlName="glAccountId">
+                  <mat-select-filter [displayMember]="'name'" [array]="glAccountData" 
+                  (filteredReturn)="filteredCreditGlAccountData =$event"></mat-select-filter>
                   <mat-option *ngFor="let affectedGLEntryCredit of creditAccountData" [value]="affectedGLEntryCredit.id">
                     {{ affectedGLEntryCredit.name }}
                   </mat-option>
@@ -140,6 +150,8 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Payment Type</mat-label>
             <mat-select formControlName="paymentTypeId">
+              <mat-select-filter [displayMember]="'name'" [array]="paymentTypeData" 
+              (filteredReturn)="filteredPaymentTypeData =$event"></mat-select-filter>
               <mat-option *ngFor="let paymentType of paymentTypeData" [value]="paymentType.id">
                 {{ paymentType.name }}
               </mat-option>

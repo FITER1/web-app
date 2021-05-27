@@ -35,6 +35,12 @@ export class CreateGlAccountComponent implements OnInit {
   /** Cancel route. (depending on creation of gl account or sub-ledger account) */
   cancelRoute = '../../';
 
+  /** filters */
+  filteredParentData:any;
+  filteredTagData: any;
+  filteredAccountUsageData: any;
+  filteredAccountTypeData: any;
+
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -67,6 +73,7 @@ export class CreateGlAccountComponent implements OnInit {
   ngOnInit() {
     this.createGlAccountForm();
     this.setGLAccountForm();
+    this.setFilteredOptions();
   }
 
   /**
@@ -81,7 +88,8 @@ export class CreateGlAccountComponent implements OnInit {
       'parentId': [this.parentId || undefined],
       'tagId': [''],
       'manualEntriesAllowed': [true],
-      'description': ['']
+      'description': [''],
+      'disabled':[false]
     });
   }
 
@@ -93,18 +101,28 @@ export class CreateGlAccountComponent implements OnInit {
       switch (accountTypeId) {
         case 1: this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
+                this.filteredParentData = this.parentData.slice();
+                this.filteredTagData = this.tagData ? this.tagData.slice() : this.tagData;
         break;
         case 2: this.parentData = this.chartOfAccountsData.liabilityHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedLiabilitiesTagOptions;
+                this.filteredParentData = this.parentData.slice();
+                this.filteredTagData = this.tagData ? this.tagData.slice() : this.tagData;
         break;
         case 3: this.parentData = this.chartOfAccountsData.equityHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedEquityTagOptions;
+                this.filteredParentData = this.parentData.slice();
+                this.filteredTagData = this.tagData ? this.tagData.slice() : this.tagData;
         break;
         case 4: this.parentData = this.chartOfAccountsData.incomeHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedIncomeTagOptions;
+                this.filteredParentData = this.parentData.slice();
+                this.filteredTagData = this.tagData ? this.tagData.slice() : this.tagData;
         break;
         case 5: this.parentData = this.chartOfAccountsData.expenseHeaderAccountOptions;
                 this.tagData = this.chartOfAccountsData.allowedExpensesTagOptions;
+                this.filteredParentData = this.parentData.slice();
+                this.filteredTagData = this.tagData ? this.tagData.slice() : this.tagData;
         break;
       }
     });
@@ -120,6 +138,11 @@ export class CreateGlAccountComponent implements OnInit {
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
       this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
     });
+  }
+
+  setFilteredOptions(){
+    this.filteredAccountTypeData =  this.accountTypeData.slice();
+    this.filteredAccountUsageData = this.accountUsageData.slice();
   }
 
 }
