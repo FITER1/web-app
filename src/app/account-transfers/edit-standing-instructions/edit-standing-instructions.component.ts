@@ -41,6 +41,13 @@ export class EditStandingInstructionsComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
 
+   /* filters */ 
+   filteredPriorityTypeData : any;
+   filteredStatusTypeData : any;
+   filteredInstructionTypeData: any;
+   filteredRecurrenceTypeData : any;
+   filteredRecurrenceFrequencyTypeData : any;
+
   /**
    * Retrieves the standing instructions template from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -134,6 +141,13 @@ export class EditStandingInstructionsComponent implements OnInit {
     this.instructionTypeData = this.standingInstructionsData.instructionTypeOptions;
     this.recurrenceTypeData = this.standingInstructionsData.recurrenceTypeOptions;
     this.recurrenceFrequencyTypeData = this.standingInstructionsData.recurrenceFrequencyOptions;
+
+
+    this.filteredPriorityTypeData = this.priorityTypeData.slice();
+    this.filteredStatusTypeData = this.statusTypeData.slice();
+    this.filteredInstructionTypeData = this.instructionTypeData.slice();
+    this.filteredRecurrenceTypeData = this.recurrenceTypeData.slice();
+    this.filteredRecurrenceFrequencyTypeData = this.recurrenceFrequencyTypeData.slice();
   }
 
   /**

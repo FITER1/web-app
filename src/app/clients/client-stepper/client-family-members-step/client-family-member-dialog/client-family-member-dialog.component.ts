@@ -25,6 +25,11 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
   /** Add/Edit family member form. */
   familyMemberForm: FormGroup;
 
+  filteredRelationshipIdOptions:any;
+  filteredGenderList:any;
+  filteredMaritalStatusList:any;
+  filteredprofessionList:any;
+
   /**
    * @param {MatDialogRef} dialogRef Client Family Member Dialog Reference
    * @param {FormBuilder} formBuilder Form Builder
@@ -40,6 +45,7 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
 
   ngOnInit() {
     this.createFamilyMemberForm();
+    this.setFilteredOptions();
     if (this.data.context === 'Edit') {
       this.familyMemberForm.patchValue({
         'firstName': this.data.member.firstName,
@@ -97,6 +103,13 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
       familyMember.dateOfBirth = this.datePipe.transform(familyMember.dateOfBirth, dateFormat);
     }
     return familyMember;
+  }
+
+  setFilteredOptions(){
+    this.filteredRelationshipIdOptions = this.data.options.relationshipIdOptions.slice();
+    this.filteredGenderList = this.data.options.genderIdOptions.slice();
+    this.filteredMaritalStatusList = this.data.options.maritalStatusIdOptions.slice();
+    this.filteredprofessionList = this.data.options.professionIdOptions.slice();
   }
 
 }

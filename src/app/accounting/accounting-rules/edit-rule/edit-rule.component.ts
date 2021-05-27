@@ -32,6 +32,12 @@ export class EditRuleComponent implements OnInit {
   /** Credit tag data. */
   creditTagData: any;
 
+  filteredOfficeData:any;
+  filteredDebitGlAccountData: any;
+  filteredCreditGlAccountData: any;
+  filteredDebitTagData: any;
+  filteredCreditTagData: any;
+
   /**
    * Retrieves the offices, gl accounts, debit tags, credit tags and accounting rule data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -52,6 +58,13 @@ export class EditRuleComponent implements OnInit {
         this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
         this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
         this.accountingRule = data.accountingRule;
+        
+        /**filter options */
+        this.filteredOfficeData = this.officeData.slice();
+        this.filteredDebitGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+        this.filteredCreditGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+        this.filteredDebitTagData = this.debitTagData.slice();
+        this.filteredCreditTagData = this.creditTagData.slice();
       });
   }
 

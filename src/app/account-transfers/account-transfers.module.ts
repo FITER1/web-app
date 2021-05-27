@@ -7,6 +7,7 @@ import { AccountTransfersRoutingModule } from './account-transfers-routing.modul
 import { SharedModule } from 'app/shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 /** Custom Components */
 import { ViewStandingInstructionsComponent } from './view-standing-instructions/view-standing-instructions.component';
@@ -22,7 +23,7 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
  * All components related to Account Transfers functions should be declared here.
  */
 @NgModule({
-  imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule],
+  imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule, MatSelectFilterModule],
   declarations: [
     ViewStandingInstructionsComponent,
     EditStandingInstructionsComponent,

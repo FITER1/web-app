@@ -45,6 +45,11 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Clients Data */
   clientsData: any;
 
+  /* filters */ 
+  filteredToOfficeTypeData : any;
+  filteredToAccountTypeData : any;
+  filteredToAccountData : any;
+
   /**
    * Retrieves the standing instructions template from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -116,6 +121,10 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     this.toOfficeTypeData = this.accountTransferTemplateData.toOfficeOptions;
     this.toAccountTypeData = this.accountTransferTemplateData.toAccountTypeOptions;
     this.toAccountData = this.accountTransferTemplateData.toAccountOptions;
+
+    this.filteredToOfficeTypeData = this.toOfficeTypeData.slice();
+    this.filteredToAccountTypeData = this.toAccountTypeData.slice();
+    this.filteredToAccountData = this.toAccountData.slice();
   }
 
   /** Executes on change of various select options */

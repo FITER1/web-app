@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { AccountingRoutingModule } from './accounting-routing.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 /** Custom Components */
 import { AccountingComponent } from './accounting.component';
@@ -47,7 +48,8 @@ import { VouchersComponent } from './vouchers/vouchers.component';
   imports: [
     SharedModule,
     DirectivesModule,
-    AccountingRoutingModule
+    AccountingRoutingModule,
+    MatSelectFilterModule
   ],
   declarations: [
     AccountingComponent,

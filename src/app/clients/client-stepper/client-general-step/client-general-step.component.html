@@ -5,7 +5,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Office</mat-label>
       <mat-select required formControlName="officeId">
-        <mat-option chosen="officeOptions" *ngFor="let office of officeOptions" [value]="office.id">
+         <mat-select-filter [displayMember]="'name'" [array]="officeOptions" 
+         (filteredReturn)="filteredOfficeList =$event"></mat-select-filter>
+        <mat-option chosen="officeOptions" *ngFor="let office of filteredOfficeList" [value]="office.id">
           {{ office.name }}
         </mat-option>
       </mat-select>
@@ -17,7 +19,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Staff</mat-label>
       <mat-select formControlName="staffId">
-        <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
+        <mat-select-filter [displayMember]="'displayName'" [array]="staffOptions" 
+         (filteredReturn)="filteredStaffList =$event"></mat-select-filter>
+        <mat-option *ngFor="let staff of filteredStaffList" [value]="staff.id">
           {{ staff.displayName }}
         </mat-option>
       </mat-select>
@@ -26,7 +30,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Legal Form</mat-label>
       <mat-select formControlName="legalFormId">
-        <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
+        <mat-select-filter [displayMember]="'value'" [array]="legalFormOptions" 
+         (filteredReturn)="filteredLegalFormList =$event"></mat-select-filter>
+        <mat-option *ngFor="let legalForm of filteredLegalFormList" [value]="legalForm.id">
           {{ legalForm.value }}
         </mat-option>
       </mat-select>
@@ -98,7 +104,9 @@
     <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" fxFlex="48%">
       <mat-label>Gender</mat-label>
       <mat-select formControlName="genderId">
-        <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
+        <mat-select-filter [displayMember]="'name'" [array]="genderOptions" 
+         (filteredReturn)="filteredGenderList =$event"></mat-select-filter>
+        <mat-option *ngFor="let gender of filteredGenderList" [value]="gender.id">
           {{ gender.name }}
         </mat-option>
       </mat-select>
@@ -111,7 +119,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Client Type</mat-label>
       <mat-select formControlName="clientTypeId">
-        <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
+        <mat-select-filter [displayMember]="'name'" [array]="clientTypeOptions" 
+         (filteredReturn)="filteredClientTypeList =$event"></mat-select-filter>
+        <mat-option *ngFor="let clientType of filteredClientTypeList" [value]="clientType.id">
           {{ clientType.name }}
         </mat-option>
       </mat-select>
@@ -120,7 +130,9 @@
     <mat-form-field fxFlex="48%">
       <mat-label>Client Classification</mat-label>
       <mat-select formControlName="clientClassificationId">
-        <mat-option *ngFor="let clientClassification of clientClassificationTypeOptions" [value]="clientClassification.id">
+        <mat-select-filter [displayMember]="'name'" [array]="clientClassificationTypeOptions" 
+         (filteredReturn)="filteredClientClassificationList =$event"></mat-select-filter>
+        <mat-option *ngFor="let clientClassification of filteredClientClassificationList" [value]="clientClassification.id">
           {{ clientClassification.name }}
         </mat-option>
       </mat-select>
@@ -168,7 +180,9 @@
     <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" fxFlex="48%">
       <mat-label>Savings Product</mat-label>
       <mat-select required formControlName="savingsProductId">
-        <mat-option *ngFor="let product of savingProductOptions" [value]="product.id">
+        <mat-select-filter [displayMember]="'name'" [array]="savingProductOptions" 
+         (filteredReturn)="filteredSavingProductList =$event"></mat-select-filter>
+        <mat-option *ngFor="let product of filteredSavingProductList" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>
@@ -195,7 +209,9 @@
       <mat-form-field fxFlex="48%">
         <mat-label>Main Business Line</mat-label>
         <mat-select formControlName="mainBusinessLineId">
-          <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
+          <mat-select-filter [displayMember]="'name'" [array]="businessLineOptions" 
+          (filteredReturn)="filteredBusinessLineList =$event"></mat-select-filter>
+          <mat-option *ngFor="let business of filteredBusinessLineList" [value]="business.id">
             {{ business.name }}
           </mat-option>
         </mat-select>
@@ -204,7 +220,9 @@
       <mat-form-field fxFlex="48%">
         <mat-label>Constitution</mat-label>
         <mat-select formControlName="constitutionId">
-          <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
+          <mat-select-filter [displayMember]="'name'" [array]="constitutionOptions" 
+          (filteredReturn)="filteredConstitutionList =$event"></mat-select-filter>
+          <mat-option *ngFor="let constitution of filteredConstitutionList" [value]="constitution.id">
             {{ constitution.name }}
           </mat-option>
         </mat-select>

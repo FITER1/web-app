@@ -31,6 +31,13 @@ export class CreateJournalEntryComponent implements OnInit {
   /** Gl Account data. */
   glAccountData: any;
 
+  /**filters */
+  filteredOfficeData:any;
+  filteredCurrencyData:any;
+  filteredDebitGlAccountData:any;
+  filteredCreditGlAccountData:any;
+  filteredPaymentTypeData:any;
+
   /**
    * Retrieves the offices, currencies, payment types and gl accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -52,6 +59,13 @@ export class CreateJournalEntryComponent implements OnInit {
         this.currencyData = data.currencies.selectedCurrencyOptions;
         this.paymentTypeData = data.paymentTypes;
         this.glAccountData = data.glAccounts;
+
+        /**filter options */
+        this.filteredOfficeData = this.officeData ? this.officeData.slice() : this.officeData;
+        this.filteredDebitGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+        this.filteredCreditGlAccountData = this.glAccountData ? this.glAccountData.slice() : this.glAccountData;
+        this.filteredCurrencyData = this.currencyData ? this.currencyData.slice() : this.currencyData;
+        this.filteredPaymentTypeData = this.paymentTypeData ? this.paymentTypeData.slice() : this.paymentTypeData;
       });
   }
 

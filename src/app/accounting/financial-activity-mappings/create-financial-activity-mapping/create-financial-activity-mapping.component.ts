@@ -25,6 +25,9 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
   /** Financial activity data. */
   financialActivityData: any;
 
+  filteredFinancialActivityData:any;
+  filteredGlAccountData:any;
+
   /**
    * Retrieves the gl account options and financial activity data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -39,6 +42,8 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
     this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
+      this.filteredFinancialActivityData = this.financialActivityData ? this.financialActivityData.slice() : this.financialActivityData;
+      this.filteredGlAccountData = this.glAccountOptions ? this.glAccountOptions.slice() : this.glAccountOptions;
     });
   }
 

@@ -31,6 +31,9 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   /** GL Account ID. */
   glAccountId: number;
 
+  filteredFinancialActivityData:any;
+  filteredGlAccountData:any;
+
   /**
    * Retrieves the gl account options, financial activity and financial activity account data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -48,6 +51,9 @@ export class EditFinancialActivityMappingComponent implements OnInit {
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
       this.glAccountOptions = data.financialActivityAccountAndTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountAndTemplate.financialActivityOptions;
+
+      this.filteredFinancialActivityData = this.financialActivityData ? this.financialActivityData.slice() : this.financialActivityData;
+      this.filteredGlAccountData = this.glAccountOptions ? this.glAccountOptions.slice() : this.glAccountOptions;
     });
   }
 

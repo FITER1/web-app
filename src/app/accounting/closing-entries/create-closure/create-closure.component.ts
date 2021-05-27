@@ -25,6 +25,8 @@ export class CreateClosureComponent implements OnInit {
   /** Office data. */
   officeData: any;
 
+  filteredOfficeData:any;
+
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -38,6 +40,7 @@ export class CreateClosureComponent implements OnInit {
               private router: Router) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
+      this.filteredOfficeData = this.officeData ? this.officeData.slice() : this.officeData;
     });
   }
 

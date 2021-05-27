@@ -63,6 +63,21 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Client Id */
   clientId: any;
 
+  /* filters */ 
+  filteredTransferTypeData: any; 
+  filteredPriorityTypeData : any;
+  filteredStatusTypeData : any;
+  filteredFromAccountTypeData: any;
+  filteredFromAccountData : any;
+  filteredDestinationTypeData: any;
+  filteredToOfficeTypeData : any;
+  filteredToClientTypeData : any;
+  filteredToAccountTypeData : any;
+  filteredToAccountData : any;
+  filteredInstructionTypeData: any;
+  filteredRecurrenceTypeData : any;
+  filteredRecurrenceFrequencyTypeData : any;
+
   /**
    * Retrieves the standing instructions template from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -156,6 +171,21 @@ export class CreateStandingInstructionsComponent implements OnInit {
     this.instructionTypeData = this.standingIntructionsTemplate.instructionTypeOptions;
     this.recurrenceTypeData = this.standingIntructionsTemplate.recurrenceTypeOptions;
     this.recurrenceFrequencyTypeData = this.standingIntructionsTemplate.recurrenceFrequencyOptions;
+
+    /** filters options */
+    this.filteredTransferTypeData = this.transferTypeData.slice();
+    this.filteredPriorityTypeData = this.priorityTypeData.slice();
+    this.filteredStatusTypeData = this.statusTypeData.slice();
+    this.filteredFromAccountTypeData = this.fromAccountTypeData.slice();
+    this.filteredFromAccountData = this.fromAccountData.slice();
+    this.filteredDestinationTypeData = this.destinationTypeData.slice();
+    this.filteredToOfficeTypeData = this.toOfficeTypeData.slice();
+    this.filteredToClientTypeData = this.toClientTypeData.slice();
+    this.filteredToAccountTypeData = this.toAccountTypeData.slice();
+    this.filteredToAccountData = this.toAccountData.slice();
+    this.filteredInstructionTypeData = this.instructionTypeData.slice();
+    this.filteredRecurrenceTypeData = this.recurrenceTypeData.slice();
+    this.filteredRecurrenceFrequencyTypeData = this.recurrenceFrequencyTypeData.slice();
   }
 
   /**

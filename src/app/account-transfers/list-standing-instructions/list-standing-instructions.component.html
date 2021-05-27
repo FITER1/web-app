@@ -25,7 +25,9 @@
     <mat-form-field fxFlex="30%">
       <mat-label>Type</mat-label>
       <mat-select [formControl]="transferType">
-        <mat-option *ngFor="let transferTypeData of transferTypeDatas" [value]="transferTypeData.id">
+        <mat-select-filter [displayMember]="'value'" [array]="transferTypeDatas" 
+                 (filteredReturn)="filteredTransferTypesData =$event"></mat-select-filter>
+        <mat-option *ngFor="let transferTypeData of filteredTransferTypesData" [value]="transferTypeData.id">
           {{ transferTypeData.value }}
         </mat-option>
       </mat-select>

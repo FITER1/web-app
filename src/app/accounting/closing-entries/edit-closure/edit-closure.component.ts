@@ -25,6 +25,8 @@ export class EditClosureComponent implements OnInit {
   /** Office data. */
   officeData: any;
 
+  filteredOfficeData:any;
+
   /**
    * Retrieves the gl account closure data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -70,6 +72,8 @@ export class EditClosureComponent implements OnInit {
     this.accountingClosureForm.get('officeId').setValue(this.glAccountClosure.officeId);
     this.accountingClosureForm.get('closingDate').setValue(new Date(this.glAccountClosure.closingDate));
     this.accountingClosureForm.get('comments').setValue(this.glAccountClosure.comments);
+
+    this.filteredOfficeData = this.officeData ? this.officeData.slice() : this.officeData;
   }
 
 
