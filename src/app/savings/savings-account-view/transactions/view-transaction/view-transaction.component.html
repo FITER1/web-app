@@ -13,7 +13,7 @@
     (click)="undoTransaction()">
     <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
   </button>
-  <span *ngIf="transactionData.transactionType.amountHold && !transactionData.releaseIdOfHoldAmount"><button mat-raised-button color="primary"
+  <span *ngIf="transactionData.transactionType.amountHold && !transactionData.amountRelease"><button mat-raised-button color="primary"
     *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
     (click)="releaseTransaction()">
     &nbsp;&nbsp;Release Amount
