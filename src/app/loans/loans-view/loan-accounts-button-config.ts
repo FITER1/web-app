@@ -215,6 +215,14 @@ export class LoansAccountButtonConfiguration {
                   }
                 ];
                 break;
+            case 'Overpaid':
+            this.optionArray = [
+              {
+                name: 'View Guarantors',
+                taskPermissionName: 'READ_GUARANTOR',
+              }
+            ];
+            break;
             default:
                 this.optionArray = [];
         }
