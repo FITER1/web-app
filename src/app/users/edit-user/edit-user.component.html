@@ -5,7 +5,7 @@
     <form [formGroup]="editUserForm" (ngSubmit)="submit()">
 
       <mat-card-content>
-        
+
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
           <mat-form-field fxFlex="48%">
@@ -70,6 +70,7 @@
           <mat-form-field fxFlex="48%">
             <mat-label>Staff</mat-label>
             <mat-select formControlName="staffId">
+              <mat-option>select staff</mat-option>
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
               </mat-option>
@@ -87,18 +88,18 @@
               At least one role <strong>must be selected</strong>
             </mat-error>
           </mat-form-field>
-        
+
         </div>
-      
+
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
         <button mat-raised-button color="primary" [disabled]="!editUserForm.valid">Submit</button>
       </mat-card-actions>
-    
+
     </form>
-  
+
   </mat-card>
 
 </div>
