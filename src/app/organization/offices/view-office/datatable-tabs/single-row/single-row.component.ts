@@ -117,7 +117,7 @@ export class SingleRowComponent implements OnInit {
       formfields: formfields
     };
     console.log(data);
-    
+
     const editDialogRef = this.dialog.open(FormDialogComponent, { data });
     editDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -132,7 +132,7 @@ export class SingleRowComponent implements OnInit {
         });
       }
     });
-    
+
   }
 
   /**
@@ -161,7 +161,11 @@ export class SingleRowComponent implements OnInit {
    * @param {any} dataTableEntryObject Additional data table details.
    */
   getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
-    let count = 0
+    let count = 0;
+    let booleanValue = false;
+    if(this.dataObject.data[0]) {
+      let booleanValue = this.dataObject.data[0].row[count];
+    }
     return columns.map((column: any) => {
       count++;
       switch (column.columnDisplayType) {
@@ -178,7 +182,7 @@ export class SingleRowComponent implements OnInit {
         case 'BOOLEAN': return new CheckboxBase({
           controlName: column.columnName,
           label: column.columnName,
-          value: (column.isColumnNullable) ? false : Boolean(JSON.parse(this.dataObject.data[0].row[count])),
+          value: (column.isColumnNullable) ? false : booleanValue,
           type: 'checkbox',
           //required: (column.isColumnNullable) ? false : true
         });
