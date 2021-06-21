@@ -95,7 +95,7 @@ export class GeneralTabComponent {
       if(recAccounts.length > 0){this.isRecurring = true;}
       if(savAccounts.length > 0){this.isSavings = true;}
 
-      
+
   });
   }
 
@@ -190,7 +190,7 @@ export class GeneralTabComponent {
   }
 
   hideWithdrawalForSharesAccount(account:any){
-      if(account.productName.includes('Shares')){
+      if(account.productName.includes('Shares') || account.productName.includes('Liquidation Account')){
        return true;
       }
   }
