@@ -8,5 +8,8 @@ RUN npm run build:prod
 
 FROM nginx:1.19.3
 COPY --from=builder /usr/src/app/dist/web-app /usr/share/nginx/html
-EXPOSE 80
+COPY ./nginx-conf/* /etc/nginx/conf.d/
+COPY conf/default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
