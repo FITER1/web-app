@@ -16,8 +16,8 @@ server {
 
   server_tokens off;
 
-  ssl_certificate /etc/ssl/keys/cert.pem;
-  ssl_certificate_key /etc/ssl/keys/key.pem;
+  #ssl_certificate /etc/ssl/keys/cert.pem;
+  #ssl_certificate_key /etc/ssl/keys/key.pem;
 
   ssl_protocols TLSv1.2;
   ssl_prefer_server_ciphers on;
