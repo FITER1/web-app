@@ -47,7 +47,7 @@ export class SavingsAccountViewComponent implements OnInit {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.savingsDatatables = data.savingsDatatables;
-      if(this.savingsAccountData.savingsProductName.includes('Shares')){
+      if(this.savingsAccountData.savingsProductName.includes('Shares') || this.savingsAccountData.savingsProductName.includes('Liquidation Account')){
         this.hideWihhdrawalButton = true;
       }
     });
