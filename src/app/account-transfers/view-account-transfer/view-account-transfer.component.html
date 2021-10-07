@@ -1,3 +1,10 @@
+<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%">
+<button mat-raised-button color="warn"
+        *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+        (click)="undoTransaction()">
+  <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
+</button>
+</div>
 <div class="container">
 
   <mat-card>
