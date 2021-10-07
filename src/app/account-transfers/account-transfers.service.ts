@@ -108,4 +108,8 @@ export class AccountTransfersService {
     return this.http.get(`/accounttransfers/${transferId}`);
   }
 
+  reverseAccountTransfer(transferId: string, data: any): Observable<any> {
+     return this.http.post(`/accounttransfers/reverseAccountTransfer/${transferId}`, data);
+   }
+
 }
