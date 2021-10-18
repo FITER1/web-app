@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { LoansService } from 'app/loans/loans.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
+import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
 
 /** Custom Dialogs */
 
@@ -39,7 +40,8 @@ export class ViewTransactionComponent {
               private datePipe: DatePipe,
               private router: Router,
               public dialog: MatDialog,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private transferService : AccountTransfersService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
     });
@@ -58,15 +60,28 @@ export class ViewTransactionComponent {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
-        const data = {
+        let ignoreAccountTransfer = false;
+        let reverseRepayment = false;
+        
+        let data = {
           transactionDate: this.datePipe.transform(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
           transactionAmount: 0,
           dateFormat,
-          locale
+          locale,
+          ignoreAccountTransfer,
+          reverseRepayment
         };
-        this.loansService.executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.reload();
-        });
+        if(!this.transactionData.transfer){
+          this.loansService.executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
+            this.reload();
+          });
+        } else {
+           data.ignoreAccountTransfer = true;
+           data.reverseRepayment = true;
+           this.transferService.reverseAccountTransfer(this.transactionData.transfer.id, data).subscribe(() => {
+            this.reload();
+          });
+        }
       }
     });
   }
