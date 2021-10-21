@@ -61,15 +61,13 @@ export class ViewTransactionComponent {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         let ignoreAccountTransfer = false;
-        let reverseRepayment = false;
         
         let data = {
           transactionDate: this.datePipe.transform(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
           transactionAmount: 0,
           dateFormat,
           locale,
-          ignoreAccountTransfer,
-          reverseRepayment
+          ignoreAccountTransfer
         };
         if(!this.transactionData.transfer){
           this.loansService.executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
@@ -77,7 +75,6 @@ export class ViewTransactionComponent {
           });
         } else {
            data.ignoreAccountTransfer = true;
-           data.reverseRepayment = true;
            this.transferService.reverseAccountTransfer(this.transactionData.transfer.id, data).subscribe(() => {
             this.reload();
           });
