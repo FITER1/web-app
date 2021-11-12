@@ -66,6 +66,11 @@
           <input formControlName="bankNumber" matInput />
         </mat-form-field>
 
+        <mat-form-field>
+          <mat-label>Notes</mat-label>
+          <textarea formControlName="note" matInput></textarea>
+        </mat-form-field>
+
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
           <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
           <button mat-raised-button color="primary" [disabled]="!editTransactionForm.valid">Submit</button>

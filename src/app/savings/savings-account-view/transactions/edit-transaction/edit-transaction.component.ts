@@ -39,6 +39,8 @@ export class EditTransactionComponent implements OnInit {
   /** Transaction Template */
   transactionTemplateData: any;
 
+  paymentDetailsData: any;
+
   /**
    * Retrieves the Saving Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -57,6 +59,7 @@ export class EditTransactionComponent implements OnInit {
     this.route.data.subscribe((data: { savingsAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.savingsAccountTransactionTemplate;
       this.paymentTypeOptions = this.transactionTemplateData.paymentTypeOptions;
+      this.paymentDetailsData = this.transactionTemplateData.paymentDetailData;
     });
     this.savingAccountId = this.route.parent.snapshot.params['savingAccountId'];
   }
@@ -69,7 +72,8 @@ export class EditTransactionComponent implements OnInit {
     this.editTransactionForm.patchValue({
       'transactionDate': this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
       'transactionAmount': this.transactionTemplateData.amount,
-      'paymentTypeId': this.transactionTemplateData.paymentTypeId
+      'paymentTypeId': this.transactionTemplateData.paymentDetailData.paymentType.id,
+      'note': this.transactionTemplateData.note
     });
   }
 
@@ -81,6 +85,7 @@ export class EditTransactionComponent implements OnInit {
       'transactionDate': ['', Validators.required],
       'transactionAmount': ['', Validators.required],
       'paymentTypeId': [''],
+      'note': ['']
     });
   }
 
@@ -90,11 +95,11 @@ export class EditTransactionComponent implements OnInit {
   addPaymentDetails() {
     this.addPaymentDetailsFlag = !this.addPaymentDetailsFlag;
     if (this.addPaymentDetailsFlag) {
-      this.editTransactionForm.addControl('accountNumber', new FormControl(''));
-      this.editTransactionForm.addControl('checkNumber', new FormControl(''));
-      this.editTransactionForm.addControl('routingCode', new FormControl(''));
-      this.editTransactionForm.addControl('receiptNumber', new FormControl(''));
-      this.editTransactionForm.addControl('bankNumber', new FormControl(''));
+      this.editTransactionForm.addControl('accountNumber', new FormControl((this.paymentDetailsData ? this.paymentDetailsData.accountNumber :'')));
+      this.editTransactionForm.addControl('checkNumber', new FormControl((this.paymentDetailsData ? this.paymentDetailsData.checkNumber :'')));
+      this.editTransactionForm.addControl('routingCode', new FormControl((this.paymentDetailsData ? this.paymentDetailsData.routingCode :'')));
+      this.editTransactionForm.addControl('receiptNumber', new FormControl((this.paymentDetailsData ? this.paymentDetailsData.receiptNumber :'')));
+      this.editTransactionForm.addControl('bankNumber', new FormControl((this.paymentDetailsData ? this.paymentDetailsData.bankNumber :'')));
     } else {
       this.editTransactionForm.removeControl('accountNumber');
       this.editTransactionForm.removeControl('checkNumber');
