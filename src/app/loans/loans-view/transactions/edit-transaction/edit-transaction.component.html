@@ -57,13 +57,22 @@
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['receiptNumber']">
-          <mat-label>Receipt Number</mat-label>
-          <input formControlName="receiptNumber" matInput />
+          <mat-label>Reciept #</mat-label>
+          <input matInput formControlName="receiptNumber" required>
+          <mat-error *ngIf="editTransactionForm.controls.receiptNumber.hasError('required')">
+              Reciept #<strong>is required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="editTransactionForm.controls['bankNumber']">
-          <mat-label>Bank</mat-label>
-          <input formControlName="bankNumber" matInput />
+          <mat-label>Bank #</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="bankNumberDatePicker" required
+                 formControlName="bankNumber">
+          <mat-datepicker-toggle matSuffix [for]="bankNumberDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #bankNumberDatePicker></mat-datepicker>
+          <mat-error *ngIf="editTransactionForm.controls.bankNumber.hasError('required')">
+            Bank #<strong>is required</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
