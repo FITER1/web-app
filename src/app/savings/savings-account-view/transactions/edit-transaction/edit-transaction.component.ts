@@ -72,7 +72,7 @@ export class EditTransactionComponent implements OnInit {
     this.editTransactionForm.patchValue({
       'transactionDate': this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
       'transactionAmount': this.transactionTemplateData.amount,
-      'paymentTypeId': this.transactionTemplateData.paymentDetailData.paymentType.id,
+      'paymentTypeId': this.transactionTemplateData.paymentDetailData ? this.transactionTemplateData.paymentDetailData.paymentType.id : '',
       'note': this.transactionTemplateData.note
     });
   }
