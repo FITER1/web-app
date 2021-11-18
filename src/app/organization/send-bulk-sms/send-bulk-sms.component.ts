@@ -131,6 +131,13 @@ export class SendBulkSmsComponent implements OnInit {
     this.clientIds.push(clientDetails.id);
   }
 
+  remove(index:any) {
+    console.log(index);
+    this.selectedClientsDetails.splice(index, 1);
+    this.clientIds.splice(index, 1);
+    console.log(this.selectedClientsDetails, this.clientIds);
+  };
+
   submit(){
     this.formData = {
       'officeId': this.selectedOfficeId,
@@ -159,7 +166,4 @@ export class SendBulkSmsComponent implements OnInit {
   }
 
   
-
-
-
 }

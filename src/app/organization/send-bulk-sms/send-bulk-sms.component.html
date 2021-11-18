@@ -46,7 +46,7 @@
           <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient"
           (optionSelected)='clientSelected($event.option.value)'>
             <mat-option *ngFor="let client of clientsData" [value]="client">
-              {{ client.displayName }}
+              {{ client.displayName }} 
             </mat-option>
           </mat-autocomplete>
         </ng-container>
@@ -55,8 +55,10 @@
           <div class="mat-table">
             <div class="mat-row">
               <div class="mat-cell">Selected Clients</div>
-              <div class="mat-cell" *ngFor= "let client of selectedClientsDetails">
-                {{client.name}}</div>
+              <div class="mat-cell" *ngFor= "let client of selectedClientsDetails; let i = index">
+                {{client.name}} <button type="button" mat-icon-button color="warn" (click)="remove(i)">
+                  <fa-icon icon="trash"></fa-icon></button>
+              </div>
             </div>
           </div>
         </ng-container>
