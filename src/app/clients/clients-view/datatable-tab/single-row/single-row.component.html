@@ -13,7 +13,7 @@
   </div>
   <mat-list role="list" *ngIf="dataObject.data[0]">
     <mat-list-item role="listitem" *ngFor="let columnHeader of dataObject.columnHeaders;let i = index">
-      {{columnHeader.columnName}} : {{dataObject.data[0].row[i]}}
+      {{columnHeader.columnName}} : {{dataObject.data[0].rowWithCodeLookupValues ? dataObject.data[0].rowWithCodeLookupValues[i] : dataObject.data[0].row[i]}}
     </mat-list-item>
   </mat-list>
 </div>

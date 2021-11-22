@@ -189,7 +189,7 @@ export class SingleRowComponent implements OnInit {
         case 'CODELOOKUP': return new SelectBase({
           controlName: column.columnName,
           label: column.columnName,
-          value: (column.isColumnNullable) ? '' : Number(this.dataObject.data[0].row[count]),
+          value: (column.isColumnNullable) ? '' : (this.dataObject.data[0] ? Number(this.dataObject.data[0].row[count]) :''),
           options: { label: 'value', value: 'id', data: column.columnValues },
           required: (column.isColumnNullable) ? false : true
         });
