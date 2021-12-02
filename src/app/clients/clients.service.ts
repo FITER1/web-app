@@ -19,7 +19,6 @@ export class ClientsService {
   getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId?: any): Observable<any> {
     let httpParams = new HttpParams()
       .set('displayName', displayName)
-      .set('orphansOnly', orphansOnly.toString())
       .set('sortOrder', sortOrder)
       .set('orderBy', orderBy);
     if (officeId) {
