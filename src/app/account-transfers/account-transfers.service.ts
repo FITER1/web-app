@@ -90,8 +90,9 @@ export class AccountTransfersService {
   }
 
   deleteStandingInstrucions(id: any) {
+    const data:any = {};
     const httpParams = new HttpParams().set('command', 'delete');
-    return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
+    return this.http.put(`/standinginstructions/${id}`,data, { params: httpParams });
   }
 
 
