@@ -145,14 +145,14 @@ export class CreateStandingInstructionsComponent implements OnInit {
       'toClientId': ['', Validators.required],
       'toAccountType': ['', Validators.required],
       'toAccountId': ['', Validators.required],
-      'instructionType': ['', Validators.required],
-      'amount': ['', Validators.required],
+      'instructionType': [''],
+      'amount': [''],
       'validFrom': ['', Validators.required],
       'validTill': ['', Validators.required],
       'recurrenceType': ['', Validators.required],
-      'recurrenceInterval': ['', Validators.required],
-      'recurrenceFrequency': ['', Validators.required],
-      'recurrenceOnMonthDay': ['', Validators.required]
+      'recurrenceInterval': [''],
+      'recurrenceFrequency': [''],
+      'recurrenceOnMonthDay': ['']
     });
   }
 
@@ -173,19 +173,19 @@ export class CreateStandingInstructionsComponent implements OnInit {
     this.recurrenceFrequencyTypeData = this.standingIntructionsTemplate.recurrenceFrequencyOptions;
 
     /** filters options */
-    this.filteredTransferTypeData = this.transferTypeData ? this.transferTypeData.slice() : '';
-    this.filteredPriorityTypeData = this.priorityTypeData ? this.priorityTypeData.slice() : '';
-    this.filteredStatusTypeData = this.statusTypeData ? this.statusTypeData.slice() : '';
-    this.filteredFromAccountTypeData = this.fromAccountTypeData ? this.fromAccountTypeData.slice() : '';
-    this.filteredFromAccountData = this.fromAccountData ? this.fromAccountData.slice() : '';
-    this.filteredDestinationTypeData = this.destinationTypeData ? this.destinationTypeData.slice() : '';
-    this.filteredToOfficeTypeData = this.toOfficeTypeData ? this.toOfficeTypeData.slice() : '';
-    this.filteredToClientTypeData = this.toClientTypeData ? this.toClientTypeData.slice() : '';
-    this.filteredToAccountTypeData = this.toAccountTypeData ? this.toAccountTypeData.slice() : '';
-    this.filteredToAccountData = this.toAccountData ? this.toAccountData.slice() : '';
-    this.filteredInstructionTypeData = this.instructionTypeData ? this.instructionTypeData.slice() : '';
-    this.filteredRecurrenceTypeData = this.recurrenceTypeData ? this.recurrenceTypeData.slice() :'';
-    this.filteredRecurrenceFrequencyTypeData = this.recurrenceFrequencyTypeData ? this.recurrenceFrequencyTypeData.slice() :'';
+    this.filteredTransferTypeData = this.transferTypeData ? this.transferTypeData.slice() : [];
+    this.filteredPriorityTypeData = this.priorityTypeData ? this.priorityTypeData.slice() : [];
+    this.filteredStatusTypeData = this.statusTypeData ? this.statusTypeData.slice() : [];
+    this.filteredFromAccountTypeData = this.fromAccountTypeData ? this.fromAccountTypeData.slice() : [];
+    this.filteredFromAccountData = this.fromAccountData ? this.fromAccountData.slice() : [];
+    this.filteredDestinationTypeData = this.destinationTypeData ? this.destinationTypeData.slice() : [];
+    this.filteredToOfficeTypeData = this.toOfficeTypeData ? this.toOfficeTypeData.slice() : [];
+    this.filteredToClientTypeData = this.toClientTypeData ? this.toClientTypeData.slice() : [];
+    this.filteredToAccountTypeData = this.toAccountTypeData ? this.toAccountTypeData.slice() : [];
+    this.filteredToAccountData = this.toAccountData ? this.toAccountData.slice() : [];
+    this.filteredInstructionTypeData = this.instructionTypeData ? this.instructionTypeData.slice() : [];
+    this.filteredRecurrenceTypeData = this.recurrenceTypeData ? this.recurrenceTypeData.slice() :[];
+    this.filteredRecurrenceFrequencyTypeData = this.recurrenceFrequencyTypeData ? this.recurrenceFrequencyTypeData.slice() :[];
   }
 
   /**
@@ -209,6 +209,14 @@ export class CreateStandingInstructionsComponent implements OnInit {
         this.createStandingInstructionsForm.controls['toOfficeId'].enable();
         this.createStandingInstructionsForm.controls['toClientId'].enable();
       }
+    });
+    this.createStandingInstructionsForm.get('toClientId').valueChanges.subscribe((toClientId: any) => {
+      console.log(toClientId);
+      this.createStandingInstructionsForm.patchValue({
+        'toAccountId': '',
+        'toAccountType': ''
+      });
+      this.changeEvent();
     });
 
   }

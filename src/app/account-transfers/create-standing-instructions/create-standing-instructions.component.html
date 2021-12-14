@@ -121,7 +121,7 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Beneficiary</mat-label>
-            <mat-select required formControlName="toClientId" (selectionChange)="changeEvent()">
+            <mat-select required formControlName="toClientId" [disabled] = "!allowclientedit">
               <mat-select-filter [displayMember]="'displayName'" [array]="toClientTypeData" 
                  (filteredReturn)="filteredToClientTypeData =$event"></mat-select-filter>
               <mat-option *ngFor="let toClientType of filteredToClientTypeData" [value]="toClientType.id">
@@ -170,17 +170,17 @@
                 {{ instructionsType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')">
+            <!-- <mat-error *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')">
               Standing Instruction Type is <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
             <mat-label>Amount</mat-label>
-            <input type="text" mifosxNumberFormatDirective matInput required formControlName="amount">
-            <mat-error *ngIf="createStandingInstructionsForm.controls.amount.hasError('required')">
+            <input type="text" mifosxNumberFormatDirective matInput formControlName="amount">
+            <!-- <mat-error *ngIf="createStandingInstructionsForm.controls.amount.hasError('required')">
               Amount is <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
@@ -221,15 +221,15 @@
 
           <mat-form-field fxFlex="48%">
             <mat-label>Interval</mat-label>
-            <input type="text" mifosxNumberFormatDirective matInput required formControlName="recurrenceInterval">
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
+            <input type="text" mifosxNumberFormatDirective matInput formControlName="recurrenceInterval">
+            <!-- <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
               Recurrence Interval is <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
             <mat-label>Recurrence Frequency</mat-label>
-            <mat-select required formControlName="recurrenceFrequency">
+            <mat-select formControlName="recurrenceFrequency">
               <mat-select-filter [displayMember]="'value'" [array]="recurrenceFrequencyTypeData" 
                  (filteredReturn)="filteredRecurrenceFrequencyTypeData =$event"></mat-select-filter>
               <mat-option *ngFor="let recurrenceFrequencyType of filteredRecurrenceFrequencyTypeData"
@@ -237,20 +237,20 @@
                 {{ recurrenceFrequencyType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')">
+            <!-- <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')">
               Recurrence Frequency is <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
             <mat-label>On Month Day</mat-label>
-            <input required matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay">
             <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')">
+            <!-- <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')">
               On Month Day is <strong>required</strong>
-            </mat-error>
+            </mat-error> -->
           </mat-form-field>
 
         </div>
