@@ -78,6 +78,7 @@ export class EditStandingInstructionsComponent implements OnInit {
    */
   ngOnInit() {
     this.createEditStandingInstructionsForm();
+    this.buildDependencies();
     const presentDate = new Date();
     const n = presentDate.getFullYear();
     if (this.standingInstructionsData.recurrenceOnMonthDay) {
@@ -133,6 +134,18 @@ export class EditStandingInstructionsComponent implements OnInit {
       'recurrenceFrequency': '',
       'recurrenceOnMonthDay': ''
     });
+  }
+
+  buildDependencies() {
+    this.editStandingInstructionsForm.get('recurrenceType').valueChanges.subscribe((recurrenceType: any) => {
+      console.log(recurrenceType);
+      if(recurrenceType == 2){
+        this.editStandingInstructionsForm.controls['amount'].disable();
+      }else{
+        this.editStandingInstructionsForm.controls['amount'].enable();
+      }
+    });
+
   }
 
   setOptions() {
