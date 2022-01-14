@@ -137,7 +137,7 @@ export class EditStandingInstructionsComponent implements OnInit {
   }
 
   buildDependencies() {
-    this.editStandingInstructionsForm.get('recurrenceType').valueChanges.subscribe((recurrenceType: any) => {
+    this.editStandingInstructionsForm.get('instructionType').valueChanges.subscribe((recurrenceType: any) => {
       console.log(recurrenceType);
       if(recurrenceType == 2){
         this.editStandingInstructionsForm.controls['amount'].disable();

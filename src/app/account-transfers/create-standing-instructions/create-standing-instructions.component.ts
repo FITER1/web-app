@@ -218,7 +218,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
       });
       this.changeEvent();
     });
-    this.createStandingInstructionsForm.get('recurrenceType').valueChanges.subscribe((recurrenceType: any) => {
+    this.createStandingInstructionsForm.get('instructionType').valueChanges.subscribe((recurrenceType: any) => {
       console.log(recurrenceType);
       if(recurrenceType == 2){
         this.createStandingInstructionsForm.controls['amount'].disable();
