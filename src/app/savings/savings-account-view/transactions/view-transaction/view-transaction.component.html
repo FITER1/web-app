@@ -8,11 +8,11 @@
       <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;Edit
     </button>
   </span>
-  <button mat-raised-button color="warn"
+  <span *ngIf="transactionData.transactionType.amountHold && transactionData.transactionType.amountRelease"><button mat-raised-button color="warn" 
     *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
     (click)="undoTransaction()">
     <fa-icon icon="undo"></fa-icon>&nbsp;&nbsp;Undo
-  </button>
+  </button></span>
   <span *ngIf="transactionData.transactionType.amountHold && !transactionData.amountRelease"><button mat-raised-button color="primary"
     *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
     (click)="releaseTransaction()">
