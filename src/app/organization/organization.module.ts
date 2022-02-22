@@ -70,6 +70,7 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 import { SendBulkSmsComponent } from './send-bulk-sms/send-bulk-sms.component';
+import { SurplusDistributionComponent } from './surplus-distribution/surplus-distribution.component';
 
 /**
  * Organization Module
@@ -146,6 +147,7 @@ import { SendBulkSmsComponent } from './send-bulk-sms/send-bulk-sms.component';
     FundMappingComponent,
     CreateHolidayComponent,
     SendBulkSmsComponent,
+    SurplusDistributionComponent,
   ]
 })
 export class OrganizationModule { }

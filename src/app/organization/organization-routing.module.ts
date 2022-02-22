@@ -103,6 +103,7 @@ import { LoanProvisioningCriteriaAndTemplateResolver } from './loan-provisioning
 import { StandingInstructionsTemplateResolver } from './standing-instructions-history/standing-instructions-template.resolver';
 import { AdvanceSearchTemplateResolver } from './fund-mapping/advance-search-template.resolver';
 import { SendBulkSmsComponent } from './send-bulk-sms/send-bulk-sms.component';
+import { SurplusDistributionComponent } from './surplus-distribution/surplus-distribution.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -646,7 +647,15 @@ const routes: Routes = [
           path: 'send-bulk-sms',
           component : SendBulkSmsComponent,
           data: { title: extract('Send Bulk Sms'), breadcrumb: 'Send Bulk Sms', routeParamBreadcrumb: false },
-        }
+        },
+        {
+          path: 'surplus-distribution',
+          component: SurplusDistributionComponent,
+          data: { title: extract('Surplus Distribution'), breadcrumb: 'Surplus Distribution' },
+          resolve: {
+            offices: OfficesResolver,
+          }
+        },
       ]
     }
   ])
