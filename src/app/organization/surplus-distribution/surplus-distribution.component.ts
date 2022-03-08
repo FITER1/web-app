@@ -69,7 +69,10 @@ export class SurplusDistributionComponent implements OnInit {
             }
           });
         }
+        if(!data){
         this.alertService.alert({ type: '', message: 'Request is processing' });
+        this.router.navigate(['../'], { relativeTo: this.route });
+        }
      });
   }
 
