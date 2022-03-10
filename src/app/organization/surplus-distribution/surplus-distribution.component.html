@@ -1,0 +1,59 @@
+<div class="container">
+
+    <mat-card>
+  
+      <form [formGroup]="reportForm" (ngSubmit)="submit()">
+        
+        <mat-card-content>
+          <div fxLayout="column">
+  
+            <ng-container>
+
+              <mat-form-field>
+                <mat-label>Office</mat-label>
+                <mat-select required formControlName="officeId">
+                  <mat-option *ngFor="let office of officeData" [value]="office.id">
+                    {{ office.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="reportForm.controls.officeId.hasError('required')">
+                   Office is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" formControlName="startDate" required [matDatepicker]="startDatePicker">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+                <mat-error *ngIf="reportForm.controls.startDate.hasError('required')">
+                  Start Date is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" formControlName="endDate" required [matDatepicker]="endDatePicker">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+                <mat-error *ngIf="reportForm.controls.endDate.hasError('required')">
+                  End Date is <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+    
+            </ng-container>
+          </div>
+        </mat-card-content>
+  
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+          <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
+          <button mat-raised-button color="primary" [disabled]="!reportForm.valid">Submit</button>
+        </mat-card-actions>
+  
+      </form>
+  
+    </mat-card>
+    
+  </div>
+  
+  

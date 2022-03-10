@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** Custom Imports. */
 import { SettingsService } from 'app/settings/settings.service';
@@ -811,6 +811,14 @@ export class OrganizationService {
 
   sendBulkSms(smsData: any){
     return this.http.post(`/sms/sendBulkSms`, smsData);
+  }
+
+  surplusDistributionDataGeneration(officeId: any, startDate: string, endDate : string, isDeleteOldData : boolean): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId)
+    .set('startDate', startDate)
+    .set('endDate', endDate)
+    .set('isDeleteOldData', isDeleteOldData.toString());
+    return this.http.get(`/offices/surplusDistribution`, { params: httpParams });
   }
 
 }
