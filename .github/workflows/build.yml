@@ -6,7 +6,6 @@ on:
       - ameta
       - staging
       - dev
-# TODO These jobs reuse the same first 7 steps. Replace with https://github.com/actions/runner/issues/438
 # TODO Instead of suffixing with sha's should suffix with file hashes. In pseudo code we want to => determine all package/server hashes => set versions => filter out existent packages => publish all missing packages/servers
 jobs:
   # Version Packages
