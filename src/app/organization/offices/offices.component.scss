@@ -5,3 +5,34 @@ table {
     cursor: pointer;
   }
 }
+
+.gl-account-tree {
+  ul,
+  li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+
+  li {
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .gl-account-tree-invisible {
+    display: none;
+  }
+}
+
+.content {
+  div {
+    margin: 1rem 0;
+    word-wrap: break-word;
+
+    &.header {
+      font-weight: 500;
+    }
+  }
+}
+

@@ -1,9 +1,13 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
 
-  <button mat-raised-button color="primary">
-    <fa-icon icon="sitemap"></fa-icon>&nbsp;&nbsp;
-    Tree View
-  </button>
+  <mat-button-toggle-group [formControl]="viewGroup">
+    <mat-button-toggle value="listView">
+      <fa-icon icon="list"></fa-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="treeView">
+      <fa-icon icon="sitemap"></fa-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
     <fa-icon icon="plus"></fa-icon>&nbsp;&nbsp;
@@ -17,7 +21,7 @@
 
 </div>
 
-<div class="container">
+<div class="container" [hidden]="viewGroup.value !== 'listView'">
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
@@ -58,5 +62,104 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
   </div>
+  </div>
+
+  <div class="container" [hidden]="viewGroup.value !== 'treeView'">
+
+    <div class="m-b-20"  fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+      <button mat-raised-button (click)="nestedTreeControl.expandAll()">  <!-- Bug(angular-material): https://github.com/angular/material2/issues/12170 -->
+        Expand All
+      </button>
+      <button mat-raised-button (click)="nestedTreeControl.collapseAll()">
+        Collapse All
+      </button>
+    </div>
+  
+    <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
+      <div fxFlex="48%" *ngIf="office">
+  
+        <mat-card>
+  
+          <mat-card-content>
+  
+            <div fxLayout="row wrap" class="content">
+  
+              <div fxFlex="50%" class="header">
+                Office Name
+              </div>
+  
+              <div fxFlex="50%">
+                {{ office.officeName }}
+              </div>
+  
+              <div fxFlex="50%" class="header">
+                External Id
+              </div>
+  
+              <div fxFlex="50%">
+                {{ office.externalId }}
+              </div>
+  
+              <div fxFlex="50%" class="header">
+                Parent Office
+              </div>
+  
+              <div fxFlex="50%">
+                {{ office.parentOffice }}
+              </div>
+  
+              <div fxFlex="50%" class="header">
+                Opened On
+              </div>
+  
+              <div fxFlex="50%">
+                {{ office.openedOn }}
+              </div>
+  
+            </div>
+  
+          </mat-card-content>
+  
+        </mat-card>
+  
+      </div>
+  
+      <div class="mat-elevation-z8" fxFlex>
+  
+        <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="gl-account-tree">
+  
+          <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+            <li class="mat-tree-node">
+              <button mat-icon-button disabled></button>
+              <span (click)="viewOfficeNode(node)">
+                <span *ngIf="node.externalId">{{ '(' + node.externalId + ')' }}</span>&nbsp;&nbsp;
+                {{ node.officeName }}
+              </span>
+            </li>
+          </mat-tree-node>
+  
+          <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+            <li>
+              <div class="mat-tree-node">
+                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                  <fa-icon class="mat-icon-rtl-mirror" icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
+                </button>
+                <span (click)="viewOfficeNode(node)">
+                  <span *ngIf="node.externalId">{{ '(' + node.externalId + ')' }}</span>&nbsp;&nbsp;
+                  {{ node.officeName }}
+                </span>
+              </div>
+              <ul [class.gl-account-tree-invisible]="!nestedTreeControl.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+              </ul>
+            </li>
+          </mat-nested-tree-node>
+  
+        </mat-tree>
+  
+      </div>
+  
+    </div>
+  
 
 </div>
