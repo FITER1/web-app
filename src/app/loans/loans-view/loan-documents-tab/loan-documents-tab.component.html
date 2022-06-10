@@ -32,7 +32,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
         <td mat-cell *matCellDef="let document; let index">
-          <button class="loan-document-action-button" mat-raised-button color="primary">
+          <button class="loan-document-action-button" mat-raised-button color="primary" (click)="download(document.parentEntityId,document.id)">
             <fa-icon icon="cloud-download-alt"></fa-icon>
           </button>
 

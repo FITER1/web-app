@@ -130,4 +130,11 @@ export class LoanDocumentsTabComponent implements OnInit {
     });
   }
 
+  download(parentEntityId: string, documentId: string) {
+    this.loansService.downloadLoanDocument(parentEntityId, documentId).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      window.open(url);
+    });
+  }
+
 }
