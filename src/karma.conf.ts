@@ -14,8 +14,8 @@ module.exports = (config: any) => {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*spec.ts',
-      'src/**/*.ts',
+      // 'src/**/*spec.ts',
+      // 'src/**/*.ts',
     ],
 
 
@@ -27,14 +27,23 @@ module.exports = (config: any) => {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://www.npmjs.com/search?q=keywords:karma-preprocessor
     preprocessors: {
+      'src/**/*.ts' : ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://www.npmjs.com/search?q=keywords:karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
+    coverageReporter: {
+      reporters:[
+        {type : 'cobertura', dir : 'coverage/'},
+        {type : 'text',      dir : 'coverage/', file : 'coverage.txt'},
+        {type : 'html',      dir : 'coverage/' },
+        {type : 'lcov',      dir : 'coverage/' }
+      ]
+    },
 
     // web server port
     port: 9876,
