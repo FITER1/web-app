@@ -2,6 +2,7 @@
 ### STAGE 1: Build app
 ###############
 ARG BUILDER_IMAGE=node:16-alpine
+ARG LATAMENV
 ARG NGINX_IMAGE=nginx:1.19.3
 
 FROM $BUILDER_IMAGE as builder
@@ -15,10 +16,10 @@ RUN apk add --no-cache git
 WORKDIR /usr/src/app
 
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
 # Export Puppeteer env variables for installation with non-default registry.
 ENV PUPPETEER_DOWNLOAD_HOST $PUPPETEER_DOWNLOAD_HOST_ARG
 ENV PUPPETEER_CHROMIUM_REVISION $PUPPETEER_CHROMIUM_REVISION_ARG
+ENV PUPPETEER_SKIP_DOWNLOAD = 'true'
 
 COPY ./ /usr/src/app/
 
@@ -29,9 +30,13 @@ RUN npm config set registry $NPM_REGISTRY_URL --location=global
 
 RUN npm install --location=global @angular/cli@12.2.17
 
-RUN npm install
+RUN npm install puppeteer
 
-RUN ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
+RUN if [ "LATAMENV" = "PDN" ]; then \
+    ng build --prod --aot --outputHashing=all --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS; \
+  else \
+    ng build --aot --outputHashing=all --output-path=/dist; \
+  fi
 
 ###############
 ### STAGE 2: Serve app with nginx ###
