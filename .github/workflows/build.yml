@@ -6,6 +6,9 @@ on:
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -24,7 +27,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/configure-aws-credentials@master
 
       - name: Build, tag, and push image to Amazon ECR
         env:
