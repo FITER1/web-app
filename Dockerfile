@@ -30,13 +30,9 @@ RUN npm config set registry $NPM_REGISTRY_URL --location=global
 
 RUN npm install --location=global @angular/cli@12.2.17
 
-RUN npm install puppeteer
+RUN npm install
 
-RUN if [ "LATAMENV" = "PDN" ]; then \
-    ng build --prod --aot --outputHashing=all --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS; \
-  else \
-    ng build --aot --outputHashing=all --output-path=/dist; \
-  fi
+RUN ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
 
 ###############
 ### STAGE 2: Serve app with nginx ###
