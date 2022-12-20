@@ -1,0 +1,59 @@
+name: Fiter Latam - Codacy Coverage Reporter
+on:
+  push:
+    branches:
+      - fiter/latam/dev
+  pull_request:
+    branches:
+      - fiter/latam/dev
+jobs:
+  codacy-coverage-reporter:
+    name: Build and upload code coverage report
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Remove Node Modules
+        run: rm -rf node_modules
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@12.2.17
+
+      - name: Update npmn
+        run: npm update
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Delete report directory if exists
+        working-directory: ../web-app/
+        run: rm -f -r  coverage || true
+
+      - name: Test coverage
+        continue-on-error: true
+        run: |
+          npm run test:ci
+
+      - name: List Files in root directory
+        continue-on-error: true
+        working-directory: ../web-app/
+        run: |
+            mkdir coverage-report
+            cd coverage/**
+            cp lcov.info ../../coverage-report
+            cd ../../coverage-report
+            ls
+
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        continue-on-error: true
+        with:
+          api-token: "${{ secrets.CODACY_API_TOKEN }}"
+          coverage-reports: ../web-app/coverage-report/lcov.info
+
+
+
