@@ -41,8 +41,10 @@ jobs:
         run: |
             mkdir coverage-report
             cd coverage/**
+            pwd
             cp lcov.info ../../coverage-report
             cd ../../coverage-report
+            pwd
             ls
 
       - name: Run codacy-coverage-reporter
