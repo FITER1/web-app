@@ -23,9 +23,6 @@ jobs:
       - name: Install Angular CLI
         run: npm install -g @angular/cli@12.2.17
 
-      - name: Update npmn
-        run: npm update
-
       - name: Install dependencies
         run: npm install
 
