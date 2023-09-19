@@ -15,20 +15,25 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - uses: kamiazya/setup-graphviz@v1
+    - name: Use Node.js 19
+      uses: actions/setup-node@v1
       with:
-        graphviz-version: '2.44.1'
-    
-    - name: Setup Node.js and Ruby
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16.13.1'
-    
-    - name: Build and archive app package
-      run: |
-        npm install -g @angular/cli@14.2.12
-        npm install --legacy-peer-deps
-        ng build --configuration production
+        # no support for lts as of now with github actions.
+        # issue link : https://github.com/actions/setup-node/issues/26
+        # lts/gallium node v19.7.0 (npm v9.5.0)
+        node-version: '19.7.0'
+        
+    - name: Angular CLI install
+      run : npm install -g --silent @angular/cli@14.2.12
+
+    - name: Npm install
+      run: npm install
+
+    - name: Run tslint
+      run : npx tslint src/**/*.ts
+
+    - name: Run build
+      run : npm run build:prod
 
     - name: Copy file using SCP
       run: |
