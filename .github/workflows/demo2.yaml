@@ -1,0 +1,44 @@
+name: Build for demo 2
+
+on:
+  push:
+    branches: [ demo ]
+
+jobs:
+  
+  deploy:
+    
+    name: Deploy archive to ubuntu server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - uses: kamiazya/setup-graphviz@v1
+      with:
+        graphviz-version: '2.44.1'
+    
+    - name: Setup Node.js and Ruby
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.13.1'
+    
+    - name: Build and archive app package
+      run: |
+        npm install -g @angular/cli@14.2.12
+        npm install --legacy-peer-deps
+        ng build --configuration production
+
+    - name: Copy file using SCP
+      run: |
+        HOST=${{ secrets.FITER_DEMO_SERVER_URL }}
+        USER=${{ secrets.FITER_DEMO_SERVER_USERNAME }}
+        SOURCE_FILE=dist/web-app/*
+        DESTINATION_DIR="/home/$USER/mifos/demo2_html/"
+        echo "${{ secrets.FITER_DEMO_SERVER_SSH_KEY }}" > key.pem
+        chmod 400 key.pem
+        ssh -i key.pem -o StrictHostKeyChecking=no -l ${{ secrets.FITER_DEMO_SERVER_USERNAME }} ${{ secrets.FITER_DEMO_SERVER_URL }} 'rm -rf /home/$USER/mifos/demo2_html/*'
+        scp -i key.pem -o StrictHostKeyChecking=no '$SOURCE_FILE' $USER@$HOST:$DESTINATION_DIR
+        
+
