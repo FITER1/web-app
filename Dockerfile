@@ -39,8 +39,13 @@ RUN ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS
 FROM $NGINX_IMAGE
 
 COPY --from=builder /dist /usr/share/nginx/html
+COPY src/theme /usr/share/nginx/html/theme
+COPY default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY start.sh /docker-entrypoint.d/
+RUN chmod +x /docker-entrypoint.d/start.sh
 
 EXPOSE 80
 
 # When the container starts, replace the env.js with values from environment variables
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+#CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]
+CMD ["nginx", "-g", "daemon off;"]

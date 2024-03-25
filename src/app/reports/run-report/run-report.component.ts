@@ -240,7 +240,7 @@ export class RunReportComponent implements OnInit {
           if (this.isTableReport()) {
             formattedResponse[newKey] = this.dateUtils.formatDate(value, Dates.DEFAULT_DATEFORMAT);
           } else {
-            formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
+            formattedResponse[newKey] = this.dateUtils.formatDate(value, 'YYYY-MM-dd');
           }
           this.reportUsesDates = true;
           break;
