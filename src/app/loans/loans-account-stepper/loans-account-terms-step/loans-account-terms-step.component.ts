@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormArray, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
@@ -117,7 +117,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
         'repaymentEvery': this.loansAccountTermsData.repaymentEvery,
         'repaymentFrequencyType': this.loansAccountTermsData.repaymentFrequencyType.id,
-        'interestRatePerPeriod': this.loansAccountTermsData.interestRatePerPeriod,
         'amortizationType': this.loansAccountTermsData.amortizationType.id,
         'isEqualAmortization': this.loansAccountTermsData.isEqualAmortization,
         'interestType': this.loansAccountTermsData.interestType.id,
@@ -135,6 +134,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'interestRateDifferential': this.loansAccountTermsData.interestRateDifferential,
         'multiDisburseLoan': this.loansAccountTermsData.multiDisburseLoan
       });
+
+      this.setAdvancedPaymentStrategyControls();
 
       if (this.loansAccountTermsData.isLoanProductLinkedToFloatingRate) {
         this.loansAccountTermsForm.removeControl('interestRatePerPeriod');
@@ -205,7 +206,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         'numberOfRepayments': this.loansAccountTermsData.numberOfRepayments,
         'repaymentEvery': this.loansAccountTermsData.repaymentEvery,
         'repaymentFrequencyType': this.loansAccountTermsData.repaymentFrequencyType.id,
-        'interestRatePerPeriod': this.loansAccountTermsData.interestRatePerPeriod,
         'amortizationType': this.loansAccountTermsData.amortizationType.id,
         'isEqualAmortization': this.loansAccountTermsData.isEqualAmortization,
         'interestType': this.loansAccountTermsData.interestType.id,
@@ -225,6 +225,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       });
     }
     this.createloansAccountTermsForm();
+    this.setAdvancedPaymentStrategyControls();
     // this.setCustomValidators();
     this.setLoanTermListener();
   }
@@ -268,11 +269,44 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.calculateLoanTerm(numberOfRepayments, repaymentEvery);
       });
 
-      this.loansAccountTermsForm.get('loanTermFrequencyType').valueChanges
+    this.loansAccountTermsForm.get('loanTermFrequencyType').valueChanges
         .subscribe(loanTermFrequencyType => {
           this.loansAccountTermsForm.patchValue({'repaymentFrequencyType': loanTermFrequencyType});
       });
 
+    this.loansAccountTermsForm.get('amortizationType').valueChanges
+      .subscribe(amortizationType => {
+        if (amortizationType === 0) {  // Equal Principal Payments
+          this.loansAccountTermsForm.addControl('fixedPrincipalPercentagePerInstallment', new UntypedFormControl(''));
+        } else {  // Equal Installments
+          this.loansAccountTermsForm.removeControl('fixedPrincipalPercentagePerInstallment');
+        }
+    });
+  }
+
+  setAdvancedPaymentStrategyControls(): void {
+      // Fixed Length validation
+      if (this.loansAccountTermsData) {
+        this.loansAccountTermsForm.removeControl('interestRatePerPeriod');
+        this.loansAccountTermsForm.removeControl('fixedLength');
+        if (this.loansAccountTermsData.product.fixedLength) {
+          this.loansAccountTermsForm.addControl('interestRatePerPeriod', new UntypedFormControl({value: 0, disabled: true}, Validators.required));
+          this.loansAccountTermsForm.addControl('fixedLength', new UntypedFormControl(this.loansAccountTermsData.product.fixedLength));
+        } else {
+          this.loansAccountTermsForm.addControl('interestRatePerPeriod', new UntypedFormControl(this.loansAccountTermsData.interestRatePerPeriod, Validators.required));
+        }
+      }
+  }
+
+  hasFixedLength(): boolean {
+    if (this.loansAccountTermsData) {
+      return this.loansAccountTermsData.product.fixedLength ? true : false;
+    }
+    return false;
+  }
+
+  isEqualPrincipalPayments(): boolean {
+    return (this.loansAccountTermsForm.value.amortizationType === 0);
   }
 
   /** Create Loans Account Terms Form */
