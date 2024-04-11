@@ -2,6 +2,7 @@
 
 @mixin account-view-component-theme($theme) {
   $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
 
   mifosx-view-bulk-import {
     .cover {
@@ -27,7 +28,7 @@
       width: 90%;
       padding: 0;
       .header {
-        background-color: mat.get-color-from-palette($primary, 500);
+        background-color: mat.get-color-from-palette($warn, 500);
 
         padding: 1%;
         .header-title-group {
@@ -56,7 +57,7 @@
             border-radius: 20px;
           }
           .signature {
-            background-color: mat.get-color-from-palette($primary, 500);
+            background-color: mat.get-color-from-palette($warn, 500);
           }
         }
         .account-actions {
@@ -91,4 +92,57 @@
       }
     }
   }
+  /* Example of overriding background color */
+.mat-raised-button {
+  background-color: rgba(242,19,44,255)  !important;
+}
+.mat-button {
+  background-color: rgba(242,19,44,255)  !important;
+}
+.mat-toolbar.mat-primary {
+  background: rgba(242,19,44,255)  !important;
+}
+.mat-tab-nav-bar.mat-background-primary > .mat-tab-link-container .mat-tab-link {
+  background: rgba(242,19,44,255)  !important;
+}
+
+.mat-tab-nav-bar.mat-background-primary > .mat-tab-link-container, .mat-tab-nav-bar.mat-background-primary > .mat-tab-header-pagination {
+  background-color: rgba(242,19,44,255)  !important;
+}
+.breadcrumb-link {
+  a {
+    color: rgba(242,19,44,255)  !important;
+  }
+}
+.mat-ink-bar {
+  background-color: rgba(242,19,44,255)  !important;
+}
+.mat-step-icon {
+  // TODO(josephperrott): Update to using a corrected disabled-text contrast
+  // instead of secondary-text.
+  background-color: mat.get-color-from-palette($warn);
+  color: mat.get-color-from-palette($warn, default-contrast);
+}
+
+.mat-step-icon-selected,
+.mat-step-icon-state-done,
+.mat-step-icon-state-edit {
+  background-color: mat.get-color-from-palette($warn);
+  color: mat.get-color-from-palette($warn, default-contrast);
+}
+
+
+  .mat-progress-bar-background {
+    fill: mat.get-color-from-palette($warn);
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: mat.get-color-from-palette($warn);
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: mat.get-color-from-palette($warn);
+  }
+
+
 }
