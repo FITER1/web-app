@@ -1,10 +1,9 @@
-
 /* ############ Light mode palettes ################*/
 
 $primary-palette: (
-  100: #5ba2ec,
-  500: #1074b9,
-  700: #004989,
+  100: #ffcccc, // light red
+  500: #ff6666, // medium red
+  700: #cc0000, // dark red
   contrast: (
     100: rgba(black, 0.87),
     500: white,
@@ -13,9 +12,9 @@ $primary-palette: (
 );
 
 $accent-palette: (
-  100: #e7ffa5,
-  500: #b4d575,
-  700: #83a447,
+  100: #ffe5e5, // very light red for accents
+  500: #ffcccc, // light red for accents
+  700: #ff9999, // soft red for accents
   contrast: (
     100: rgba(black, 0.87),
     500: rgba(black, 0.87),
@@ -26,23 +25,24 @@ $accent-palette: (
 /* ############ Dark mode palettes ################*/
 
 $dark-primary-palette: (
-  100: #5ba2ec,
-  500: #1074b9,
-  700: #004989,
+  100: #563232, // soft dark red, for less contrast
+  500: #7B1F1F, // medium dark red, richer and more appealing
+  700: #4E0D0D, // very dark red, for subtle accents
   contrast: (
-    100: white,
-    500: rgba(white, 0.87),
-    700: rgba(white, 0.87)
+    100: white, // for best readability on very dark red
+    500: rgba(white, 0.87), // slightly dimmed white for medium dark red
+    700: rgba(white, 0.87) // same as above for consistency
   )
 );
 
 $dark-accent-palette: (
-  100: #e7ffa5,
-  500: #b4d575,
-  700: #83a447,
+  100: #774444, // muted red for subtle accents
+  500: #993333, // stronger accent color
+  700: #701414, // deep red for prominent UI elements
   contrast: (
-    100: white,
-    500: white,
-    700: white
+    100: white, // white text for readability
+    500: white, // ensuring contrast with the darker accent
+    700: white // strong contrast for the deepest red
   )
 );
+
