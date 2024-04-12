@@ -16,6 +16,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { MatTableDataSource } from '@angular/material/table';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
 
@@ -32,6 +33,7 @@ export class ViewTransactionComponent implements OnInit {
 
   /** Transaction data. */
   transactionData: any;
+  transactionType: LoanTransactionType;
   /** Is Editable */
   allowEdition = true;
   /** Is Undoable */
@@ -61,18 +63,20 @@ export class ViewTransactionComponent implements OnInit {
    * @param {AlertService} alertService Alert Service
    */
   constructor(private loansService: LoansService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService,
-              private organizationService: OrganizationService,
-              private alertService: AlertService) {
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+    private settingsService: SettingsService,
+    private organizationService: OrganizationService,
+    private alertService: AlertService) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
+      this.transactionType = this.transactionData.type;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = !this.transactionData.manuallyReversed;
-      this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.transactionData.manuallyReversed;
+      this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.allowChargeback) {
         if (this.transactionData.transactionRelations) {
@@ -86,14 +90,14 @@ export class ViewTransactionComponent implements OnInit {
             }
           });
           this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
-          this.isFullRelated =  (this.amountRelationsAllowed === 0);
-          this.allowChargeback = this.allowChargebackTransaction(this.transactionData.type) && !this.isFullRelated;
+          this.isFullRelated = (this.amountRelationsAllowed === 0);
+          this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
         }
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
       }
-      if (this.existTransactionRelations && transactionsChargebackRelated) {
+      if ((this.existTransactionRelations && transactionsChargebackRelated) || this.transactionType.reAge || this.transactionType.reAmortize) {
         this.allowUndo = false;
       }
     });
@@ -104,9 +108,9 @@ export class ViewTransactionComponent implements OnInit {
   ngOnInit(): void {
     if (this.allowChargeback) {
       this.organizationService.getPaymentTypesWithCode().toPromise()
-      .then(data => {
-        this.paymentTypeOptions = data;
-      });
+        .then(data => {
+          this.paymentTypeOptions = data;
+        });
     }
   }
 
@@ -116,13 +120,13 @@ export class ViewTransactionComponent implements OnInit {
   allowTransactionEdition(transactionType: number): boolean {
     return (transactionType === 20
       || transactionType === 21 || transactionType === 22
-      || transactionType === 23);
+      || transactionType === 23 || transactionType === 28);
   }
 
   allowChargebackTransaction(transactionType: LoanTransactionType): boolean {
     return (transactionType.repayment
       || transactionType.goodwillCredit || transactionType.payoutRefund
-      || transactionType.merchantIssuedRefund);
+      || transactionType.merchantIssuedRefund || transactionType.downPayment);
   }
 
   /**
@@ -131,7 +135,7 @@ export class ViewTransactionComponent implements OnInit {
   undoTransaction() {
     const accountId = this.route.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Undo Transaction', dialogContext: `Are you sure you want undo the transaction ${this.transactionData.id}` }
+      data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') + `${this.transactionData.id}` }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -190,8 +194,10 @@ export class ViewTransactionComponent implements OnInit {
             this.router.navigate(['../'], { relativeTo: this.route });
           });
         } else {
-          this.alertService.alert({ type: 'BusinessRule',
-            message: 'Chargeback amount must be lower or equal to: ' + this.amountRelationsAllowed });
+          this.alertService.alert({
+            type: 'BusinessRule',
+            message: 'Chargeback amount must be lower or equal to: ' + this.amountRelationsAllowed
+          });
         }
       }
     });

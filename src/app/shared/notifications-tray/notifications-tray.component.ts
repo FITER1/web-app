@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
+import { environment } from 'environments/environment';
 
 /**
  * Notifications Tray Component
@@ -17,7 +18,8 @@ import { NotificationsService } from 'app/notifications/notifications.service';
   encapsulation: ViewEncapsulation.None
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
-
+  /** Wait time between API status calls 60 seg */
+  waitTime = environment.waitTimeForNotifications || 60;
   /** Read Notifications */
   readNotifications: any[] = [];
   /** Displayed Read Notifications */
@@ -38,7 +40,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
     'center' : '/centers/',
     'shareAccount' : '/shares-accounts/',
     'fixedDeposit' : '/fixed-deposits-accounts/',
-    'recurringDepositAccount': '/recurringdeposits/',
+    'recurringDepositAccount': '/recurring-deposits-accounts/',
     'savingsAccount' : '/savings-accounts/',
     'shareProduct': '/products/share-products/',
     'loanProduct' : '/products/loan-products/'
@@ -57,7 +59,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(() => { this.fetchUnreadNotifications(); }, 60000);
+    this.fetchUnreadNotifications();
   }
 
   ngOnDestroy() {
@@ -81,7 +83,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
       this.setNotifications();
     });
     // this.mockNotifications(); // Uncomment for Testing.
-    this.timer = setTimeout(() => { this.fetchUnreadNotifications(); }, 60000);
+    this.timer = setTimeout(() => { this.fetchUnreadNotifications(); }, this.waitTime * 1000);
   }
 
   /**

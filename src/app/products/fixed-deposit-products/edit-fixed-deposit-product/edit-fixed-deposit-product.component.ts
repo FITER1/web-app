@@ -14,6 +14,7 @@ import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-pro
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-edit-fixed-deposit-product',
@@ -31,7 +32,7 @@ export class EditFixedDepositProductComponent implements OnInit {
   @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
 
   fixedDepositProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash'];
+  accountingRuleData: string[] = [];
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -43,10 +44,12 @@ export class EditFixedDepositProductComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private router: Router,
-              private settingsService: SettingsService) {
+              private settingsService: SettingsService,
+              private accounting: Accounting) {
     this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductAndTemplate;
     });
+    this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
   }
 
   ngOnInit() {
@@ -108,7 +111,6 @@ export class EditFixedDepositProductComponent implements OnInit {
   }
 
   submit() {
-    // TODO: Update once language and date settings are setup
     const fixedDepositProduct = {
       ...this.fixedDepositProduct,
       charges: this.fixedDepositProduct.charges.map((charge: any) => ({ id: charge.id })),
@@ -117,6 +119,18 @@ export class EditFixedDepositProductComponent implements OnInit {
     if (!fixedDepositProduct.description) {
       fixedDepositProduct.description = '';
     }
+    const charts: any[] = [];
+    fixedDepositProduct.charts.forEach((chart: any) => {
+      if (chart['amountRangeFrom'] === '') {
+        delete chart['amountRangeFrom'];
+      }
+      if (chart['amountRangeTo'] === '') {
+        delete chart['amountRangeTo'];
+      }
+      charts.push(chart);
+    });
+    fixedDepositProduct.charts = charts;
+
     delete fixedDepositProduct.advancedAccountingRules;
     this.productsService.updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
       .subscribe((response: any) => {

@@ -10,6 +10,8 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Dialogs */
 import { RecurringDepositConfirmationDialogComponent } from '../../custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { Dates } from 'app/core/utils/dates';
+import { TranslateService } from '@ngx-translate/core';
+import { Location } from '@angular/common';
 
 /**
  * View Transaction Component.
@@ -36,9 +38,11 @@ export class ViewTransactionComponent {
    */
   constructor(private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
+    private location: Location,
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
+    private translateService: TranslateService,
     private settingsService: SettingsService, ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }) => {
       this.transactionData = data.recurringDepositsAccountTransaction;
@@ -50,7 +54,7 @@ export class ViewTransactionComponent {
    */
   undoTransaction() {
     const accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
-    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: 'Undo Transaction', dialogContext: 'Are you sure you want to undo this transaction ?' } });
+    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to undo this transaction ?') } });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
@@ -68,4 +72,14 @@ export class ViewTransactionComponent {
     });
   }
 
+  transactionColor(): string {
+    if (this.transactionData.reversed) {
+      return 'undo';
+    }
+    return 'active';
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
 }

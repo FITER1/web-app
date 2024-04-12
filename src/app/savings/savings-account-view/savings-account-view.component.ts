@@ -13,6 +13,8 @@ import { ToggleWithholdTaxDialogComponent } from './custom-dialogs/toggle-withho
 import { SavingsButtonsConfiguration } from './savings-buttons.config';
 import { SavingsService } from '../savings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Currency } from 'app/shared/models/general.model';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Savings Account View Component
@@ -34,7 +36,7 @@ export class SavingsAccountViewComponent implements OnInit {
   entityType: string;
 
   isActive = false;
-  currencyCode: string;
+  currency: Currency;
 
   /**
    * Fetches savings account data from `resolve`
@@ -43,12 +45,13 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    */
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private savingsService: SavingsService,
-              public dialog: MatDialog) {
+    private router: Router,
+    private savingsService: SavingsService,
+    private translateService: TranslateService,
+    public dialog: MatDialog) {
     this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
-      this.currencyCode = this.savingsAccountData.currency.code;
+      this.currency = this.savingsAccountData.currency;
       this.savingsDatatables = data.savingsDatatables;
     });
     if (this.router.url.includes('clients')) {
@@ -122,7 +125,7 @@ export class SavingsAccountViewComponent implements OnInit {
   private reload() {
     const url: string = this.router.url;
     const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
-    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
+    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
@@ -143,6 +146,8 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Add Charge':
       case 'Hold Amount':
       case 'Block Account':
+      case 'Block Deposit':
+      case 'Block Withdrawal':
       case 'Unassign Staff':
       case 'Withdraw By Client':
       case 'Apply Annual Fees':
@@ -174,7 +179,9 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
         break;
       case 'Unblock Account':
-        this.unblockSavingsAccount();
+      case 'Unblock Deposit':
+      case 'Unblock Withdrawal':
+        this.unblockSavingsAccount(name);
         break;
     }
   }
@@ -232,7 +239,7 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true})
+        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
           .subscribe(() => {
             this.reload();
           });
@@ -249,7 +256,7 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false})
+        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
           .subscribe(() => {
             this.reload();
           });
@@ -260,13 +267,20 @@ export class SavingsAccountViewComponent implements OnInit {
   /**
    * Unblock Savings Account.
    */
-  private unblockSavingsAccount() {
+  private unblockSavingsAccount(action: string) {
     const unblockSavingsAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Unblock Savings Account', dialogContext: 'Are you sure you want Unblock this Savings Account' }
+      data: { heading: this.translateService.instant('labels.heading.Savings Account'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + action + this.translateService.instant('this Savings Account') }
     });
+    let command = 'unblock';
+    if (action === 'Unblock Deposit') {
+      command = 'unblockCredit';
+    }
+    if (action === 'Unblock Withdrawal') {
+      command = 'unblockDebit';
+    }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'unblock', { })
+        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {})
           .subscribe(() => {
             this.reload();
           });

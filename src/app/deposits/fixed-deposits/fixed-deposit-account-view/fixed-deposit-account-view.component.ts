@@ -15,6 +15,7 @@ import { FixedDepositsButtonsConfiguration } from './fixed-deposits-buttons.conf
 /** Custom Services */
 import { FixedDepositsService } from '../fixed-deposits.service';
 import { SavingsService } from 'app/savings/savings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Fixed Deposits Account View Component
@@ -32,6 +33,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
   savingsDatatables: any;
   /** Button Configurations */
   buttonConfig: FixedDepositsButtonsConfiguration;
+  /** Entity Type */
+  entityType: string;
+  currency: Currency;
+  showTransactions = false;
 
   /**
    * Fetches fixed deposits account data from `resolve`
@@ -49,7 +54,17 @@ export class FixedDepositAccountViewComponent implements OnInit {
     this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
+      this.currency = this.fixedDepositsAccountData.currency;
+      const status: any = data.fixedDepositsAccountData.status;
+      this.showTransactions = (status.id >= 300);
     });
+    if (this.router.url.includes('clients')) {
+      this.entityType = 'Client';
+    } else if (this.router.url.includes('groups')) {
+      this.entityType = 'Group';
+    } else if (this.router.url.includes('centers')) {
+      this.entityType = 'Center';
+    }
   }
 
   ngOnInit() {
@@ -97,6 +112,7 @@ export class FixedDepositAccountViewComponent implements OnInit {
       case 'Activate':
       case 'Close':
       case 'Undo Approval':
+      case 'Undo Activation':
       case 'Add Charge':
       case 'Withdraw By Client':
       case 'Premature Close':

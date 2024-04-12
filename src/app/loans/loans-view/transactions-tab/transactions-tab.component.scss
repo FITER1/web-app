@@ -38,6 +38,12 @@
     .chargeoff {
       color: $status-chargeoff;
     }
+    .reage {
+      color: $status-reage;
+    }
+    .reamortize {
+      color: $status-reamortize;
+    }
   }
 }
 
@@ -51,4 +57,9 @@
 
 .transaction-button {
   min-width: 180px;
+}
+
+.action-button {
+  width: 100%;
+  height: 100%;
 }

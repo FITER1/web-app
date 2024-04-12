@@ -39,6 +39,7 @@ export class AuthenticationService {
   /** User credentials. */
 
   private credentials: Credentials;
+  private dialogShown = false;
   /** Key to store credentials in storage. */
   private credentialsStorageKey = 'mifosXCredentials';
   /** Key to store oauth token details in storage. */
@@ -92,7 +93,6 @@ export class AuthenticationService {
       let httpParams = new HttpParams();
       httpParams = httpParams.set('client_id', 'community-app');
       httpParams = httpParams.set('grant_type', 'password');
-      httpParams = httpParams.set('client_secret', '123');
       return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
         .pipe(
           map((tokenResponse: OAuth2Token) => {
@@ -146,7 +146,6 @@ export class AuthenticationService {
     let httpParams = new HttpParams();
     httpParams = httpParams.set('client_id', 'community-app');
     httpParams = httpParams.set('grant_type', 'refresh_token');
-    httpParams = httpParams.set('client_secret', '123');
     httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
     this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
       .subscribe((tokenResponse: OAuth2Token) => {
@@ -202,6 +201,7 @@ export class AuthenticationService {
     }
     this.authenticationInterceptor.removeAuthorization();
     this.setCredentials();
+    this.resetDialog();
     return of(true);
   }
 
@@ -264,6 +264,18 @@ export class AuthenticationService {
    */
   getDeliveryMethods() {
     return this.http.get('/twofactor');
+  }
+
+  showDialog() {
+    this.dialogShown = true;
+  }
+
+  resetDialog() {
+    this.dialogShown = false;
+  }
+
+  hasDialogBeenShown() {
+    return this.dialogShown;
   }
 
   /**

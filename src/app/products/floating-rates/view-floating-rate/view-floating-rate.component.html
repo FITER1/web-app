@@ -28,7 +28,7 @@
         </div>
 
         <div fxFlex="10%">
-          {{ floatingRateData.isBaseLendingRate ? 'Yes' : 'No' }}
+          {{ floatingRateData.isBaseLendingRate | yesNo }}
         </div>
 
         <div fxFlex="14%" class="mat-body-strong">
@@ -36,7 +36,7 @@
         </div>
 
         <div fxFlex="10%">
-          {{ floatingRateData.isActive ? 'Yes' : 'No' }}
+          {{ floatingRateData.isActive | yesNo }}
         </div>
 
       </div>
@@ -55,7 +55,7 @@
 
           <ng-container matColumnDef="fromDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> From Date </th>
-            <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.fromDate  | dateFormat }} </td>
+            <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.fromDate | dateFormat }} </td>
           </ng-container>
 
           <ng-container matColumnDef="interestRate">

@@ -13,7 +13,8 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
-import { PaymentAllocation, PaymentAllocationTransactionType, PaymentAllocationTransactionTypes, PaymentAllocationTypes } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { Accounting } from 'app/core/utils/accounting';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -30,14 +31,14 @@ export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
-  accountingRuleData = ['None', 'Cash', 'Accrual (periodic)', 'Accrual (upfront)'];
+  accountingRuleData: string[] = [];
   itemsByDefault: any[] = [];
 
   isAdvancedPaymentStrategy = false;
   paymentAllocation: PaymentAllocation[] = [];
-  transactionTypes: PaymentAllocationTransactionType[] = [
-    PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION
-  ];
+  creditAllocation: PaymentAllocation[] = [];
+  advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
+  advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
    /**
     * @param {ActivatedRoute} route Activated Route.
@@ -45,11 +46,12 @@ export class CreateLoanProductComponent implements OnInit {
     * @param {LoanProducts} loanProducts LoanProducts
     * @param {Router} router Router for navigation.
     */
-
   constructor(private route: ActivatedRoute,
               private productsService: ProductsService,
               private loanProducts: LoanProducts,
-              private router: Router) {
+              private router: Router,
+              private accounting: Accounting,
+              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
     this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
@@ -62,7 +64,10 @@ export class CreateLoanProductComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
+    this.buildAdvancedPaymentAllocation();
+  }
 
   get loanProductDetailsForm() {
     return this.loanProductDetailsStep.loanProductDetailsForm;
@@ -79,11 +84,19 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   advancePaymentStrategy(value: string) {
-    this.isAdvancedPaymentStrategy = (value === 'advanced-payment-allocation-strategy');
+    this.isAdvancedPaymentStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(value);
   }
 
-  setPaymentAllocation(paymentAllocation: PaymentAllocation[]) {
+  buildAdvancedPaymentAllocation(): void {
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductsTemplate);
+  }
+
+  setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
     this.paymentAllocation = paymentAllocation;
+  }
+
+  setCreditAllocation(paymentAllocation: PaymentAllocation[]): void {
+    this.creditAllocation = paymentAllocation;
   }
 
   get loanProductSettingsForm() {
@@ -115,12 +128,18 @@ export class CreateLoanProductComponent implements OnInit {
     };
     if (this.isAdvancedPaymentStrategy) {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
+      loanProduct['creditAllocation'] = this.creditAllocation;
     }
     return loanProduct;
   }
 
   submit() {
     const loanProduct = this.loanProducts.buildPayload(this.loanProduct, this.itemsByDefault);
+    if (loanProduct['useDueForRepaymentsConfigurations'] === true) {
+      loanProduct['dueDaysForRepaymentEvent'] = null;
+      loanProduct['overDueDaysForRepaymentEvent'] = null;
+    }
+    delete loanProduct['useDueForRepaymentsConfigurations'];
 
     this.productsService.createLoanProduct(loanProduct)
       .subscribe((response: any) => {

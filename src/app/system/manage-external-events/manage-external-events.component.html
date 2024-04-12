@@ -2,7 +2,7 @@
 
   <div #filter fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
 
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div #eventsTable class="mat-elevation-z8">
+  <div #eventsTable class="mat-elevation-z8 table-container">
 
     <table mat-table [dataSource]="dataSource" matSort>
 

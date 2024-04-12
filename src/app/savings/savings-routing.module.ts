@@ -2,9 +2,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-/** Translation Imports */
-import { extract } from '../core/i18n/i18n.service';
-
 /** Custom Components */
 import { SavingsAccountViewComponent } from './savings-account-view/savings-account-view.component';
 import { TransactionsTabComponent } from './savings-account-view/transactions-tab/transactions-tab.component';
@@ -45,16 +42,17 @@ import { NotesTabComponent } from './savings-account-view/notes-tab/notes-tab.co
 import { SavingNotesResolver } from './common-resolvers/saving-notes.resolver';
 import { SavingDocumentsResolver } from './common-resolvers/saving-documents.resolver';
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
+import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 
 /** Savings Routes */
 const routes: Routes = [
   {
     path: '',
-    data: { title: extract('All Savings'), breadcrumb: 'Savings', routeParamBreadcrumb: false },
+    data: { title: 'All Savings', breadcrumb: 'Savings', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create',
-        data: { title: extract('Create Savings Account'), breadcrumb: 'Create Savings Account' },
+        data: { title: 'Create Savings Account', breadcrumb: 'Create Savings Account' },
         component: CreateSavingsAccountComponent,
         resolve: {
           savingsAccountTemplate: SavingsAccountTemplateResolver
@@ -62,7 +60,7 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId',
-        data: { title: extract('Saving Account View'), routeParamBreadcrumb: 'savingAccountId' },
+        data: { title: 'Saving Account View', routeParamBreadcrumb: 'savingAccountId' },
         component: SavingsAccountViewComponent,
         resolve: {
           savingsAccountData: SavingsAccountViewResolver,
@@ -71,12 +69,22 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'transactions',
+            redirectTo: 'general',
             pathMatch: 'full'
           },
           {
+            path: 'general',
+            data: { title: 'Savings Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+            children: [
+              {
+                path: '',
+                component: GeneralTabComponent
+              }
+            ]
+          },
+          {
             path: 'transactions',
-            data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: { title: 'Savings Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
             children: [
               {
                 path: '',
@@ -91,17 +99,17 @@ const routes: Routes = [
           {
             path: 'charges',
             component: ChargesTabComponent,
-            data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false }
+            data: { title: 'Savings Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
           },
           {
             path: 'standing-instructions',
             component: StandingInstructionsTabComponent,
-            data: { title: extract('Savings Account SIH'), breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+            data: { title: 'Savings Account SIH', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
           },
           {
             path: 'notes',
             component: NotesTabComponent,
-            data: { title: extract('Savings Account Notes'), breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            data: { title: 'Savings Account Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
             resolve: {
               savingAccountNotes: SavingNotesResolver
             }
@@ -109,7 +117,7 @@ const routes: Routes = [
           {
             path: 'documents',
             component: SavingsDocumentsTabComponent,
-            data: { title: extract('Savings Account Documents'), breadcrumb: 'Documents', routeParamBreadcrumb: false },
+            data: { title: 'Savings Account Documents', breadcrumb: 'Documents', routeParamBreadcrumb: false },
             resolve: {
               savingsDocuments: SavingDocumentsResolver
             }
@@ -120,7 +128,7 @@ const routes: Routes = [
               {
                 path: ':datatableName',
                 component: DatatableTabsComponent,
-                data: { title: extract('View Data Table'), routeParamBreadcrumb: 'datatableName' },
+                data: { title: 'View Data Table', routeParamBreadcrumb: 'datatableName' },
                 resolve: {
                   savingsDatatable: SavingsDatatableResolver
                 }
@@ -131,7 +139,7 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/edit',
-        data: { title: extract('Edit Savings Account'), breadcrumb: 'Edit', routeParamBreadcrumb: false },
+        data: { title: 'Edit Savings Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
         component: EditSavingsAccountComponent,
         resolve: {
           savingsAccountAndTemplate: SavingsAccountAndTemplateResolver
@@ -139,7 +147,7 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/transactions/:id',
-        data: { title: extract('Savings Account Transactions'), breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+        data: { title: 'Savings Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
         children: [
           {
             path: '',
@@ -166,7 +174,7 @@ const routes: Routes = [
                   {
                     path: ':datatableName',
                     component: DatatableTransactionTabComponent,
-                    data: { title: extract('View Data table'), routeParamBreadcrumb: 'datatableName' },
+                    data: { title: 'View Data table', routeParamBreadcrumb: 'datatableName' },
                     resolve: {
                       transactionDatatable: TransactionDatatableResolver
                     }
@@ -195,7 +203,7 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/charges',
-        data: { title: extract('Savings Account Charges'), breadcrumb: 'Charges', routeParamBreadcrumb: false },
+        data: { title: 'Savings Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false },
         children: [
           {
             path: '',
@@ -214,7 +222,7 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/actions/:name',
-        data: { title: extract('Savings Account Actions'), breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
+        data: { title: 'Savings Account Actions', breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
         component: SavingAccountActionsComponent,
         resolve: {
           savingsAccountActionData: SavingsAccountActionsResolver
@@ -229,7 +237,7 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { title: extract('Create GSIM Application'), breadcrumb: 'Create GSIM Application' },
+            data: { title: 'Create GSIM Application', breadcrumb: 'Create GSIM Application' },
             component: CreateGsimAccountComponent,
             resolve: {
               groupsData: GroupViewResolver,
@@ -238,7 +246,7 @@ const routes: Routes = [
           },
           {
             path: ':savingAccountId',
-            data: { title: extract('GSIM Account View'), routeParamBreadcrumb: 'savingAccountId' },
+            data: { title: 'GSIM Account View', routeParamBreadcrumb: 'savingAccountId' },
             children: [
               {
                 path: '',

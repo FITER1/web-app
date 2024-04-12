@@ -13,6 +13,10 @@ import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoanStatus } from '../models/loan-status.model';
+import { Currency } from 'app/shared/models/general.model';
+import { DelinquencyPausePeriod } from '../models/loan-account.model';
+import { TranslateService } from '@ngx-translate/core';
+import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -41,17 +45,34 @@ export class LoansViewComponent implements OnInit {
   /** Disburse Transaction number */
   disburseTransactionNo = 0;
 
+  loanDelinquencyClassificationStyle = '';
   loanStatus: LoanStatus;
+  currency: Currency;
+  loanReAged = false;
+  loanReAmortized = false;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              public loansService: LoansService,
-              public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any, loanArrearsDelinquencyConfig: any}) => {
+    private router: Router,
+    public loansService: LoansService,
+    private translateService: TranslateService,
+    public dialog: MatDialog) {
+    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any, loanArrearsDelinquencyConfig: any }) => {
       this.loanDetailsData = data.loanDetailsData;
       this.loanDatatables = data.loanDatatables;
       this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
       this.loanStatus = this.loanDetailsData.status;
+      this.currency = this.loanDetailsData.currency;
+      if (this.loanStatus.active) {
+        this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+          if (!lt.manuallyReversed) {
+            if (lt.type.reAge) {
+              this.loanReAged = true;
+            } else if (lt.type.reAmortize) {
+              this.loanReAmortized = true;
+            }
+          }
+        });
+      }
     });
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;
@@ -60,7 +81,7 @@ export class LoansViewComponent implements OnInit {
   ngOnInit() {
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
-    if (this.loanDetailsData.status.active && this.loanDetailsData.multiDisburseLoan) {
+    if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
       if (this.loanDetailsData && this.loanDetailsData.transactions) {
         this.loanDetailsData.transactions.forEach((transaction: any) => {
           if (transaction.type.disbursement) {
@@ -77,6 +98,7 @@ export class LoansViewComponent implements OnInit {
     } else if (this.router.url.includes('centers')) {
       this.entityType = 'Center';
     }
+    this.loanDelinquencyClassification();
   }
 
   // Defines the buttons based on the status of the loan account
@@ -156,11 +178,39 @@ export class LoansViewComponent implements OnInit {
         });
       }
 
+      // Allow Re-Ageing only when there is not any Re-Age transaction
+      if (!this.loanReAged) {
+        this.buttonConfig.addButton({
+          name: 'Re-Age',
+          icon: 'calendar',
+          taskPermissionName: 'REAGE_LOAN',
+        });
+      } else {
+        this.buttonConfig.addButton({
+          name: 'Undo Re-Age',
+          icon: 'undo',
+          taskPermissionName: 'UNDO_REAGE_LOAN',
+        });
+      }
+
+      if (!this.loanReAmortized) {
+        this.buttonConfig.addButton({
+          name: 'Re-Amortize',
+          icon: 'calendar-alt',
+          taskPermissionName: 'REAMORTIZE_LOAN',
+        });
+      } else {
+        this.buttonConfig.addButton({
+          name: 'Undo Re-Amortize',
+          icon: 'undo',
+          taskPermissionName: 'UNDO_REAMORTIZE_LOAN',
+        });
+      }
     }
   }
 
-  loanAction(button: string) {
-    switch (button) {
+  loanAction(actionName: string) {
+    switch (actionName) {
       case 'Recover From Guarantor':
         this.recoverFromGuarantor();
         break;
@@ -168,14 +218,18 @@ export class LoansViewComponent implements OnInit {
         this.deleteLoanAccount();
         break;
       case 'Modify Application':
-        this.router.navigate(['edit-loans-account'], { relativeTo: this.route});
+        this.router.navigate(['edit-loans-account'], { relativeTo: this.route });
         break;
       case 'Transfer Funds':
         const queryParams: any = { loanId: this.loanId, accountType: 'fromloans' };
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
         break;
+      case 'Undo Re-Age':
+      case 'Undo Re-Amortize':
+        this.undoReAgeOrReAmortize(actionName);
+        break;
       default:
-        this.router.navigate(['actions', button], { relativeTo: this.route });
+        this.router.navigate(['actions', actionName], { relativeTo: this.route });
         break;
     }
   }
@@ -185,11 +239,40 @@ export class LoansViewComponent implements OnInit {
    */
   private recoverFromGuarantor() {
     const recoverFromGuarantorDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: 'Recover from Guarantor', dialogContext: 'Are you sure you want recover from Guarantor', type: 'Mild' }
+      data: { heading: this.translateService.instant('labels.heading.Recover from Guarantor'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover from Guarantor'), type: 'Mild' }
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees').subscribe(() => {
+          this.reload();
+        });
+      }
+    });
+  }
+
+  loanDelinquencyClassification(): void {
+    this.loanDelinquencyClassificationStyle = '';
+    if (this.loanDetailsData.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
+      this.loanDetailsData.delinquent.delinquencyPausePeriods.some((period: DelinquencyPausePeriod) => {
+        if (period.active) {
+          this.loanDelinquencyClassificationStyle = 'fa fa-stop status-pending';
+        }
+      });
+    }
+  }
+
+  undoReAgeOrReAmortize(actionName: string): void {
+    actionName = actionName.replace('Undo ', '');
+    const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Transaction'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + ' ' + this.translateService.instant('labels.menus.' + actionName)
+      }
+    });
+    undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
+        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
           this.reload();
         });
       }

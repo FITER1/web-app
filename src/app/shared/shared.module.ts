@@ -42,6 +42,11 @@ import { ViewJournalEntryTransactionComponent } from './accounting/view-journal-
 import { AccountNumberComponent } from './account-number/account-number.component';
 import { EntityNameComponent } from './entity-name/entity-name.component';
 import { TransactionPaymentDetailComponent } from './transaction-payment-detail/transaction-payment-detail.component';
+import { StepperButtonsComponent } from './steppers/stepper-buttons/stepper-buttons.component';
+import { GlAccountSelectorComponent } from './accounting/gl-account-selector/gl-account-selector.component';
+import { GlAccountDisplayComponent } from './accounting/gl-account-display/gl-account-display.component';
+import { ViewSavingsAccountingDetailsComponent } from './accounting/view-savings-accounting-details/view-savings-accounting-details.component';
+import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 
 /**
  * Shared Module
@@ -54,7 +59,7 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
     IconsModule,
     MaterialModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot(),
+    TranslateModule,
     PipesModule,
     DirectivesModule,
     NgxMatDatetimePickerModule,
@@ -90,7 +95,12 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
     ViewJournalEntryTransactionComponent,
     AccountNumberComponent,
     EntityNameComponent,
-    TransactionPaymentDetailComponent
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent,
+    GlAccountSelectorComponent,
+    GlAccountDisplayComponent,
+    ViewSavingsAccountingDetailsComponent,
+    ThemeToggleComponent
   ],
   exports: [
     FileUploadComponent,
@@ -117,7 +127,12 @@ import { TransactionPaymentDetailComponent } from './transaction-payment-detail/
     ViewJournalEntryTransactionComponent,
     SvgIconComponent,
     EntityNameComponent,
-    TransactionPaymentDetailComponent
+    TransactionPaymentDetailComponent,
+    StepperButtonsComponent,
+    GlAccountSelectorComponent,
+    GlAccountDisplayComponent,
+    ViewSavingsAccountingDetailsComponent,
+    ThemeToggleComponent
   ]
 })
 export class SharedModule { }

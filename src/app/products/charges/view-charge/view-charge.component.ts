@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 
 /** Custom Components */
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /**
@@ -21,20 +22,30 @@ export class ViewChargeComponent implements OnInit {
 
   /** Charge data. */
   chargeData: any;
-
+  /** Boolean for MinCap and MaxCap */
+  minCap: boolean;
+  maxCap: boolean;
   /**
    * Retrieves the charge data from `resolve`.
    * @param {ProductsService} productsService Products Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService) {
     this.route.data.subscribe((data: { charge: any }) => {
       this.chargeData = data.charge;
+      if (this.chargeData.minCap) {
+        this.minCap = true;
+      }
+      if (this.chargeData.maxCap) {
+        this.maxCap = true;
+      }
     });
   }
 
@@ -46,7 +57,7 @@ export class ViewChargeComponent implements OnInit {
    */
   deleteCharge() {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `charge ${this.chargeData.id}` }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id}
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

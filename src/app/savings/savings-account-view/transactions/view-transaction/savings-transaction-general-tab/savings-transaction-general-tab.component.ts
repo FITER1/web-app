@@ -33,6 +33,13 @@ export class SavingsTransactionGeneralTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  allowUndo(): boolean {
+    if (this.transactionData.reversed && this.transactionData.transactionType.amountHold) {
+      return false;
+    }
+    return !this.transactionData.reversed;
+  }
+
   releaseAmount(): void {
     const releaseAmountDialogRef = this.dialog.open(ReleaseAmountDialogComponent);
     releaseAmountDialogRef.afterClosed().subscribe((response: any) => {
@@ -58,10 +65,16 @@ export class SavingsTransactionGeneralTabComponent implements OnInit {
           locale
         };
         this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
+          this.router.navigate(['../..'], { relativeTo: this.route });
         });
       }
     });
   }
 
+  transactionColor(): string {
+    if (this.transactionData.reversed) {
+      return 'undo';
+    }
+    return 'active';
+  }
 }

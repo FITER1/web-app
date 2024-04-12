@@ -2,13 +2,13 @@
 
   <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
 
-    <div fxLayout="row" fxLayoutGap="40px">
+    <div fxLayout="row" class="top-card">
 
       <mat-card class="recent-activities">
 
         <mat-card-header class="header">
           <h3><fa-icon icon="bolt"></fa-icon>
-          &nbsp;&nbsp; {{"labels.heading.Recent Activities"  |translate}}</h3>
+          &nbsp;&nbsp; {{"labels.heading.Recent Activities" | translate}}</h3>
         </mat-card-header>
 
         <mat-card-content>
@@ -23,7 +23,7 @@
 
         <mat-card-header class="header">
           <h3><fa-icon icon="laptop"></fa-icon>
-          &nbsp;&nbsp; {{"labels.heading.Frequent Activities"  |translate}}</h3>
+          &nbsp;&nbsp; {{"labels.heading.Frequent Activities" | translate}}</h3>
         </mat-card-header>
 
         <mat-card-content>
@@ -32,21 +32,27 @@
             [routerLink]="activity"> {{ activity | urlToString }} </button>
           </mat-action-list>
         </mat-card-content>
-        
+
       </mat-card>
 
-      <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
+      <div class="amount-disbursed">
+        <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
+      </div>
 
     </div>
 
-    <div fxLayout="row" fxLayoutGap="40px">
+    <div fxLayout="row" class="bottom-card">
 
-      <mifosx-client-trends-bar></mifosx-client-trends-bar>
+      <div class="trends-bar">
+        <mifosx-client-trends-bar></mifosx-client-trends-bar>
+      </div>
 
-      <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
-
+      <div class="amount-collected">
+        <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
+      </div>
+      
     </div>
-    
+
   </mat-card>
 
 </div>

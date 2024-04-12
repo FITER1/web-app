@@ -1,9 +1,11 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, CreditAllocationOrder, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionType } from './payment-allocation-model';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
-import { FutureInstallmentAllocationRules, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionType, PaymentAllocationTransactionTypes, PaymentAllocationTypes, PaymentCode } from './payment-allocation-model';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { MatTabGroup } from '@angular/material/tabs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-loan-product-payment-strategy-step',
@@ -12,69 +14,120 @@ import { FutureInstallmentAllocationRules, PaymentAllocation, PaymentAllocationO
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
 
-  @Input() loanProductsTemplate: any;
-  @Input() transactionType: PaymentAllocationTransactionType;
-  @Output() paymentAllocation = new EventEmitter<PaymentAllocation[]>();
+  @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
+  @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
+  @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
+  @Input() paymentAllocationOrderDefault: PaymentAllocationOrder[];
+  @Input() advancedCreditAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
+  @Input() creditAllocationOrderDefault: CreditAllocationOrder[];
+
   @Output() paymentAllocationChange = new EventEmitter<boolean>();
+  @Output() setPaymentAllocation = new EventEmitter<PaymentAllocation[]>();
+  @Output() setCreditAllocation = new EventEmitter<CreditAllocation[]>();
 
-  paymentAllocationsData: PaymentCode[] = [];
-  installmentAllocationOptions: PaymentCode[] = [];
-  transactionTypeOptions: PaymentCode[] = [];
+  @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
 
-  transactionTypeCtrl = new UntypedFormControl('');
-  futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
-
-  @ViewChild('table') table: MatTable<any>;
-
-  /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['paymentAllocation', 'order'];
-
-  constructor() { }
+  constructor(private dialog: MatDialog,
+    private advancedPaymentStrategy: AdvancedPaymentStrategy,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.paymentAllocationsData = [];
-    this.setOptions();
-    this.sendPaymentAllocation();
+    this.sendAllocations();
   }
 
-  setOptions(): void {
-    this.paymentAllocationsData = PaymentAllocationTypes.options;
-    this.transactionTypeOptions = PaymentAllocationTransactionTypes.options;
-    this.transactionTypeCtrl.patchValue(this.transactionTypeOptions[0].code);
-    if (this.transactionType) {
-      this.transactionTypeCtrl.patchValue(this.transactionType.code);
-    }
-    this.installmentAllocationOptions = FutureInstallmentAllocationRules.options;
-    this.futureInstallmentAllocationRule.patchValue(this.installmentAllocationOptions[0].code);
+  sendAllocations(): void {
+    this.setPaymentAllocation.emit(this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations));
+    this.setCreditAllocation.emit(this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations));
   }
 
-  dropTable(event: CdkDragDrop<any[]>) {
-    const prevIndex = this.paymentAllocationsData.findIndex((d: any) => d === event.item.data);
-    moveItemInArray(this.paymentAllocationsData, prevIndex, event.currentIndex);
-    this.paymentAllocationsData = [...this.paymentAllocationsData];
-    this.table.renderRows();
-    this.sendPaymentAllocation();
-    this.paymentAllocationChange.emit(true);
+  allocationChanged(changed: boolean): void {
+    this.paymentAllocationChange.emit(changed);
+    this.sendAllocations();
   }
 
-  sendPaymentAllocation(): void {
-    let transactionTypeVal = PaymentAllocationTransactionTypes.DEFAULT_TRANSACTION.code;
-    if (this.transactionType) {
-      transactionTypeVal = this.transactionType.code;
-    }
-    const paymentAllocationOrder: PaymentAllocationOrder[] = [];
-    this.paymentAllocationsData.forEach((txType: PaymentCode, index: number) => {
-      paymentAllocationOrder.push({ 'paymentAllocationRule': txType.code, order: (index + 1) });
+  addTransaction(): void {
+    const transactionTypesCurrent: String[] = [];
+    this.advancedPaymentAllocations.forEach((item: AdvancedPaymentAllocation) => {
+      transactionTypesCurrent.push(item.transaction.code);
+    });
+    this.advancedCreditAllocations.forEach((item: AdvancedPaymentAllocation) => {
+      transactionTypesCurrent.push(item.transaction.code);
     });
 
-    const paymentAllocation: PaymentAllocation[] = [];
-    paymentAllocation.push({
-      'futureInstallmentAllocationRule': this.futureInstallmentAllocationRule.value,
-      'transactionType': transactionTypeVal,
-      'paymentAllocationOrder': paymentAllocationOrder
+    const transactionTypesOptions: PaymentAllocationTransactionType[] = [];
+    this.advancedPaymentAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
+      if (!this.advancedPaymentStrategy.isDefault(option) && transactionTypesCurrent.indexOf(option.code) < 0) {
+        option.credit = false;
+        transactionTypesOptions.push(option);
+      }
+    });
+    this.advancedCreditAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
+      if (transactionTypesCurrent.indexOf(option.code) < 0) {
+        option.credit = true;
+        transactionTypesOptions.push(option);
+      }
     });
 
-    this.paymentAllocation.emit(paymentAllocation);
+    const formfields: FormfieldBase[] = [
+      new SelectBase({
+        controlName: 'code',
+        label: this.translateService.instant('labels.inputs.Transaction Type'),
+        options: { label: 'code', value: 'code', data: transactionTypesOptions },
+        order: 1
+      })
+    ];
+    const data = {
+      title: this.translateService.instant('labels.inputs.Advanced Payment Allocation Transaction Type'),
+      layout: {
+        addButtonText: this.translateService.instant('labels.buttons.Add'),
+        cancelButtonText: this.translateService.instant('labels.buttons.Cancel')
+      },
+      formfields: formfields
+    };
+    const transactionTypeDialogRef = this.dialog.open(FormDialogComponent, { data });
+    transactionTypeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        const defaultPaymentAllocation: AdvancedPaymentAllocation = this.advancedPaymentAllocations[0];
+        transactionTypesOptions.forEach((transactionType: PaymentAllocationTransactionType) => {
+          if (transactionType.code === response.data.value.code) {
+            if (!transactionType.credit) {
+              this.advancedPaymentAllocations.push(
+                this.advancedPaymentStrategy.buildAdvancedPaymentAllocation(true, transactionType, this.paymentAllocationOrderDefault,
+                  defaultPaymentAllocation.futureInstallmentAllocationRules)
+              );
+            } else {
+              this.advancedCreditAllocations.push(
+                this.advancedPaymentStrategy.buildAdvancedCreditAllocation(transactionType, this.creditAllocationOrderDefault)
+              );
+            }
+            this.paymentAllocationChange.emit(true);
+            this.sendAllocations();
+          }
+        });
+      }
+    });
+  }
+
+  transactionTypeRemoved(transaction: PaymentAllocationTransactionType): void {
+    if (!transaction.credit) {
+      this.advancedPaymentAllocations.forEach((item: AdvancedPaymentAllocation, index: number) => {
+        if (item.transaction.code === transaction.code) {
+          this.advancedPaymentAllocations.splice(index, 1);
+          this.paymentAllocationChange.emit(true);
+          this.tabGroup.selectedIndex = (index - 1);
+          this.sendAllocations();
+        }
+      });
+    } else {
+      this.advancedCreditAllocations.forEach((item: AdvancedPaymentAllocation, index: number) => {
+        if (item.transaction.code === transaction.code) {
+          this.advancedCreditAllocations.splice(index, 1);
+          this.paymentAllocationChange.emit(true);
+          this.tabGroup.selectedIndex = (index - 1);
+          this.sendAllocations();
+        }
+      });
+    }
   }
 
 }
