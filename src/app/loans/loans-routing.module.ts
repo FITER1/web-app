@@ -60,6 +60,10 @@ import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/ext
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
+import { RescheduleViewComponent } from './reschedule-view/reschedule-view.component';
+import { LoanRescheduleRequestResolver } from './common-resolvers/loan-reschedule-request.rsolver';
+import { RescheduledScheduleComponent } from './reschedule-view/rescheduled-schedule/rescheduled-schedule.component';
+import { LoanRescheduleRepaymentScheduleResolver } from './common-resolvers/loan-reschedule-repayment-schedule.rsolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -317,6 +321,25 @@ const routes: Routes = [
           loansAccountAndTemplate: LoansAccountAndTemplateResolver
         }
       },
+      {
+        path: ':loanId/viewreschedulerequest/:reschedulerequestId',
+        children: [
+          { 
+            path: '' , pathMatch: 'prefix',
+            resolve: {
+              rescheduleRequest: LoanRescheduleRequestResolver
+            },
+            component: RescheduleViewComponent,
+          },
+          {
+            path: 'preview' ,
+            component: RescheduledScheduleComponent,
+            resolve: {
+              loanRepaymentScheduleDetails: LoanRescheduleRepaymentScheduleResolver
+            }
+          }
+        ]
+      }
     ]
   },
   {

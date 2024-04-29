@@ -338,6 +338,25 @@ export class LoansService {
     return this.http.post('/rescheduleloans', data, { params: httpParams });
   }
 
+
+  /**
+   * Returns the Loan Reschedule request
+   * @param rescheduleId Reschedule ID
+   * @returns 
+   */
+  retrieveLoanRescheduleRequest(rescheduleId: any) {
+    return this.http.get(`/rescheduleloans/${rescheduleId}`);
+  }
+
+    /**
+   * Returns the Loan Reschedule repayment schedule
+   * @param rescheduleId Reschedule ID
+   * @returns 
+   */
+    retrieveLoanRescheduleRepaymentSchedule(rescheduleId: any) {
+      return this.http.get(`/rescheduleloans/${rescheduleId}`, {params: new HttpParams().set('command', 'previewLoanReschedule')});
+    }
+  
   /**
    * Gets Loan Account Template
    * @param {any} clientId Client ID
