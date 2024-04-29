@@ -1,0 +1,47 @@
+<div class="container">
+    <mat-card>
+        <form [formGroup]="rescheduleForm" (ngSubmit)="onSubmit()">
+            <div class="header-container">
+                <mat-card-title>{{ "labels.heading.View Loan Reschedule Request" | translate }}</mat-card-title>
+                <div class="button-container">
+                    <button mat-raised-button color="success" *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'">
+                        <fa-icon icon="check" class="m-r-10"></fa-icon>{{'labels.buttons.Approve' | translate}}
+                    </button>
+                    <button mat-raised-button color="warn" (click)="cancel()">
+                        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{'labels.buttons.Cancel' | translate}}
+                    </button>
+                    <button mat-raised-button color="reject" *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'" (click)="reject()">
+                        <fa-icon icon="times" class="m-r-10"></fa-icon>{{'labels.buttons.Reject' | translate}}
+                    </button>
+                </div>
+              </div>
+    
+            <div class="form-section">
+               
+        
+                <div class="display-field">
+                    <span class="field-name">{{ 'Reschedule from Installment On' | translate }}:</span>
+                    <span class="field-value">{{ repaymentScheduleRequest.rescheduleFromDate | dateFormat }}</span>
+                </div>
+        
+                <div class="display-field">
+                    <span class="field-name">{{ 'Reason for Rescheduling' | translate }}:</span>
+                    <span class="field-value">{{ repaymentScheduleRequest.rescheduleReasonCodeValue.name }}</span>
+                </div>
+        
+                <div class="display-field">
+                    <span class="field-name">{{ 'Submitted On' | translate }}:</span>
+                    <span class="field-value">{{ repaymentScheduleRequest.timeline.submittedOnDate | dateFormat }}</span>
+                </div>
+        
+                <mat-form-field appearance="fill" class="full-width">
+                <mat-label>{{ 'Comments' | translate }}</mat-label>
+                    <textarea matInput formControlName="comments"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+        <div class="actions center-button">
+            <button mat-raised-button color="primary" type="button" [routerLink]="['./preview']">{{ 'Repayment Schedule' | translate }}</button>
+        </div>
+    </mat-card>
+</div>

@@ -885,7 +885,8 @@
             "Working Days": "Working Days",
             "You have created": "You have created",
             "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
-            "successfully select option": "successfully. Please select from the options below to proceed furthur."
+            "successfully select option": "successfully. Please select from the options below to proceed furthur.",
+            "View Loan Reschedule Request": "View Loan Reschedule Request"
         },
         "inputs": {
             "ACCOUNTING": "ACCOUNTING",
