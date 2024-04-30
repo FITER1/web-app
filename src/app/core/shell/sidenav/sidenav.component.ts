@@ -15,6 +15,8 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
 import { SettingsService } from 'app/settings/settings.service';
+import { AppImageService } from 'app/settings/app-image/app-image.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Sidenav component.
@@ -62,7 +64,9 @@ export class SidenavComponent implements OnInit, AfterViewInit {
               private authenticationService: AuthenticationService,
               private settingsService: SettingsService,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+              private popoverService: PopoverService,
+              private appImageService: AppImageService,
+              private _sanitizer: DomSanitizer) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
   }
 
@@ -73,6 +77,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
     this.setMappedAcitivites();
+    this.appLogo();
   }
 
   /**
@@ -218,5 +223,19 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     }
     return this.settingsService.tenantIdentifier;
   }
+  
+  fiter_logo: any;
+  imageId: string = "3";
+  /**
+   * Get app logo
+   */
+  appLogo(): any {
+    this.appImageService.getappImage(this.imageId).subscribe(
+      (base64Image: any) => {
+        this.fiter_logo = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+      }, (error: any) => {}
+    );
+  }
+  
 
 }

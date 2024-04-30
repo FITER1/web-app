@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
@@ -14,6 +15,8 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
+
+  
 
   /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
@@ -59,7 +62,8 @@ export class SettingsComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService, private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);
@@ -92,5 +96,7 @@ export class SettingsComponent implements OnInit {
   compareOptions(option1: any, option2: any) {
     return option1 && option2 && option1.code === option2.code;
   }
+
+  
 
 }
