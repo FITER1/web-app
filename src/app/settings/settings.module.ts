@@ -8,6 +8,7 @@ import { SettingsRoutingModule } from './settings-routing.module';
 /** Custom Components */
 import { SettingsComponent } from './settings.component';
 import { AppImageComponent } from './app-image/app-image.component';
+import { ContactInfoComponent } from './contact-info/contact-info.component';
 
 /**
  * Settings Module
@@ -19,6 +20,6 @@ import { AppImageComponent } from './app-image/app-image.component';
     SharedModule,
     SettingsRoutingModule
   ],
-  declarations: [SettingsComponent, AppImageComponent]
+  declarations: [SettingsComponent, AppImageComponent, ContactInfoComponent]
 })
 export class SettingsModule { }

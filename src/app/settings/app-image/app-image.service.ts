@@ -17,7 +17,7 @@ export class AppImageService {
 
   getappImage(appImageId: string) {
     const httpParams = new HttpParams().set('maxHeight', '150');
-    return this.http.skipErrorHandler().get(`/app/${appImageId}/images`, { params: httpParams, responseType: 'text', headers: { 'Bypass-Auth': 'true'  }});
+    return this.http.skipErrorHandler().get(`/app/${appImageId}/images`, { params: httpParams, responseType: 'text'});
   }
 
 }

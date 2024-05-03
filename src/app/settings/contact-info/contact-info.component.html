@@ -1,0 +1,96 @@
+
+<mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{'labels.inputs.Contact Information' | translate}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div *ngIf="!showContactInfo">
+
+    <form [formGroup]="contactInfoForm" (ngSubmit)="submit()">
+
+        <mat-card-content>
+
+    <div fxLayout="column">
+
+      <mat-form-field>
+        <mat-label>{{'labels.inputs.Website' | translate}}</mat-label>
+        <input type="url" matInput formControlName = "website">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
+        <input type="email" matInput formControlName = "email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{'labels.inputs.Contact No' | translate}}</mat-label>
+        <input type="tel" matInput formControlName="mobileNo">
+      </mat-form-field>
+
+    </div>
+    </mat-card-content>
+    
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
+      <button mat-raised-button color="primary">{{'labels.buttons.Submit' | translate }}</button>
+    </mat-card-actions>
+  </form>
+  </div>
+
+  <div *ngIf="showContactInfo">
+  <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+    <button mat-raised-button color="primary" (click)="deleteContactInfo()">
+      {{'labels.buttons.Delete' | translate}}
+    </button>
+  </div>
+
+  <div class="container mat-elevation-z8">
+  
+    <div class="container">
+
+        <mat-card>
+      
+          <mat-card-content>
+      
+            <div fxLayout="row wrap" class="content">
+      
+              <div fxFlex="50%" class="header">
+                {{"labels.inputs.Website" | translate}}
+              </div>
+      
+              <div fxFlex="50%">
+                {{ contactInfo.website }}
+              </div>
+      
+              <div fxFlex="50%" class="header">
+                {{"labels.inputs.Email" | translate}}
+              </div>
+
+              <div fxFlex="50%">
+                {{ contactInfo.email }}
+              </div>
+
+              <div fxFlex="50%" class="header">
+                {{"labels.inputs.Mobile No" | translate}}
+              </div>
+
+              <div fxFlex="50%">
+                {{ contactInfo.mobileNo }}
+              </div>
+      
+            </div>
+      
+          </mat-card-content>
+      
+        </mat-card>
+      
+  
+  </div>
+  </div>
+  </div>
+  
+  </mat-expansion-panel>
+  

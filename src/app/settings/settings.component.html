@@ -74,34 +74,7 @@
 
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{'labels.inputs.Contact Information' | translate}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <div fxLayout="column">
-
-        <mat-form-field>
-          <mat-label>{{'labels.inputs.Website' | translate}}</mat-label>
-          <input type="url" matInput>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
-          <input type="email" matInput>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>{{'labels.inputs.Contact No' | translate}}</mat-label>
-          <input type="tel" matInput>
-        </mat-form-field>
-
-      </div>
-
-    </mat-expansion-panel>
+    <mifosx-contact-info></mifosx-contact-info>
 
   </mat-accordion>
 
