@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, UntypedFormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
+import { TranslateService } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
@@ -35,7 +36,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private translateService: TranslateService) {
     this.createLoanProductAccountingForm();
     this.setConditionalControls();
   }
@@ -63,6 +65,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
           'receivableInterestAccountId': accountingMappings.receivableInterestAccount.id,
           'receivableFeeAccountId': accountingMappings.receivableFeeAccount.id,
           'receivablePenaltyAccountId': accountingMappings.receivablePenaltyAccount.id,
+        });
+        this.loanProductAccountingForm.patchValue({
+          'enableAccrualActivityPosting': this.loanProductsTemplate.enableAccrualActivityPosting
         });
         /* falls through */
       case 2:
@@ -168,10 +173,12 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('receivableInterestAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('receivableFeeAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('receivablePenaltyAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('enableAccrualActivityPosting', new UntypedFormControl(false));
         } else {
           this.loanProductAccountingForm.removeControl('receivableInterestAccountId');
           this.loanProductAccountingForm.removeControl('receivableFeeAccountId');
           this.loanProductAccountingForm.removeControl('receivablePenaltyAccountId');
+          this.loanProductAccountingForm.removeControl('enableAccrualActivityPosting');
         }
       });
   }
@@ -218,7 +225,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   delete(formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `this` }
+      data: { deleteContext:  this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -300,6 +307,11 @@ export class LoanProductAccountingStepComponent implements OnInit {
       })
     ];
     return formfields;
+  }
+
+  get isAccountingAccrualBased() {
+    const accountingRule = this.loanProductAccountingForm.value.accountingRule;
+    return accountingRule  === 3 || accountingRule === 4;
   }
 
   get loanProductAccounting() {

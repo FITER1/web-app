@@ -134,6 +134,11 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
           },
           {
+            name: 'Interest Payment Waiver',
+            icon: 'coins',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+          },
+          {
             name: 'Payout Refund',
             icon: 'coins',
             taskPermissionName: 'CREATE_PAYOUT_REFUND',
@@ -201,6 +206,10 @@ export class LoansAccountButtonConfiguration {
             taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
           },
           {
+            name: 'Interest Payment Waiver',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+          },
+          {
             name: 'Payout Refund',
             taskPermissionName: 'CREATE_PAYOUT_REFUND',
           },
@@ -213,7 +222,7 @@ export class LoansAccountButtonConfiguration {
       case 'Submitted and pending approval':
         this.optionArray = [
           {
-            name: 'Withdrawn by client',
+            name: 'Withdrawn by Client',
             taskPermissionName: 'WITHDRAW_LOAN',
           },
           {

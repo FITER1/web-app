@@ -313,6 +313,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.loanProduct.accountingRule.id : this.loanProduct.accountingRule;
   }
 
+  get isAccountingAccrualBased(): boolean {
+    return this.accountingRule() === 3 || this.accountingRule() === 4;
+  }
+
   isAccountingEnabled(): boolean {
     return (this.accountingRule() >= 2);
   }
@@ -321,6 +325,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
     return (this.loanProduct.paymentChannelToFundSourceMappings?.length > 0
       || this.loanProduct.feeToIncomeAccountMappings?.length > 0
       || this.loanProduct.penaltyToIncomeAccountMappings?.length > 0);
+  }
+
+  getAccountingRuleName(value: string): string {
+    return this.accounting.getAccountRuleName(value.toUpperCase());
   }
 
 }

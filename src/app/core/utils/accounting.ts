@@ -5,8 +5,12 @@ import { OptionData } from 'app/shared/models/option-data.model';
 
 @Injectable({
     providedIn: 'root'
-  })
-  export class Accounting {
+})
+export class Accounting {
+
+    public getAccountingRulesForShares(): string[] {
+        return ['NONE', 'Cash'];
+    }
 
     public getAccountingRulesForSavings(): string[] {
         return ['NONE', 'Cash', 'Accrual (periodic)'];
@@ -17,14 +21,14 @@ import { OptionData } from 'app/shared/models/option-data.model';
     }
 
     public getAccountRuleName(value: string): string {
-        if (value === 'ACCRUAL PERIODIC') {
+        if (['ACCRUAL PERIODIC', 'ACCRUAL (PERIODIC)'].includes(value)) {
             return 'Accrual (periodic)';
-        } else if (value === 'ACCRUAL UPFRONT') {
+        } else if (['ACCRUAL UPFRONT', 'ACCRUAL (UPFRONT)'].includes(value)) {
             return 'Accrual (upfront)';
         } else if (value === 'CASH BASED') {
             return 'Cash';
         } else if (value === 'NONE') {
-            return 'None';
+            return 'NONE';
         }
         return '';
     }
