@@ -19,6 +19,8 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import { AppImageService } from 'app/settings/app-image/app-image.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /**
  * Home component.
@@ -63,7 +65,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private router: Router,
               private dialog: MatDialog,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+              private popoverService: PopoverService,
+              private appImageService: AppImageService,
+              private _sanitizer: DomSanitizer) { }
 
   /**
    * Sets the username of the authenticated user.
@@ -77,6 +81,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.dialog.open(WarningDialogComponent);
       this.authenticationService.showDialog();
     }
+    this.appLgLogo();
   }
 
   /**
@@ -171,5 +176,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/home']);
+  }
+
+  fiter_lg_logo: any;
+  imageId: string = "4";
+  /**
+   * Get app logo with orgnization name
+   */
+  appLgLogo(): any {
+    this.appImageService.getappImage(this.imageId).subscribe(
+      (base64Image: any) => {
+        this.fiter_lg_logo = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+      }, (error: any) => {}
+    );
   }
 }
