@@ -28,7 +28,7 @@
       width: 90%;
       padding: 0;
       .header {
-        background-color: mat.get-color-from-palette($primary, 500);
+        background-color: rgba(242,19,44,255);
 
         padding: 1%;
         .header-title-group {
@@ -57,7 +57,7 @@
             border-radius: 20px;
           }
           .signature {
-            background-color: mat.get-color-from-palette($primary, 500);
+            background-color: rgba(242,19,44,255);
           }
         }
         .account-actions {

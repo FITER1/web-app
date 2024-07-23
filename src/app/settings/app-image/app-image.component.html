@@ -1,0 +1,25 @@
+<mat-expansion-panel>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{'labels.inputs.Images' | translate}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div fxLayout="column">
+
+      <span class="header">{{'labels.inputs.Favicon' | translate}}</span>
+      <mifosx-file-upload (change)="onFileSelect($event,'1')"></mifosx-file-upload>
+
+      <span class="header">{{'labels.inputs.Cover Image' | translate}}</span>
+      <mifosx-file-upload (change)="onFileSelect($event,'2')"></mifosx-file-upload>
+
+      <span class="header">{{'labels.inputs.Logo' | translate}}</span>
+      <mifosx-file-upload (change)="onFileSelect($event,'3')"></mifosx-file-upload>
+
+      <span class="header">{{'labels.inputs.Logo with Organization Name' | translate}}</span>
+      <mifosx-file-upload (change)="onFileSelect($event,'4')"></mifosx-file-upload>
+
+    </div>
+
+  </mat-expansion-panel>
