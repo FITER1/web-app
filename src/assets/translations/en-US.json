@@ -653,7 +653,7 @@
             "In advance principal": "In advance principal",
             "In advanced interest": "In advanced interest",
             "Next installment": "Next installment",
-	          "Last installment": "Last installment",
+            "Last installment": "Last installment",
             "LOAN_PROVISIONING": "LOAN_PROVISIONING",
             "Reamortization": "Reamortization",
             "equals": "equals",
@@ -1567,7 +1567,7 @@
             "Fixed EMI amount": "Fixed EMI amount",
             "Fixed Length": "Fixed Length",
             "Principal Percentage Per Installment": "Principal Percentage Per Installment",
-            "floating rate period with from date as":"floating rate period with from date as",
+            "floating rate period with from date as": "floating rate period with from date as",
             "Floating Interest Rate": "Floating Interest Rate",
             "Floating Interest Rate Calculation Allowed": "Floating Interest Rate Calculation Allowed",
             "Floating Interest Rates": "Floating Interest Rates",
@@ -2561,7 +2561,7 @@
             "Are you sure you want to": "Are you sure you want to ",
             "the productmix component with id": "the productmix component with id",
             "the Reschedule Loan": " the Reschedule Loan",
-            "the Transaction Type":"the Transaction Type"
+            "the Transaction Type": "the Transaction Type"
         },
         "text": {
             "A": "A",
@@ -3063,7 +3063,7 @@
             "The report request": "The report request has been sent and the report will be exported to file repository",
             "The usage of stronger passwords": "Define standards for enforcing the usage of stronger passwords",
             "These are predefined postings": "These are predefined postings",
-            "this":"this",
+            "this": "this",
             "This allows you to manage funds associated with loans.": "This allows you to manage funds associated with loans.",
             "This option allows you to create new loan product.": "This option allows you to create new loan product.",
             "This option allows you to create new recurring product.": "This option allows you to create new recurring product.",
@@ -3192,6 +3192,7 @@
         "es-MX": "Español (Spanish)",
         "fr-FR": "Français (French)",
         "it-IT": "Italiano (Italian)",
+        "he-IL": "עִברִית (Hebrew)",
         "ko-KO": "한국어 (Korean)",
         "lt-LT": "Lietuvių (Lithuanian)",
         "lv-LV": "Latviešu (Latvian)",
