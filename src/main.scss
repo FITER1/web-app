@@ -3,13 +3,14 @@
  * Component-specific style should not go here and be included directly as part of the components.
  */
 
-// Import Default Theme for MifosX
-@use 'theme/mifosx-theme';
+// Import Default Theme for Fiter
+@use 'theme/fiter-theme';
 @use 'theme/pictonblue-yellowgreen' as *;
 @use 'theme/indigo-pink' as *;
 @use 'theme/pink-bluegrey' as *;
 @use 'theme/deeppurple-amber' as *;
 @use 'theme/purple-green.scss' as *;
+@use 'theme/mifosx-theme' as *;
 
 // Global Imports
 

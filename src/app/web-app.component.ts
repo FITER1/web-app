@@ -30,9 +30,10 @@ import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
+import { Theme } from './shared/theme-picker/theme.model';
 
 /** Initialize Logger */
-const log = new Logger('MifosX');
+const log = new Logger('Fiter');
 
 @Component({
   selector: 'mifosx-web-app',
@@ -74,6 +75,17 @@ export class WebAppComponent implements OnInit {
   @HostBinding('class') public cssClass: string;
 
   ngOnInit() {
+    // Always set up the Fiter theme as default
+    const fiterTheme: Theme = {
+      href: 'fiter-theme.css',
+      primary: '#0D47A1', // Blue 800 - Fiter blue
+      accent: '#FB8C00', // Orange 600 - Fiter orange
+      isDark: false,
+      isDefault: true
+    };
+    this.themeStorageService.installTheme(fiterTheme);
+
+    // Handle light/dark mode
     this.themingService.theme.subscribe((value: string) => {
       this.cssClass = value;
     });

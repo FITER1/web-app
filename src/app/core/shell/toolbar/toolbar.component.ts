@@ -121,10 +121,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   }
 
   /**
-   * Opens Mifos JIRA Wiki page.
+   * Opens Fiter documentation page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open('https://fiter.io/documentation', '_blank');
   }
   /**
    * Popover function

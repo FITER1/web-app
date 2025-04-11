@@ -1,15 +1,15 @@
 {
-  "short_name": "MifosX",
-  "name": "MifosX Web App",
+  "short_name": "Fiter",
+  "name": "Fiter Web App",
   "start_url": "/",
   "scope": "/",
-  "theme_color": "#fff",
+  "theme_color": "#0D47A1",
   "background_color": "#fff",
   "display": "standalone",
-  "description": "MifosX Web App is the default web application built on top of the Fineract platform for the Mifos user community leveraging the popular Angular framework.",
+  "description": "Fiter Web App is a financial technology application built on top of the Fineract platform for digital financial services.",
   "icons": [
     {
-      "src": "assets/images/MifosX_logo.png",
+      "src": "assets/images/fiter/fiter_logo.png",
       "sizes": "182x184",
       "type": "image/png"
     }

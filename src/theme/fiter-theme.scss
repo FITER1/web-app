@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+@use '../app/groups/groups-view/groups-view.component-theme.scss' as *;
+@use '../app/centers/centers-view/centers-view.component-theme.scss' as *;
+@use '../app/home/dashboard/dashboard.component-theme.scss' as *;
+@use '../app/shares/shares-account-view/shares-account-view.component-theme.scss' as *;
+@use './content' as *;
+
+// Custom material palette for Fiter.io's brand colors
+// Using dark blue as primary color and orange as accent color for Fiter.io's brand
+$fiter-primary: mat.define-palette(mat.$red-palette, 800, 600, 900);
+
+$fiter-accent: mat.define-palette(mat.$orange-palette, 600, 400, 800);
+
+$fiter-warn: mat.define-palette(mat.$red-palette);
+
+$fiter-theme: mat.define-light-theme($fiter-primary, $fiter-accent, $fiter-warn);
+
+// Default theme is Fiter theme
+@include mat.all-component-themes($fiter-theme);
+
+.fiter-theme {
+  @include mat.all-component-themes($fiter-theme);
+
+  // Add any custom styles for Fiter branding here
+  .mat-toolbar.mat-primary {
+    background-color: #e93e1e; // Fiter blue - slightly darker for better contrast
+  }
+
+  .login-container {
+    background-color: #f9f9f9;
+  }
+
+  mifosx-clients-view .account-card .header {
+    background-color: mat.get-color-from-palette($fiter-primary, 500) !important;
+  }
+
+  mifosx-home .container mat-card {
+    background-color: mat.get-color-from-palette($fiter-primary, 500) !important;
+
+    mat-card-title {
+      color: mat.get-color-from-palette($fiter-primary, 50) !important;
+    }
+
+    mat-label {
+      color: mat.get-color-from-palette($fiter-primary, 50) !important;
+    }
+  }
+}
+
+$fiter-app-theme: mat.define-light-theme($fiter-primary, $fiter-accent, $fiter-warn);
+
+@include mat.all-component-themes($fiter-app-theme);
+@include groups-view-component-theme($fiter-app-theme);
+@include centers-view-component-theme($fiter-app-theme);
+@include dashboard-component-theme($fiter-app-theme);
+@include shares-account-view-component-theme($fiter-app-theme);
+@include account-view-component-theme($fiter-app-theme);
+
+/* ################################## Dark theme ################################### */

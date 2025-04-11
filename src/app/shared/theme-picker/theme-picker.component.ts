@@ -21,9 +21,9 @@ import { ThemeStorageService } from './theme-storage.service';
 export class ThemePickerComponent implements OnInit {
   /** Default theme for the application. */
   currentTheme: Theme = {
-    href: 'denim-yellowgreen.css',
-    primary: '#1074B9',
-    accent: '#B4D575',
+    href: 'fiter-theme.css',
+    primary: '#0D47A1', // Blue 800 - Fiter blue
+    accent: '#FB8C00', // Orange 600 - Fiter orange
     isDark: false,
     isDefault: true
   };
@@ -33,6 +33,12 @@ export class ThemePickerComponent implements OnInit {
     {
       href: 'pictonblue-yellowgreen.css',
       primary: '#1DAEEC',
+      accent: '#B4D575',
+      isDark: false
+    },
+    {
+      href: 'denim-yellowgreen.css',
+      primary: '#1074B9',
       accent: '#B4D575',
       isDark: false
     },

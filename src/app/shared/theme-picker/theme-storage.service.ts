@@ -6,7 +6,7 @@ import { ThemeManagerService } from './theme-manager.service';
   providedIn: 'root'
 })
 export class ThemeStorageService {
-  private themeStorageKey = 'mifosXTheme';
+  private themeStorageKey = 'fiterTheme';
   onThemeUpdate: EventEmitter<Theme>;
 
   constructor(public themeManagerService: ThemeManagerService) {
@@ -39,12 +39,12 @@ export class ThemeStorageService {
       'indigo-pink-theme',
       'deeppurple-amber-theme',
       'pink-bluegrey-theme',
-      'purple-green-theme'
+      'purple-green-theme',
+      'fiter-theme'
     );
 
-    if (!theme.isDefault) {
-      body.classList.add(this.getThemeClass(theme.href));
-    }
+    // Always add the theme class, even if it's the default
+    body.classList.add(this.getThemeClass(theme.href));
 
     this.storeTheme(theme);
   }
@@ -66,6 +66,8 @@ export class ThemeStorageService {
         return 'pink-bluegrey-theme';
       case 'purple-green.css':
         return 'purple-green-theme';
+      case 'fiter-theme.css':
+        return 'fiter-theme';
       default:
         return '';
     }
