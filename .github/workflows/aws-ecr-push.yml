@@ -1,5 +1,5 @@
 
-name: Build and Push to ECR
+name: Build and Push to Fiter ECR
 
 on:
   push:
